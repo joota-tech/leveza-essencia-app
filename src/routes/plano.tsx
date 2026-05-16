@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
-import { planDays } from "@/lib/app-data";
+import { planDays, type PlanMeal } from "@/lib/app-data";
 import { useProgress } from "@/lib/use-progress";
 import { Check, Coffee, Moon, Sandwich, Sparkles, Sun } from "lucide-react";
 
@@ -72,10 +72,10 @@ function PlanPage() {
         <p className="mt-3 rounded-2xl bg-blush p-3 text-sm italic text-foreground">"{day.quote}"</p>
 
         <div className="mt-5 space-y-3">
-          <Meal icon={<Coffee className="h-4 w-4" />} label="Café da manhã" text={day.breakfast} />
-          <Meal icon={<Sun className="h-4 w-4" />} label="Almoço" text={day.lunch} />
-          <Meal icon={<Sandwich className="h-4 w-4" />} label="Lanche" text={day.snack} />
-          <Meal icon={<Moon className="h-4 w-4" />} label="Jantar" text={day.dinner} />
+          <Meal icon={<Coffee className="h-4 w-4" />} label="Café da manhã" meal={day.breakfast} />
+          <Meal icon={<Sun className="h-4 w-4" />} label="Almoço" meal={day.lunch} />
+          <Meal icon={<Sandwich className="h-4 w-4" />} label="Lanche" meal={day.snack} />
+          <Meal icon={<Moon className="h-4 w-4" />} label="Jantar" meal={day.dinner} />
         </div>
 
         <button
@@ -106,14 +106,19 @@ function PlanPage() {
   );
 }
 
-function Meal({ icon, label, text }: { icon: React.ReactNode; label: string; text: string }) {
+function Meal({ icon, label, meal }: { icon: React.ReactNode; label: string; meal: PlanMeal }) {
   return (
-    <div className="flex items-start gap-3 rounded-2xl bg-secondary p-3">
+    <Link
+      to="/receitas/$id"
+      params={{ id: meal.recipeId }}
+      className="flex items-start gap-3 rounded-2xl bg-secondary p-3 transition-all active:scale-[0.98] hover:bg-blush"
+    >
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary">{icon}</div>
-      <div>
+      <div className="flex-1">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</p>
-        <p className="mt-0.5 text-sm text-foreground">{text}</p>
+        <p className="mt-0.5 text-sm text-foreground">{meal.name}</p>
       </div>
-    </div>
+      <span className="self-center text-xs text-primary">Ver receita →</span>
+    </Link>
   );
 }
