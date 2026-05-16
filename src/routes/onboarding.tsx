@@ -20,7 +20,7 @@ const steps: Step[] = [
   { key: "goal", question: "Seu objetivo principal?", options: ["Emagrecer", "Reduzir compulsão", "Mais energia", "Autoestima"] },
   { key: "difficulty", question: "Sua maior dificuldade?", options: ["Vontade de doce", "Comer à noite", "Falta de tempo", "Ansiedade"] },
   { key: "routine", question: "Como é sua rotina?", options: ["Muito corrida", "Equilibrada", "Tranquila"] },
-  { key: "esteem", question: "Como está sua autoestima hoje?", options: ["Baixa",: "Média", "Boa"].filter(Boolean) as string[] },
+  { key: "esteem", question: "Como está sua autoestima hoje?", options: ["Baixa", "Média", "Boa"] },
 ];
 
 function OnboardingPage() {
