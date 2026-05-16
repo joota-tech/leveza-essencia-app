@@ -26,7 +26,7 @@ export const Route = createFileRoute("/receitas/$id")({
 });
 
 function RecipeDetail() {
-  const { recipe: r } = Route.useLoaderData();
+  const { recipe: r } = Route.useLoaderData() as { recipe: Recipe };
   const { progress, toggleFavorite } = useProgress();
   const fav = progress.favorites.includes(r.id);
 
