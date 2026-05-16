@@ -9,38 +9,168 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PlanoRouteImport } from './routes/plano'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as BonusRouteImport } from './routes/bonus'
+import { Route as AntiCompulsaoRouteImport } from './routes/anti-compulsao'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReceitasIndexRouteImport } from './routes/receitas.index'
+import { Route as ReceitasIdRouteImport } from './routes/receitas.$id'
 
+const PlanoRoute = PlanoRouteImport.update({
+  id: '/plano',
+  path: '/plano',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BonusRoute = BonusRouteImport.update({
+  id: '/bonus',
+  path: '/bonus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AntiCompulsaoRoute = AntiCompulsaoRouteImport.update({
+  id: '/anti-compulsao',
+  path: '/anti-compulsao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceitasIndexRoute = ReceitasIndexRouteImport.update({
+  id: '/receitas/',
+  path: '/receitas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceitasIdRoute = ReceitasIdRouteImport.update({
+  id: '/receitas/$id',
+  path: '/receitas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/anti-compulsao': typeof AntiCompulsaoRoute
+  '/bonus': typeof BonusRoute
+  '/onboarding': typeof OnboardingRoute
+  '/perfil': typeof PerfilRoute
+  '/plano': typeof PlanoRoute
+  '/receitas/$id': typeof ReceitasIdRoute
+  '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/anti-compulsao': typeof AntiCompulsaoRoute
+  '/bonus': typeof BonusRoute
+  '/onboarding': typeof OnboardingRoute
+  '/perfil': typeof PerfilRoute
+  '/plano': typeof PlanoRoute
+  '/receitas/$id': typeof ReceitasIdRoute
+  '/receitas': typeof ReceitasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/anti-compulsao': typeof AntiCompulsaoRoute
+  '/bonus': typeof BonusRoute
+  '/onboarding': typeof OnboardingRoute
+  '/perfil': typeof PerfilRoute
+  '/plano': typeof PlanoRoute
+  '/receitas/$id': typeof ReceitasIdRoute
+  '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/anti-compulsao'
+    | '/bonus'
+    | '/onboarding'
+    | '/perfil'
+    | '/plano'
+    | '/receitas/$id'
+    | '/receitas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/anti-compulsao'
+    | '/bonus'
+    | '/onboarding'
+    | '/perfil'
+    | '/plano'
+    | '/receitas/$id'
+    | '/receitas'
+  id:
+    | '__root__'
+    | '/'
+    | '/anti-compulsao'
+    | '/bonus'
+    | '/onboarding'
+    | '/perfil'
+    | '/plano'
+    | '/receitas/$id'
+    | '/receitas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AntiCompulsaoRoute: typeof AntiCompulsaoRoute
+  BonusRoute: typeof BonusRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PerfilRoute: typeof PerfilRoute
+  PlanoRoute: typeof PlanoRoute
+  ReceitasIdRoute: typeof ReceitasIdRoute
+  ReceitasIndexRoute: typeof ReceitasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/plano': {
+      id: '/plano'
+      path: '/plano'
+      fullPath: '/plano'
+      preLoaderRoute: typeof PlanoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bonus': {
+      id: '/bonus'
+      path: '/bonus'
+      fullPath: '/bonus'
+      preLoaderRoute: typeof BonusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anti-compulsao': {
+      id: '/anti-compulsao'
+      path: '/anti-compulsao'
+      fullPath: '/anti-compulsao'
+      preLoaderRoute: typeof AntiCompulsaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +178,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receitas/': {
+      id: '/receitas/'
+      path: '/receitas'
+      fullPath: '/receitas/'
+      preLoaderRoute: typeof ReceitasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receitas/$id': {
+      id: '/receitas/$id'
+      path: '/receitas/$id'
+      fullPath: '/receitas/$id'
+      preLoaderRoute: typeof ReceitasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AntiCompulsaoRoute: AntiCompulsaoRoute,
+  BonusRoute: BonusRoute,
+  OnboardingRoute: OnboardingRoute,
+  PerfilRoute: PerfilRoute,
+  PlanoRoute: PlanoRoute,
+  ReceitasIdRoute: ReceitasIdRoute,
+  ReceitasIndexRoute: ReceitasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

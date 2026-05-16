@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
+import type { Recipe } from "@/lib/app-data";
 import { recipes } from "@/lib/app-data";
 import { useProgress } from "@/lib/use-progress";
 import { ArrowLeft, Clock, Flame, Heart, Share2, Sparkles } from "lucide-react";
