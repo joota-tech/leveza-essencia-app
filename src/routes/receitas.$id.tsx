@@ -54,9 +54,9 @@ function RecipeDetail() {
         </div>
       </div>
 
-      <div className="-mt-10 rounded-t-[2rem] bg-background px-6 pt-6">
-        <span className="text-xs uppercase tracking-widest text-primary">{r.category}</span>
-        <h1 className="mt-1 font-serif text-3xl leading-tight">{r.name}</h1>
+      <div className="relative -mt-8 rounded-t-[2rem] bg-background px-6 pb-6 pt-8">
+        <span className="block text-xs uppercase tracking-widest text-primary">{r.category}</span>
+        <h1 className="mt-2 font-serif text-3xl leading-tight">{r.name}</h1>
 
         <div className="mt-4 grid grid-cols-3 gap-2 text-center">
           <Stat icon={<Clock className="h-3 w-3" />} label="Tempo" value={r.time} />
