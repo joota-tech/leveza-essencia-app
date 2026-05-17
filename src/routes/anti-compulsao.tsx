@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { Candy, CloudRain, Heart, Moon, RotateCcw, Sparkles, X } from "lucide-react";
@@ -59,13 +59,18 @@ function AntiPage() {
 
       <section className="mt-6 grid grid-cols-2 gap-3 px-6">
         {sections.map((s) => (
-          <div key={s.id} className="rounded-3xl border border-border/60 bg-card p-4 shadow-soft">
+          <Link
+            key={s.id}
+            to="/anti-compulsao/$id"
+            params={{ id: s.id }}
+            className="block rounded-3xl border border-border/60 bg-card p-4 shadow-soft transition-all active:scale-[0.98] hover:bg-blush/40"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blush text-primary">
               <s.icon className="h-4 w-4" />
             </div>
             <h3 className="mt-3 font-serif text-base leading-tight">{s.title}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{s.desc}</p>
-          </div>
+          </Link>
         ))}
       </section>
 
