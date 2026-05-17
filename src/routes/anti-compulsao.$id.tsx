@@ -158,7 +158,7 @@ export const Route = createFileRoute("/anti-compulsao/$id")({
 });
 
 function DetailPage() {
-  const s = Route.useLoaderData();
+  const s = Route.useLoaderData() as Section;
   const Icon = s.icon;
 
   return (
