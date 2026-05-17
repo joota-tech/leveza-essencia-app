@@ -20,7 +20,11 @@ function PlanPage() {
   const handleComplete = () => {
     completeDay(day.day);
     setCelebrate(true);
-    setTimeout(() => setCelebrate(false), 2200);
+    const nextDay = Math.min(21, day.day + 1);
+    setTimeout(() => {
+      setCelebrate(false);
+      if (nextDay !== day.day) setSelected(nextDay);
+    }, 2200);
   };
 
   const percent = Math.round((progress.completedDays.length / 21) * 100);
