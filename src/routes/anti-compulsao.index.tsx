@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { Candy, CloudRain, Heart, Moon, RotateCcw, Sparkles, X } from "lucide-react";
 
-export const Route = createFileRoute("/anti-compulsao")({
+export const Route = createFileRoute("/anti-compulsao/")({
   head: () => ({ meta: [{ title: "Acolher — Anti-Compulsão" }] }),
   component: AntiPage,
 });

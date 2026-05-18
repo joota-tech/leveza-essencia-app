@@ -8,6 +8,8 @@ type Progress = {
   favorites: string[];
   startWeight?: number;
   goalWeight?: number;
+  height?: number;
+  age?: string;
   onboarded: boolean;
 };
 
