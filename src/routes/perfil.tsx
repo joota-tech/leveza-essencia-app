@@ -151,6 +151,6 @@ function Row({ icon, label, onClick, to }: { icon: React.ReactNode; label: strin
     </>
   );
   const cls = "flex w-full items-center gap-3 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft";
-  if (to) return <Link to={to} className={cls}>{content}</Link>;
+  if (to) return <Link to={to as never} className={cls}>{content}</Link>;
   return <button onClick={onClick} className={cls}>{content}</button>;
 }
