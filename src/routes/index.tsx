@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
 import { modules, motivationalQuotes } from "@/lib/app-data";
-import { ChevronRight, Droplet, Sparkles, Flame, Heart } from "lucide-react";
+import { ChevronRight, Droplet, Sparkles, Flame, Heart, Lock } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -19,24 +19,32 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { progress, update, loaded } = useProgress();
   const navigate = useNavigate();
+  const [today, setToday] = useState<{ weekday: string; quote: string } | null>(null);
 
   useEffect(() => {
     if (loaded && !progress.onboarded) navigate({ to: "/onboarding" });
   }, [loaded, progress.onboarded, navigate]);
 
-  const quote = motivationalQuotes[new Date().getDate() % motivationalQuotes.length];
+  useEffect(() => {
+    const d = new Date();
+    setToday({
+      weekday: d.toLocaleDateString("pt-BR", { weekday: "long" }),
+      quote: motivationalQuotes[d.getDate() % motivationalQuotes.length],
+    });
+  }, []);
+
   const percent = Math.round((progress.completedDays.length / 21) * 100);
 
   return (
     <MobileShell>
       <header className="px-6 pt-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          {new Date().toLocaleDateString("pt-BR", { weekday: "long" })}
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground min-h-[1rem]">
+          {today?.weekday ?? ""}
         </p>
         <h1 className="mt-1 font-serif text-3xl leading-tight">
           Bom dia, <span className="italic text-primary">{progress.name}</span>
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">{quote}</p>
+        <p className="mt-2 text-sm text-muted-foreground min-h-[1.25rem]">{today?.quote ?? ""}</p>
       </header>
 
       {/* Hero progress card */}
@@ -111,9 +119,9 @@ function HomePage() {
         </div>
         <div className="scrollbar-hide mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-2">
           {modules.map((m, i) => (
-            <Link
+            <div
               key={m.id}
-              to="/plano"
+              aria-disabled
               className="group relative w-[68%] shrink-0 snap-start overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft"
             >
               <div className="aspect-[4/5] w-full bg-gradient-rose">
@@ -124,13 +132,18 @@ function HomePage() {
                   <div className="text-rose-foreground">
                     <p className="text-[11px] opacity-80">{m.subtitle}</p>
                     <h3 className="mt-1 font-serif text-xl leading-tight">{m.title}</h3>
-                    <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-rose-foreground/30">
-                      <div className="h-full bg-rose-foreground" style={{ width: `${m.progress}%` }} />
-                    </div>
                   </div>
                 </div>
               </div>
-            </Link>
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/55 backdrop-blur-[2px]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-card/90 text-foreground shadow-glow">
+                  <Lock className="h-5 w-5" />
+                </div>
+                <span className="rounded-full bg-card/90 px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-foreground">
+                  Em breve
+                </span>
+              </div>
+            </div>
           ))}
         </div>
       </section>
