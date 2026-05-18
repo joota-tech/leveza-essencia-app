@@ -13,9 +13,9 @@ import { Route as PlanoRouteImport } from './routes/plano'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as BonusRouteImport } from './routes/bonus'
-import { Route as AntiCompulsaoRouteImport } from './routes/anti-compulsao'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReceitasIndexRouteImport } from './routes/receitas.index'
+import { Route as AntiCompulsaoIndexRouteImport } from './routes/anti-compulsao.index'
 import { Route as ReceitasIdRouteImport } from './routes/receitas.$id'
 import { Route as AntiCompulsaoIdRouteImport } from './routes/anti-compulsao.$id'
 
@@ -39,11 +39,6 @@ const BonusRoute = BonusRouteImport.update({
   path: '/bonus',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AntiCompulsaoRoute = AntiCompulsaoRouteImport.update({
-  id: '/anti-compulsao',
-  path: '/anti-compulsao',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -52,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
 const ReceitasIndexRoute = ReceitasIndexRouteImport.update({
   id: '/receitas/',
   path: '/receitas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AntiCompulsaoIndexRoute = AntiCompulsaoIndexRouteImport.update({
+  id: '/anti-compulsao/',
+  path: '/anti-compulsao/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReceitasIdRoute = ReceitasIdRouteImport.update({
@@ -67,82 +67,82 @@ const AntiCompulsaoIdRoute = AntiCompulsaoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/anti-compulsao': typeof AntiCompulsaoRouteWithChildren
   '/bonus': typeof BonusRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
+  '/anti-compulsao/': typeof AntiCompulsaoIndexRoute
   '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/anti-compulsao': typeof AntiCompulsaoRouteWithChildren
   '/bonus': typeof BonusRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
+  '/anti-compulsao': typeof AntiCompulsaoIndexRoute
   '/receitas': typeof ReceitasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/anti-compulsao': typeof AntiCompulsaoRouteWithChildren
   '/bonus': typeof BonusRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
+  '/anti-compulsao/': typeof AntiCompulsaoIndexRoute
   '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/anti-compulsao'
     | '/bonus'
     | '/onboarding'
     | '/perfil'
     | '/plano'
     | '/anti-compulsao/$id'
     | '/receitas/$id'
+    | '/anti-compulsao/'
     | '/receitas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/anti-compulsao'
     | '/bonus'
     | '/onboarding'
     | '/perfil'
     | '/plano'
     | '/anti-compulsao/$id'
     | '/receitas/$id'
+    | '/anti-compulsao'
     | '/receitas'
   id:
     | '__root__'
     | '/'
-    | '/anti-compulsao'
     | '/bonus'
     | '/onboarding'
     | '/perfil'
     | '/plano'
     | '/anti-compulsao/$id'
     | '/receitas/$id'
+    | '/anti-compulsao/'
     | '/receitas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AntiCompulsaoRoute: typeof AntiCompulsaoRouteWithChildren
   BonusRoute: typeof BonusRoute
   OnboardingRoute: typeof OnboardingRoute
   PerfilRoute: typeof PerfilRoute
   PlanoRoute: typeof PlanoRoute
   ReceitasIdRoute: typeof ReceitasIdRoute
+  AntiCompulsaoIndexRoute: typeof AntiCompulsaoIndexRoute
   ReceitasIndexRoute: typeof ReceitasIndexRoute
 }
 
@@ -176,13 +176,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BonusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/anti-compulsao': {
-      id: '/anti-compulsao'
-      path: '/anti-compulsao'
-      fullPath: '/anti-compulsao'
-      preLoaderRoute: typeof AntiCompulsaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -195,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/receitas'
       fullPath: '/receitas/'
       preLoaderRoute: typeof ReceitasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anti-compulsao/': {
+      id: '/anti-compulsao/'
+      path: '/anti-compulsao'
+      fullPath: '/anti-compulsao/'
+      preLoaderRoute: typeof AntiCompulsaoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/receitas/$id': {
@@ -214,26 +214,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AntiCompulsaoRouteChildren {
-  AntiCompulsaoIdRoute: typeof AntiCompulsaoIdRoute
-}
-
-const AntiCompulsaoRouteChildren: AntiCompulsaoRouteChildren = {
-  AntiCompulsaoIdRoute: AntiCompulsaoIdRoute,
-}
-
-const AntiCompulsaoRouteWithChildren = AntiCompulsaoRoute._addFileChildren(
-  AntiCompulsaoRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AntiCompulsaoRoute: AntiCompulsaoRouteWithChildren,
   BonusRoute: BonusRoute,
   OnboardingRoute: OnboardingRoute,
   PerfilRoute: PerfilRoute,
   PlanoRoute: PlanoRoute,
   ReceitasIdRoute: ReceitasIdRoute,
+  AntiCompulsaoIndexRoute: AntiCompulsaoIndexRoute,
   ReceitasIndexRoute: ReceitasIndexRoute,
 }
 export const routeTree = rootRouteImport
