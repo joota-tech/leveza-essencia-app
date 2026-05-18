@@ -26,15 +26,28 @@ const steps: Step[] = [
 function OnboardingPage() {
   const [i, setI] = useState(-1); // -1 = welcome
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [weight, setWeight] = useState("");
+  const [goalWeight, setGoalWeight] = useState("");
+  const [height, setHeight] = useState("");
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const { update } = useProgress();
   const navigate = useNavigate();
 
   const total = steps.length;
   const finish = () => {
-    update({ name: name.trim() || "linda", onboarded: true });
+    update({
+      name: name.trim() || "linda",
+      age: age || undefined,
+      startWeight: weight ? Number(weight) : undefined,
+      goalWeight: goalWeight ? Number(goalWeight) : undefined,
+      height: height ? Number(height) : undefined,
+      onboarded: true,
+    });
     navigate({ to: "/" });
   };
+
+  const canStart = name.trim().length > 0 && age && weight && height;
 
   if (i === -1) {
     return (
