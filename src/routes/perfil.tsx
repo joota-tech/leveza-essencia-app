@@ -20,6 +20,21 @@ function ProfilePage() {
       ? Math.max(0, progress.startWeight - progress.goalWeight)
       : 0;
 
+  const [mood, setMood] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(MOOD_KEY);
+      if (raw) {
+        const { date, value } = JSON.parse(raw);
+        if (date === new Date().toDateString()) setMood(value);
+      }
+    } catch {}
+  }, []);
+  const pickMood = (e: string) => {
+    setMood(e);
+    try { localStorage.setItem(MOOD_KEY, JSON.stringify({ date: new Date().toDateString(), value: e })); } catch {}
+  };
+
   return (
     <MobileShell>
       <header className="px-6 pt-10">
