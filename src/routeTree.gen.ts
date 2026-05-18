@@ -60,9 +60,9 @@ const ReceitasIdRoute = ReceitasIdRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AntiCompulsaoIdRoute = AntiCompulsaoIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AntiCompulsaoRoute,
+  id: '/anti-compulsao/$id',
+  path: '/anti-compulsao/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -141,6 +141,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PerfilRoute: typeof PerfilRoute
   PlanoRoute: typeof PlanoRoute
+  AntiCompulsaoIdRoute: typeof AntiCompulsaoIdRoute
   ReceitasIdRoute: typeof ReceitasIdRoute
   AntiCompulsaoIndexRoute: typeof AntiCompulsaoIndexRoute
   ReceitasIndexRoute: typeof ReceitasIndexRoute
@@ -206,10 +207,10 @@ declare module '@tanstack/react-router' {
     }
     '/anti-compulsao/$id': {
       id: '/anti-compulsao/$id'
-      path: '/$id'
+      path: '/anti-compulsao/$id'
       fullPath: '/anti-compulsao/$id'
       preLoaderRoute: typeof AntiCompulsaoIdRouteImport
-      parentRoute: typeof AntiCompulsaoRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -220,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PerfilRoute: PerfilRoute,
   PlanoRoute: PlanoRoute,
+  AntiCompulsaoIdRoute: AntiCompulsaoIdRoute,
   ReceitasIdRoute: ReceitasIdRoute,
   AntiCompulsaoIndexRoute: AntiCompulsaoIndexRoute,
   ReceitasIndexRoute: ReceitasIndexRoute,
@@ -227,13 +229,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
