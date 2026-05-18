@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlanoRouteImport } from './routes/plano'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as NotificacoesRouteImport } from './routes/notificacoes'
 import { Route as BonusRouteImport } from './routes/bonus'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReceitasIndexRouteImport } from './routes/receitas.index'
@@ -32,6 +33,11 @@ const PerfilRoute = PerfilRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificacoesRoute = NotificacoesRouteImport.update({
+  id: '/notificacoes',
+  path: '/notificacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BonusRoute = BonusRouteImport.update({
@@ -60,14 +66,15 @@ const ReceitasIdRoute = ReceitasIdRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AntiCompulsaoIdRoute = AntiCompulsaoIdRouteImport.update({
-  id: '/anti-compulsao/$id',
-  path: '/anti-compulsao/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AntiCompulsaoRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bonus': typeof BonusRoute
+  '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bonus': typeof BonusRoute
+  '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bonus': typeof BonusRoute
+  '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bonus'
+    | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/bonus'
+    | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/bonus'
+    | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
@@ -138,10 +150,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BonusRoute: typeof BonusRoute
+  NotificacoesRoute: typeof NotificacoesRoute
   OnboardingRoute: typeof OnboardingRoute
   PerfilRoute: typeof PerfilRoute
   PlanoRoute: typeof PlanoRoute
-  AntiCompulsaoIdRoute: typeof AntiCompulsaoIdRoute
   ReceitasIdRoute: typeof ReceitasIdRoute
   AntiCompulsaoIndexRoute: typeof AntiCompulsaoIndexRoute
   ReceitasIndexRoute: typeof ReceitasIndexRoute
@@ -168,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notificacoes': {
+      id: '/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/notificacoes'
+      preLoaderRoute: typeof NotificacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bonus': {
@@ -207,10 +226,10 @@ declare module '@tanstack/react-router' {
     }
     '/anti-compulsao/$id': {
       id: '/anti-compulsao/$id'
-      path: '/anti-compulsao/$id'
+      path: '/$id'
       fullPath: '/anti-compulsao/$id'
       preLoaderRoute: typeof AntiCompulsaoIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AntiCompulsaoRoute
     }
   }
 }
@@ -218,10 +237,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BonusRoute: BonusRoute,
+  NotificacoesRoute: NotificacoesRoute,
   OnboardingRoute: OnboardingRoute,
   PerfilRoute: PerfilRoute,
   PlanoRoute: PlanoRoute,
-  AntiCompulsaoIdRoute: AntiCompulsaoIdRoute,
   ReceitasIdRoute: ReceitasIdRoute,
   AntiCompulsaoIndexRoute: AntiCompulsaoIndexRoute,
   ReceitasIndexRoute: ReceitasIndexRoute,
@@ -229,3 +248,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
