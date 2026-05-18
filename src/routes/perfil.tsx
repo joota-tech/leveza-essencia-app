@@ -142,12 +142,15 @@ function Field({ label, value, onChange }: { label: string; value: string | numb
   );
 }
 
-function Row({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick?: () => void }) {
-  return (
-    <button onClick={onClick} className="flex w-full items-center gap-3 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
+function Row({ icon, label, onClick, to }: { icon: React.ReactNode; label: string; onClick?: () => void; to?: string }) {
+  const content = (
+    <>
       <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blush text-primary">{icon}</div>
       <span className="flex-1 text-sm">{label}</span>
       <ChevronRight className="h-4 w-4 text-muted-foreground" />
-    </button>
+    </>
   );
+  const cls = "flex w-full items-center gap-3 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft";
+  if (to) return <Link to={to} className={cls}>{content}</Link>;
+  return <button onClick={onClick} className={cls}>{content}</button>;
 }
