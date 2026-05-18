@@ -1,8 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
 import { recipes } from "@/lib/app-data";
 import { Bell, ChevronRight, LogOut, Settings, Smile, Trophy } from "lucide-react";
+
+const MOOD_KEY = "desafio21-mood";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({ meta: [{ title: "Perfil — Desafio 21 Dias" }] }),
