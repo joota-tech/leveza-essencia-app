@@ -62,18 +62,63 @@ function OnboardingPage() {
           <p className="mt-3 text-center text-sm leading-relaxed text-muted-foreground">
             Um protocolo feminino, leve e possível. Sem fome, sem culpa, sem guerra com a comida.
           </p>
-          <div className="mt-10">
-            <label className="block text-xs uppercase tracking-widest text-muted-foreground">Como prefere ser chamada?</label>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Seu nome"
-              className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
-            />
+          <div className="mt-8 space-y-4">
+            <div>
+              <label className="block text-xs uppercase tracking-widest text-muted-foreground">Como prefere ser chamada?</label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Seu nome"
+                className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-muted-foreground">Idade</label>
+                <input
+                  inputMode="numeric"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value.replace(/\D/g, "").slice(0, 3))}
+                  placeholder="anos"
+                  className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-muted-foreground">Altura (cm)</label>
+                <input
+                  inputMode="numeric"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value.replace(/\D/g, "").slice(0, 3))}
+                  placeholder="ex: 165"
+                  className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-muted-foreground">Peso atual (kg)</label>
+                <input
+                  inputMode="decimal"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value.replace(/[^\d.,]/g, "").replace(",", ".").slice(0, 5))}
+                  placeholder="ex: 70"
+                  className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-muted-foreground">Meta (kg)</label>
+                <input
+                  inputMode="decimal"
+                  value={goalWeight}
+                  onChange={(e) => setGoalWeight(e.target.value.replace(/[^\d.,]/g, "").replace(",", ".").slice(0, 5))}
+                  placeholder="opcional"
+                  className="mt-2 w-full rounded-2xl border border-border bg-card px-4 py-4 font-serif text-lg outline-none focus:border-primary"
+                />
+              </div>
+            </div>
           </div>
           <button
             onClick={() => setI(0)}
-            className="mt-auto mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow"
+            disabled={!canStart}
+            className="mt-10 mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow disabled:opacity-40"
           >
             Começar minha jornada <ChevronRight className="h-4 w-4" />
           </button>
