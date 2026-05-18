@@ -91,16 +91,21 @@ function ProfilePage() {
         <h3 className="font-serif text-lg">Como você está hoje?</h3>
         <div className="mt-3 flex justify-between">
           {["😔", "😐", "🙂", "😊", "✨"].map((e) => (
-            <button key={e} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary text-2xl transition-transform active:scale-90">
+            <button
+              key={e}
+              onClick={() => pickMood(e)}
+              className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl transition-all active:scale-90 ${mood === e ? "bg-blush ring-2 ring-primary scale-110" : "bg-secondary"}`}
+            >
               {e}
             </button>
           ))}
         </div>
+        {mood && <p className="mt-3 text-center text-xs text-muted-foreground">Registrado por hoje ♥</p>}
       </section>
 
       <section className="mx-6 mt-5 space-y-2">
-        <Row icon={<Bell className="h-4 w-4" />} label="Notificações & lembretes" />
-        <Row icon={<Settings className="h-4 w-4" />} label="Configurações" />
+        <Row icon={<Bell className="h-4 w-4" />} label="Notificações & lembretes" to="/notificacoes" />
+        <Row icon={<Settings className="h-4 w-4" />} label="Configurações" to="/configuracoes" />
         <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => {
           if (confirm("Deseja reiniciar todo o progresso?")) {
             localStorage.removeItem("desafio21-progress");
