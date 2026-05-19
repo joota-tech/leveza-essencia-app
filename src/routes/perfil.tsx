@@ -30,6 +30,9 @@ function ProfilePage() {
       ? Math.max(0, progress.startWeight - progress.goalWeight)
       : 0;
 
+  const navigate = useNavigate();
+  const [resetOpen, setResetOpen] = useState(false);
+
   const [mood, setMood] = useState<string | null>(null);
   useEffect(() => {
     try {
@@ -43,6 +46,16 @@ function ProfilePage() {
   const pickMood = (e: string) => {
     setMood(e);
     try { localStorage.setItem(MOOD_KEY, JSON.stringify({ date: new Date().toDateString(), value: e })); } catch {}
+  };
+
+  const handleReset = () => {
+    try {
+      localStorage.removeItem("desafio21-progress");
+      localStorage.removeItem(MOOD_KEY);
+    } catch {}
+    setResetOpen(false);
+    navigate({ to: "/onboarding" });
+    setTimeout(() => location.reload(), 50);
   };
 
   return (
@@ -116,13 +129,25 @@ function ProfilePage() {
       <section className="mx-6 mt-5 space-y-2">
         <Row icon={<Bell className="h-4 w-4" />} label="Notificações & lembretes" to="/notificacoes" />
         <Row icon={<Settings className="h-4 w-4" />} label="Configurações" to="/configuracoes" />
-        <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => {
-          if (confirm("Deseja reiniciar todo o progresso?")) {
-            localStorage.removeItem("desafio21-progress");
-            location.reload();
-          }
-        }} />
+        <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => setResetOpen(true)} />
       </section>
+
+      <AlertDialog open={resetOpen} onOpenChange={setResetOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Reiniciar sua jornada?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Todos os seus dados, progresso, favoritos e respostas serão apagados. Esta ação não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleReset} className="bg-primary text-primary-foreground hover:bg-primary/90">
+              Sim, reiniciar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </MobileShell>
   );
 }
