@@ -15,11 +15,16 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificacoesRouteImport } from './routes/notificacoes'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as BonusRouteImport } from './routes/bonus'
+import { Route as NutriRouteImport } from './routes/nutri'
+import { Route as EvolucaoRouteImport } from './routes/evolucao'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReceitasIndexRouteImport } from './routes/receitas.index'
 import { Route as AntiCompulsaoIndexRouteImport } from './routes/anti-compulsao.index'
+import { Route as ModulosIndexRouteImport } from './routes/modulos.index'
 import { Route as ReceitasIdRouteImport } from './routes/receitas.$id'
 import { Route as AntiCompulsaoIdRouteImport } from './routes/anti-compulsao.$id'
+import { Route as ModulosIdRouteImport } from './routes/modulos.$id'
+import { Route as ApiNutriRouteImport } from './routes/api/nutri'
 
 const PlanoRoute = PlanoRouteImport.update({
   id: '/plano',
@@ -51,6 +56,16 @@ const BonusRoute = BonusRouteImport.update({
   path: '/bonus',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NutriRoute = NutriRouteImport.update({
+  id: '/nutri',
+  path: '/nutri',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvolucaoRoute = EvolucaoRouteImport.update({
+  id: '/evolucao',
+  path: '/evolucao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -66,6 +81,11 @@ const AntiCompulsaoIndexRoute = AntiCompulsaoIndexRouteImport.update({
   path: '/anti-compulsao/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModulosIndexRoute = ModulosIndexRouteImport.update({
+  id: '/modulos/',
+  path: '/modulos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReceitasIdRoute = ReceitasIdRouteImport.update({
   id: '/receitas/$id',
   path: '/receitas/$id',
@@ -76,100 +96,145 @@ const AntiCompulsaoIdRoute = AntiCompulsaoIdRouteImport.update({
   path: '/anti-compulsao/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModulosIdRoute = ModulosIdRouteImport.update({
+  id: '/modulos/$id',
+  path: '/modulos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNutriRoute = ApiNutriRouteImport.update({
+  id: '/api/nutri',
+  path: '/api/nutri',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/nutri': typeof NutriRoute
   '/bonus': typeof BonusRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
+  '/api/nutri': typeof ApiNutriRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
+  '/modulos/$id': typeof ModulosIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
   '/anti-compulsao/': typeof AntiCompulsaoIndexRoute
+  '/modulos/': typeof ModulosIndexRoute
   '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/nutri': typeof NutriRoute
   '/bonus': typeof BonusRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
+  '/api/nutri': typeof ApiNutriRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
+  '/modulos/$id': typeof ModulosIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
   '/anti-compulsao': typeof AntiCompulsaoIndexRoute
+  '/modulos': typeof ModulosIndexRoute
   '/receitas': typeof ReceitasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/nutri': typeof NutriRoute
   '/bonus': typeof BonusRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/notificacoes': typeof NotificacoesRoute
   '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/plano': typeof PlanoRoute
+  '/api/nutri': typeof ApiNutriRoute
   '/anti-compulsao/$id': typeof AntiCompulsaoIdRoute
+  '/modulos/$id': typeof ModulosIdRoute
   '/receitas/$id': typeof ReceitasIdRoute
   '/anti-compulsao/': typeof AntiCompulsaoIndexRoute
+  '/modulos/': typeof ModulosIndexRoute
   '/receitas/': typeof ReceitasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/evolucao'
+    | '/nutri'
     | '/bonus'
     | '/configuracoes'
     | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
+    | '/api/nutri'
     | '/anti-compulsao/$id'
+    | '/modulos/$id'
     | '/receitas/$id'
     | '/anti-compulsao/'
+    | '/modulos/'
     | '/receitas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/evolucao'
+    | '/nutri'
     | '/bonus'
     | '/configuracoes'
     | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
+    | '/api/nutri'
     | '/anti-compulsao/$id'
+    | '/modulos/$id'
     | '/receitas/$id'
     | '/anti-compulsao'
+    | '/modulos'
     | '/receitas'
   id:
     | '__root__'
     | '/'
+    | '/evolucao'
+    | '/nutri'
     | '/bonus'
     | '/configuracoes'
     | '/notificacoes'
     | '/onboarding'
     | '/perfil'
     | '/plano'
+    | '/api/nutri'
     | '/anti-compulsao/$id'
+    | '/modulos/$id'
     | '/receitas/$id'
     | '/anti-compulsao/'
+    | '/modulos/'
     | '/receitas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EvolucaoRoute: typeof EvolucaoRoute
+  NutriRoute: typeof NutriRoute
   BonusRoute: typeof BonusRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   NotificacoesRoute: typeof NotificacoesRoute
   OnboardingRoute: typeof OnboardingRoute
   PerfilRoute: typeof PerfilRoute
   PlanoRoute: typeof PlanoRoute
+  ApiNutriRoute: typeof ApiNutriRoute
   AntiCompulsaoIdRoute: typeof AntiCompulsaoIdRoute
+  ModulosIdRoute: typeof ModulosIdRoute
   ReceitasIdRoute: typeof ReceitasIdRoute
   AntiCompulsaoIndexRoute: typeof AntiCompulsaoIndexRoute
+  ModulosIndexRoute: typeof ModulosIndexRoute
   ReceitasIndexRoute: typeof ReceitasIndexRoute
 }
 
@@ -217,6 +282,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BonusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nutri': {
+      id: '/nutri'
+      path: '/nutri'
+      fullPath: '/nutri'
+      preLoaderRoute: typeof NutriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evolucao': {
+      id: '/evolucao'
+      path: '/evolucao'
+      fullPath: '/evolucao'
+      preLoaderRoute: typeof EvolucaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -224,11 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/nutri': {
+      id: '/api/nutri'
+      path: '/api/nutri'
+      fullPath: '/api/nutri'
+      preLoaderRoute: typeof ApiNutriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/receitas/': {
       id: '/receitas/'
       path: '/receitas'
       fullPath: '/receitas/'
       preLoaderRoute: typeof ReceitasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modulos/': {
+      id: '/modulos/'
+      path: '/modulos'
+      fullPath: '/modulos/'
+      preLoaderRoute: typeof ModulosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/anti-compulsao/': {
@@ -245,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReceitasIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modulos/$id': {
+      id: '/modulos/$id'
+      path: '/modulos/$id'
+      fullPath: '/modulos/$id'
+      preLoaderRoute: typeof ModulosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/anti-compulsao/$id': {
       id: '/anti-compulsao/$id'
       path: '/anti-compulsao/$id'
@@ -257,17 +357,32 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EvolucaoRoute: EvolucaoRoute,
+  NutriRoute: NutriRoute,
   BonusRoute: BonusRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   NotificacoesRoute: NotificacoesRoute,
   OnboardingRoute: OnboardingRoute,
   PerfilRoute: PerfilRoute,
   PlanoRoute: PlanoRoute,
+  ApiNutriRoute: ApiNutriRoute,
   AntiCompulsaoIdRoute: AntiCompulsaoIdRoute,
+  ModulosIdRoute: ModulosIdRoute,
   ReceitasIdRoute: ReceitasIdRoute,
   AntiCompulsaoIndexRoute: AntiCompulsaoIndexRoute,
+  ModulosIndexRoute: ModulosIndexRoute,
   ReceitasIndexRoute: ReceitasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
