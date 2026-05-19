@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
 import { recipes } from "@/lib/app-data";
-import { Bell, ChevronRight, LogOut, Settings, Smile, Trophy } from "lucide-react";
+import { Bell, ChevronRight, LogOut, Settings, Smile, Trophy, TrendingUp } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -127,6 +127,7 @@ function ProfilePage() {
       </section>
 
       <section className="mx-6 mt-5 space-y-2">
+        <Row icon={<TrendingUp className="h-4 w-4" />} label="Minha evolução & conquistas" to="/evolucao" />
         <Row icon={<Bell className="h-4 w-4" />} label="Notificações & lembretes" to="/notificacoes" />
         <Row icon={<Settings className="h-4 w-4" />} label="Configurações" to="/configuracoes" />
         <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => setResetOpen(true)} />

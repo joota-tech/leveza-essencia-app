@@ -2,8 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
-import { modules, motivationalQuotes } from "@/lib/app-data";
-import { ChevronRight, Droplet, Sparkles, Flame, Heart, Lock } from "lucide-react";
+import { motivationalQuotes } from "@/lib/app-data";
+import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
+import { ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -111,40 +112,69 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Premium quick actions */}
+      <section className="mx-6 mt-5 grid grid-cols-2 gap-3">
+        <Link to="/nutri" className="group relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-rose p-4 text-rose-foreground shadow-glow premium-glow">
+          <MessageCircleHeart className="h-5 w-5" />
+          <p className="mt-3 font-serif text-base leading-tight">Converse com a Nutri</p>
+          <p className="mt-0.5 text-[11px] opacity-90">Suporte feminino 24h</p>
+        </Link>
+        <Link to="/evolucao" className="rounded-3xl border border-border/60 bg-card p-4 shadow-soft">
+          <TrendingUp className="h-5 w-5 text-primary" />
+          <p className="mt-3 font-serif text-base leading-tight">Sua evolução</p>
+          <p className="mt-0.5 text-[11px] text-muted-foreground">Conquistas e medalhas</p>
+        </Link>
+      </section>
+
       {/* Modules carousel */}
       <section className="mt-7">
         <div className="flex items-end justify-between px-6">
-          <h2 className="font-serif text-xl">Módulos da jornada</h2>
-          <span className="text-xs text-muted-foreground">{modules.length}</span>
+          <div>
+            <h2 className="font-serif text-xl">Módulos da jornada</h2>
+            <p className="text-[11px] text-muted-foreground">Desbloqueio a cada 2 dias</p>
+          </div>
+          <Link to="/modulos" className="text-xs text-primary">Ver todos</Link>
         </div>
         <div className="scrollbar-hide mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-2">
-          {modules.map((m, i) => (
-            <div
-              key={m.id}
-              aria-disabled
-              className="group relative w-[68%] shrink-0 snap-start overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft"
-            >
-              <div className="aspect-[4/5] w-full bg-gradient-rose">
-                <div className="flex h-full flex-col justify-between p-4">
-                  <span className="self-start rounded-full bg-card/70 px-2 py-0.5 text-[10px] font-medium text-foreground backdrop-blur">
-                    Módulo {i + 1}
-                  </span>
-                  <div className="text-rose-foreground">
-                    <p className="text-[11px] opacity-80">{m.subtitle}</p>
-                    <h3 className="mt-1 font-serif text-xl leading-tight">{m.title}</h3>
+          {modulesData.map((m) => {
+            const unlocked = isModuleUnlocked(m.index, progress.completedDays.length);
+            const req = moduleUnlockRequirement(m.index);
+            const card = (
+              <div className={`group relative w-[68%] shrink-0 snap-start overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft ${unlocked ? "premium-glow" : ""}`}>
+                <div className={`aspect-[4/5] w-full bg-gradient-to-br ${m.accent}`}>
+                  <div className="flex h-full flex-col justify-between p-4">
+                    <div className="flex items-start justify-between">
+                      <span className="rounded-full bg-card/80 px-2 py-0.5 text-[10px] font-medium backdrop-blur">
+                        Módulo {m.index}
+                      </span>
+                      <span className="text-2xl" aria-hidden>{m.emoji}</span>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-foreground/70">{m.subtitle}</p>
+                      <h3 className="mt-1 font-serif text-xl leading-tight">{m.title}</h3>
+                    </div>
                   </div>
                 </div>
+                {!unlocked && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/50 backdrop-blur-[3px]">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-card/95 text-foreground shadow-glow">
+                      <Lock className="h-5 w-5" />
+                    </div>
+                    <span className="rounded-full bg-card/95 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-foreground">
+                      Faltam {Math.max(0, req - progress.completedDays.length)}d
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/55 backdrop-blur-[2px]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-card/90 text-foreground shadow-glow">
-                  <Lock className="h-5 w-5" />
-                </div>
-                <span className="rounded-full bg-card/90 px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-foreground">
-                  Em breve
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+            return unlocked ? (
+              <Link key={m.id} to="/modulos/$id" params={{ id: m.id }} className="w-[68%] shrink-0 snap-start">
+                {card}
+              </Link>
+            ) : (
+              <div key={m.id} aria-disabled className="w-[68%] shrink-0 snap-start">{card}</div>
+            );
+          })}
         </div>
       </section>
 
