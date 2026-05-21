@@ -438,7 +438,7 @@ export const bonuses: Array<{
 }> = [
   { id: "cardapio", title: "Cardápio Proteico de 21 Dias", subtitle: "Pronto pra imprimir", items: ["Café, almoço, jantar e lanche", "Lista de compras semanal", "Substituições inteligentes"], pdf: "/bonus/menu-proteico-21-dias.pdf", filename: "Menu-Proteico-de-21-Dias.pdf" },
   { id: "guia", title: "Guia Anti-Compulsão Feminina", subtitle: "Por que você come emocional", items: ["Mapa dos gatilhos", "Roteiro 5-5-5", "Diário de emoções"], pdf: "/bonus/guia-anti-compulsao-feminina.pdf", filename: "Guia-Anti-Compulsao-Feminina.pdf" },
-  { id: "10min", title: "Receitas de 10 Minutos", subtitle: "Pra dias impossíveis", items: ["20 receitas testadas", "Ingredientes do dia a dia", "Sem dificuldade"] },
+  { id: "10min", title: "Receitas de 10 Minutos", subtitle: "Pra dias impossíveis", items: ["20 receitas testadas", "Ingredientes do dia a dia", "Sem dificuldade"], pdf: "/bonus/receitas-10-minutos.pdf", filename: "Receitas-de-10-Minutos.pdf" },
   { id: "fora", title: "Como Comer Fora Sem Engordar", subtitle: "Restaurante, festa, viagem", items: ["O que pedir em cada lugar", "Drinks inteligentes", "Voltando ao plano sem culpa"] },
 ];
 
