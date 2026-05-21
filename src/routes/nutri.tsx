@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { ArrowLeft, Send, Sparkles } from "lucide-react";
@@ -27,6 +27,7 @@ export const Route = createFileRoute("/nutri")({
 });
 
 function NutriPage() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,11 @@ function NutriPage() {
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handlePop = () => {
+      navigate({ to: "/" });
+    };
+    window.addEventListener("popstate", handlePop);
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -41,7 +47,9 @@ function NutriPage() {
         if (Array.isArray(parsed) && parsed.length) setMessages(parsed);
       }
     } catch {}
-  }, []);
+
+    return () => window.removeEventListener("popstate", handlePop);
+  }, [navigate]);
 
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); } catch {}
