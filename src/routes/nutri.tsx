@@ -39,8 +39,7 @@ function NutriPage() {
       navigate({ to: "/" });
     };
     window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, [navigate]);
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -48,7 +47,9 @@ function NutriPage() {
         if (Array.isArray(parsed) && parsed.length) setMessages(parsed);
       }
     } catch {}
-  }, []);
+
+    return () => window.removeEventListener("popstate", handlePop);
+  }, [navigate]);
 
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); } catch {}
