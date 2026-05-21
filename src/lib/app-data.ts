@@ -428,12 +428,20 @@ export const modules = [
   { id: "plano", title: "Plano de 21 Dias", subtitle: "Sua jornada completa", progress: 14 },
 ];
 
-export const bonuses = [
-  { id: "cardapio", title: "Cardápio Proteico de 21 Dias", subtitle: "Pronto pra imprimir", items: ["Café, almoço, jantar e lanche", "Lista de compras semanal", "Substituições inteligentes"] },
+export const bonuses: Array<{
+  id: string;
+  title: string;
+  subtitle: string;
+  items: string[];
+  pdf?: string;
+  filename?: string;
+}> = [
+  { id: "cardapio", title: "Cardápio Proteico de 21 Dias", subtitle: "Pronto pra imprimir", items: ["Café, almoço, jantar e lanche", "Lista de compras semanal", "Substituições inteligentes"], pdf: "/bonus/menu-proteico-21-dias.pdf", filename: "Menu-Proteico-de-21-Dias.pdf" },
   { id: "guia", title: "Guia Anti-Compulsão Feminina", subtitle: "Por que você come emocional", items: ["Mapa dos gatilhos", "Roteiro 5-5-5", "Diário de emoções"] },
   { id: "10min", title: "Receitas de 10 Minutos", subtitle: "Pra dias impossíveis", items: ["20 receitas testadas", "Ingredientes do dia a dia", "Sem dificuldade"] },
   { id: "fora", title: "Como Comer Fora Sem Engordar", subtitle: "Restaurante, festa, viagem", items: ["O que pedir em cada lugar", "Drinks inteligentes", "Voltando ao plano sem culpa"] },
 ];
+
 
 export const motivationalQuotes = [
   "Você não precisa sofrer para emagrecer.",
