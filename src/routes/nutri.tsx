@@ -27,6 +27,7 @@ export const Route = createFileRoute("/nutri")({
 });
 
 function NutriPage() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,12 @@ function NutriPage() {
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handlePop = () => {
+      navigate({ to: "/" });
+    };
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, [navigate]);
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
