@@ -140,7 +140,7 @@ function HomePage() {
             const unlocked = isModuleUnlocked(m.index, progress.completedDays.length);
             const req = moduleUnlockRequirement(m.index);
             const card = (
-              <div className={`group relative w-[68%] shrink-0 snap-start overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft ${unlocked ? "premium-glow" : ""}`}>
+              <div className={`group relative w-full overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft ${unlocked ? "premium-glow" : ""}`}>
                 <div className="relative aspect-[4/5] w-full overflow-hidden">
                   <img
                     src={`/modules/${m.id}.jpg`}
@@ -150,18 +150,15 @@ function HomePage() {
                     height={800}
                     className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/75" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/30 to-black/80" />
                   <div className="relative flex h-full flex-col justify-between p-4 text-white">
                     <div className="flex items-start justify-between">
                       <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-medium backdrop-blur-md">
                         Módulo {m.index}
                       </span>
-                      <span className="text-2xl drop-shadow-md" aria-hidden>{m.emoji}</span>
+                      <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-white/85 line-clamp-1">{m.subtitle}</p>
-                      <h3 className="mt-1 font-serif text-[22px] leading-[1.1] drop-shadow-md line-clamp-2">{m.title}</h3>
-                    </div>
+                    <h3 className="font-serif text-[17px] leading-[1.15] drop-shadow-md">{m.title}</h3>
                   </div>
                 </div>
                 {!unlocked && (
@@ -177,11 +174,11 @@ function HomePage() {
               </div>
             );
             return unlocked ? (
-              <Link key={m.id} to="/modulos/$id" params={{ id: m.id }} className="w-[68%] shrink-0 snap-start">
+              <Link key={m.id} to="/modulos/$id" params={{ id: m.id }} className="w-[62%] shrink-0 snap-start">
                 {card}
               </Link>
             ) : (
-              <div key={m.id} aria-disabled className="w-[68%] shrink-0 snap-start">{card}</div>
+              <div key={m.id} aria-disabled className="w-[62%] shrink-0 snap-start">{card}</div>
             );
           })}
         </div>
