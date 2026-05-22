@@ -59,24 +59,37 @@ function ModuleCard({
 }) {
   const body = (
     <div className={`relative overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft ${unlocked ? "premium-glow" : ""}`}>
-      <div className={`bg-gradient-to-br ${m.accent} p-5`}>
-        <div className="flex items-start justify-between">
-          <span className="rounded-full bg-card/70 px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest backdrop-blur">
-            Módulo {m.index}
-          </span>
-          <span className="text-2xl" aria-hidden>{m.emoji}</span>
-        </div>
-        <h3 className="mt-4 font-serif text-xl leading-tight">{m.title}</h3>
-        <p className="mt-1 text-xs text-muted-foreground">{m.subtitle}</p>
-        {unlocked && (
-          <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-card/80 px-3 py-1 text-[11px] text-foreground backdrop-blur">
-            <Sparkles className="h-3 w-3 text-primary" /> Abrir módulo
+      <div className="relative aspect-[16/10] w-full overflow-hidden">
+        <img
+          src={`/modules/${m.id}.jpg`}
+          alt={m.title}
+          loading="lazy"
+          width={640}
+          height={400}
+          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/75" />
+        <div className="relative flex h-full flex-col justify-between p-5 text-white">
+          <div className="flex items-start justify-between">
+            <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest backdrop-blur-md">
+              Módulo {m.index}
+            </span>
+            <span className="text-2xl drop-shadow-md" aria-hidden>{m.emoji}</span>
           </div>
-        )}
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/85">{m.subtitle}</p>
+            <h3 className="mt-1 font-serif text-2xl leading-tight drop-shadow-md">{m.title}</h3>
+            {unlocked && (
+              <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[11px] text-foreground">
+                <Sparkles className="h-3 w-3 text-primary" /> Abrir módulo
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {!unlocked && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/50 backdrop-blur-[3px]">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/55 backdrop-blur-[3px]">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-card/95 text-foreground shadow-glow">
             <Lock className="h-5 w-5" />
           </div>

@@ -141,22 +141,31 @@ function HomePage() {
             const req = moduleUnlockRequirement(m.index);
             const card = (
               <div className={`group relative w-[68%] shrink-0 snap-start overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft ${unlocked ? "premium-glow" : ""}`}>
-                <div className={`aspect-[4/5] w-full bg-gradient-to-br ${m.accent}`}>
-                  <div className="flex h-full flex-col justify-between p-4">
+                <div className="relative aspect-[4/5] w-full overflow-hidden">
+                  <img
+                    src={`/modules/${m.id}.jpg`}
+                    alt={m.title}
+                    loading="lazy"
+                    width={640}
+                    height={800}
+                    className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/75" />
+                  <div className="relative flex h-full flex-col justify-between p-4 text-white">
                     <div className="flex items-start justify-between">
-                      <span className="rounded-full bg-card/80 px-2 py-0.5 text-[10px] font-medium backdrop-blur">
+                      <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-medium backdrop-blur-md">
                         Módulo {m.index}
                       </span>
-                      <span className="text-2xl" aria-hidden>{m.emoji}</span>
+                      <span className="text-2xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
                     <div>
-                      <p className="text-[11px] text-foreground/70">{m.subtitle}</p>
-                      <h3 className="mt-1 font-serif text-xl leading-tight">{m.title}</h3>
+                      <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-white/85 line-clamp-1">{m.subtitle}</p>
+                      <h3 className="mt-1 font-serif text-[22px] leading-[1.1] drop-shadow-md line-clamp-2">{m.title}</h3>
                     </div>
                   </div>
                 </div>
                 {!unlocked && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/50 backdrop-blur-[3px]">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-foreground/55 backdrop-blur-[3px]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-card/95 text-foreground shadow-glow">
                       <Lock className="h-5 w-5" />
                     </div>
