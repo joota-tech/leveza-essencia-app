@@ -17,6 +17,14 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+function titleSize(title: string) {
+  const len = title.length;
+  if (len <= 18) return "text-[16px]";
+  if (len <= 21) return "text-[15px]";
+  if (len <= 24) return "text-[14px]";
+  return "text-[13px]";
+}
+
 function HomePage() {
   const { progress, update, loaded } = useProgress();
   const navigate = useNavigate();
@@ -158,7 +166,7 @@ function HomePage() {
                       </span>
                       <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
-                    <h3 className="font-serif text-[17px] leading-[1.15] drop-shadow-md">{m.title}</h3>
+                    <h3 className={`font-serif leading-[1.15] drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
                   </div>
                 </div>
                 {!unlocked && (

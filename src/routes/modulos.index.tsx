@@ -9,6 +9,14 @@ export const Route = createFileRoute("/modulos/")({
   component: ModulesIndex,
 });
 
+function titleSize(title: string) {
+  const len = title.length;
+  if (len <= 18) return "text-[22px]";
+  if (len <= 21) return "text-xl";
+  if (len <= 24) return "text-lg";
+  return "text-base";
+}
+
 function ModulesIndex() {
   const { progress } = useProgress();
   const done = progress.completedDays.length;
@@ -78,7 +86,7 @@ function ModuleCard({
           </div>
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/85">{m.subtitle}</p>
-            <h3 className="mt-1 font-serif text-2xl leading-tight drop-shadow-md">{m.title}</h3>
+            <h3 className={`mt-1 font-serif leading-tight drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
             {unlocked && (
               <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[11px] text-foreground">
                 <Sparkles className="h-3 w-3 text-primary" /> Abrir módulo
