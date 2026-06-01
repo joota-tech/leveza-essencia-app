@@ -9,6 +9,14 @@ export const Route = createFileRoute("/modulos/")({
   component: ModulesIndex,
 });
 
+function titleSize(title: string) {
+  const len = title.length;
+  if (len <= 18) return "text-[22px]";
+  if (len <= 21) return "text-xl";
+  if (len <= 24) return "text-lg";
+  return "text-base";
+}
+
 function ModulesIndex() {
   const { progress } = useProgress();
   const done = progress.completedDays.length;

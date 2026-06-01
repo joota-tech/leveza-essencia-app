@@ -17,6 +17,14 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+function titleSize(title: string) {
+  const len = title.length;
+  if (len <= 18) return "text-[16px]";
+  if (len <= 21) return "text-[15px]";
+  if (len <= 24) return "text-[14px]";
+  return "text-[13px]";
+}
+
 function HomePage() {
   const { progress, update, loaded } = useProgress();
   const navigate = useNavigate();
