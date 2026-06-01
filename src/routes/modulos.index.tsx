@@ -78,7 +78,7 @@ function ModuleCard({
           </div>
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/85">{m.subtitle}</p>
-            <h3 className="mt-1 font-serif text-2xl leading-tight drop-shadow-md">{m.title}</h3>
+            <h3 className={`mt-1 font-serif leading-tight drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
             {unlocked && (
               <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[11px] text-foreground">
                 <Sparkles className="h-3 w-3 text-primary" /> Abrir módulo

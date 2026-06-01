@@ -158,7 +158,7 @@ function HomePage() {
                       </span>
                       <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
-                    <h3 className="font-serif text-[17px] leading-[1.15] drop-shadow-md">{m.title}</h3>
+                    <h3 className={`font-serif leading-[1.15] drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
                   </div>
                 </div>
                 {!unlocked && (
