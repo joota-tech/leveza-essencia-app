@@ -11,10 +11,10 @@ export const Route = createFileRoute("/modulos/")({
 
 function titleSize(title: string) {
   const len = title.length;
-  if (len <= 18) return "text-[22px]";
-  if (len <= 21) return "text-xl";
-  if (len <= 24) return "text-lg";
-  return "text-base";
+  if (len <= 16) return "text-[30px]";
+  if (len <= 20) return "text-[26px]";
+  if (len <= 24) return "text-[22px]";
+  return "text-[19px]";
 }
 
 function ModulesIndex() {
