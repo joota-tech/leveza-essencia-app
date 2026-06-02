@@ -166,7 +166,19 @@ function HomePage() {
                       </span>
                       <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
-                    <h3 className={`font-serif leading-[1.15] drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
+                    <div className="relative">
+                      {/* decorative backdrop */}
+                      <div className="pointer-events-none absolute inset-x-0 -inset-y-3 rounded-2xl bg-gradient-to-t from-black/55 via-black/30 to-transparent blur-md" />
+                      <div className="pointer-events-none absolute left-1/2 top-1 h-px w-10 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+                      <h3 className={`relative text-center font-serif italic tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] ${titleSize(m.title)}`}>
+                        {m.title}
+                      </h3>
+                      <div className="pointer-events-none mx-auto mt-1.5 flex items-center justify-center gap-1.5">
+                        <span className="h-px w-6 bg-white/60" />
+                        <span className="h-1 w-1 rotate-45 bg-white/80" />
+                        <span className="h-px w-6 bg-white/60" />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {!unlocked && (
