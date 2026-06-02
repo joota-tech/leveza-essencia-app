@@ -84,11 +84,19 @@ function ModuleCard({
             </span>
             <span className="text-2xl drop-shadow-md" aria-hidden>{m.emoji}</span>
           </div>
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/85">{m.subtitle}</p>
-            <h3 className={`mt-1 font-serif leading-tight drop-shadow-md ${titleSize(m.title)}`}>{m.title}</h3>
+          <div className="relative text-center">
+            {/* decorative backdrop behind title */}
+            <div className="pointer-events-none absolute inset-x-4 -inset-y-4 rounded-3xl bg-gradient-to-t from-black/60 via-black/30 to-transparent blur-md" />
+            <div className="pointer-events-none absolute left-1/2 top-0 h-px w-16 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+            <p className="relative text-[10px] font-medium uppercase tracking-[0.3em] text-white/85">{m.subtitle}</p>
+            <h3 className={`relative mt-1.5 font-serif italic leading-[1.05] tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] ${titleSize(m.title)}`}>{m.title}</h3>
+            <div className="pointer-events-none relative mx-auto mt-2 flex items-center justify-center gap-2">
+              <span className="h-px w-8 bg-white/60" />
+              <span className="h-1.5 w-1.5 rotate-45 bg-white/85" />
+              <span className="h-px w-8 bg-white/60" />
+            </div>
             {unlocked && (
-              <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[11px] text-foreground">
+              <div className="relative mt-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[11px] text-foreground">
                 <Sparkles className="h-3 w-3 text-primary" /> Abrir módulo
               </div>
             )}
