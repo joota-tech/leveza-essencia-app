@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
 
 function titleSize(title: string) {
   const len = title.length;
-  if (len <= 18) return "text-[16px]";
-  if (len <= 21) return "text-[15px]";
-  if (len <= 24) return "text-[14px]";
-  return "text-[13px]";
+  if (len <= 16) return "text-[24px]";
+  if (len <= 20) return "text-[21px]";
+  if (len <= 24) return "text-[19px]";
+  return "text-[17px]";
 }
 
 function HomePage() {
