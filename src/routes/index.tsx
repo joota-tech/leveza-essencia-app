@@ -2,9 +2,10 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
-import { motivationalQuotes } from "@/lib/app-data";
+import { quoteOfTheDay } from "@/lib/app-data";
+import { useDailyReminder } from "@/lib/use-daily-reminder";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
-import { ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, TrendingUp } from "lucide-react";
+import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Quote, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -28,18 +29,17 @@ function titleSize(title: string) {
 function HomePage() {
   const { progress, update, loaded } = useProgress();
   const navigate = useNavigate();
-  const [today, setToday] = useState<{ weekday: string; quote: string } | null>(null);
+  const [weekday, setWeekday] = useState<string>("");
+
+  const dailyQuote = quoteOfTheDay(progress.currentDay);
+  const reminder = useDailyReminder(dailyQuote);
 
   useEffect(() => {
     if (loaded && !progress.onboarded) navigate({ to: "/onboarding" });
   }, [loaded, progress.onboarded, navigate]);
 
   useEffect(() => {
-    const d = new Date();
-    setToday({
-      weekday: d.toLocaleDateString("pt-BR", { weekday: "long" }),
-      quote: motivationalQuotes[d.getDate() % motivationalQuotes.length],
-    });
+    setWeekday(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
   }, []);
 
   const percent = Math.round((progress.completedDays.length / 21) * 100);
@@ -48,13 +48,44 @@ function HomePage() {
     <MobileShell>
       <header className="px-6 pt-10">
         <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground min-h-[1rem]">
-          {today?.weekday ?? ""}
+          {weekday}
         </p>
         <h1 className="mt-1 font-serif text-3xl leading-tight">
           Bom dia, <span className="italic text-primary">{progress.name}</span>
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground min-h-[1.25rem]">{today?.quote ?? ""}</p>
       </header>
+
+      {/* Frase do dia — card matinal */}
+      <section className="relative mx-6 mt-5 overflow-hidden rounded-3xl border border-primary/20 bg-gradient-warm p-5 shadow-soft animate-float-up">
+        <div className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-primary/15 blur-2xl" />
+        <div className="pointer-events-none absolute -bottom-8 -left-4 h-24 w-24 rounded-full bg-accent/30 blur-2xl" />
+        <div className="relative flex items-start gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card/80 text-primary shadow-soft backdrop-blur">
+            <Quote className="h-4 w-4" />
+          </div>
+          <div className="flex-1">
+            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-primary">Frase do dia · Dia {progress.currentDay}</p>
+            <p className="mt-1 font-serif text-[19px] italic leading-snug text-foreground">
+              “{dailyQuote}”
+            </p>
+            {reminder.permission === "granted" && reminder.enabled ? (
+              <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <BellRing className="h-3 w-3 text-primary" />
+                Lembrete diário ativo às 07:00
+              </p>
+            ) : reminder.permission === "unsupported" ? null : (
+              <button
+                onClick={reminder.requestPermission}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur transition hover:shadow-glow"
+              >
+                <BellRing className="h-3 w-3 text-primary" />
+                Receber lembrete matinal
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
 
       {/* Hero progress card */}
       <section className="mx-6 mt-6 overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft animate-float-up">
