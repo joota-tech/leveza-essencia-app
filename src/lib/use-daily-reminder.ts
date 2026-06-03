@@ -45,7 +45,7 @@ export function useDailyReminder(quote: string) {
     setEnabled(s.enabled);
   }, []);
 
-  // Dispara notificação na abertura matinal + agenda a próxima 07:00
+  // Dispara notificação na abertura matinal + agenda a próxima 08:30
   useEffect(() => {
     if (permission !== "granted" || !enabled || !quote) return;
 
@@ -69,10 +69,10 @@ export function useDailyReminder(quote: string) {
 
     showIfMorning();
 
-    // Agenda próximo disparo às 07:00
+    // Agenda próximo disparo às 08:30
     const now = new Date();
     const next = new Date();
-    next.setHours(REMINDER_HOUR, 0, 0, 0);
+    next.setHours(REMINDER_HOUR, REMINDER_MINUTE, 0, 0);
     if (next.getTime() <= now.getTime()) next.setDate(next.getDate() + 1);
     const delay = next.getTime() - now.getTime();
     const timer = window.setTimeout(showIfMorning, delay);
