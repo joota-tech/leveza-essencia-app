@@ -71,7 +71,7 @@ function HomePage() {
             {reminder.permission === "granted" && reminder.enabled ? (
               <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <BellRing className="h-3 w-3 text-primary" />
-                Lembrete diário ativo às 07:00
+                Lembrete diário ativo às 08:30
               </p>
             ) : reminder.permission === "unsupported" ? null : (
               <button
