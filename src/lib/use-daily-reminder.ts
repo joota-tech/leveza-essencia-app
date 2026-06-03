@@ -33,12 +33,13 @@ function todayKey() {
 }
 
 export function useDailyReminder(quote: string) {
-  const [permission, setPermission] = useState<NotificationPermission | "unsupported">(
-    typeof window !== "undefined" && "Notification" in window ? Notification.permission : "unsupported",
-  );
+  const [permission, setPermission] = useState<NotificationPermission | "unsupported">("unsupported");
   const [enabled, setEnabled] = useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setPermission(Notification.permission);
+    }
     const s = loadState();
     setEnabled(s.enabled);
   }, []);
