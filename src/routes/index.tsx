@@ -68,15 +68,16 @@ function HomePage() {
             <p className="mt-1 font-serif text-[19px] italic leading-snug text-foreground">
               “{dailyQuote}”
             </p>
-            {reminder.permission === "granted" && reminder.enabled ? (
+            {reminder.enabled ? (
               <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <BellRing className="h-3 w-3 text-primary" />
                 Lembrete diário ativo às 08:30
               </p>
-            ) : reminder.permission === "unsupported" ? null : (
+            ) : (
               <button
-                onClick={reminder.requestPermission}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur transition hover:shadow-glow"
+                type="button"
+                onClick={() => reminder.requestPermission()}
+                className="relative z-10 mt-3 inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur transition hover:shadow-glow active:scale-95"
               >
                 <BellRing className="h-3 w-3 text-primary" />
                 Receber lembrete matinal

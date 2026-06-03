@@ -9,6 +9,8 @@ type State = {
   lastShownDate: string | null; // YYYY-MM-DD
 };
 
+type Mode = "native" | "in-app";
+
 function loadState(): State {
   if (typeof window === "undefined") return { enabled: false, lastShownDate: null };
   try {
@@ -33,21 +35,39 @@ function todayKey() {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
 
+function notificationsAvailable(): boolean {
+  if (typeof window === "undefined") return false;
+  if (!("Notification" in window)) return false;
+  // Em iframes com permissions-policy bloqueando, requestPermission lança ou
+  // resolve "denied". Detectamos iframe para já cair no modo in-app.
+  try {
+    if (window.self !== window.top) return false;
+  } catch {
+    return false;
+  }
+  return true;
+}
+
 export function useDailyReminder(quote: string) {
+  const [mode, setMode] = useState<Mode>("in-app");
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("unsupported");
   const [enabled, setEnabled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && "Notification" in window) {
+    if (notificationsAvailable()) {
+      setMode("native");
       setPermission(Notification.permission);
+    } else {
+      setMode("in-app");
+      setPermission("unsupported");
     }
     const s = loadState();
     setEnabled(s.enabled);
   }, []);
 
-  // Dispara notificação na abertura matinal + agenda a próxima 08:30
+  // Dispara notificação nativa (apenas modo native, granted)
   useEffect(() => {
-    if (permission !== "granted" || !enabled || !quote) return;
+    if (mode !== "native" || permission !== "granted" || !enabled || !quote) return;
 
     const showIfMorning = () => {
       const now = new Date();
@@ -69,7 +89,6 @@ export function useDailyReminder(quote: string) {
 
     showIfMorning();
 
-    // Agenda próximo disparo às 08:30
     const now = new Date();
     const next = new Date();
     next.setHours(REMINDER_HOUR, REMINDER_MINUTE, 0, 0);
@@ -77,13 +96,27 @@ export function useDailyReminder(quote: string) {
     const delay = next.getTime() - now.getTime();
     const timer = window.setTimeout(showIfMorning, delay);
     return () => window.clearTimeout(timer);
-  }, [permission, enabled, quote]);
+  }, [mode, permission, enabled, quote]);
 
   const requestPermission = async () => {
-    if (!("Notification" in window)) return;
-    const result = await Notification.requestPermission();
-    setPermission(result);
-    if (result === "granted") {
+    // Modo in-app (preview, iframe, sem suporte): só liga o lembrete in-app
+    if (mode === "in-app") {
+      setEnabled(true);
+      saveState({ enabled: true, lastShownDate: null });
+      return;
+    }
+    try {
+      const result = await Notification.requestPermission();
+      setPermission(result);
+      if (result === "granted") {
+        setEnabled(true);
+        saveState({ enabled: true, lastShownDate: null });
+      } else {
+        // Negado: ativa fallback in-app mesmo assim
+        setEnabled(true);
+        saveState({ enabled: true, lastShownDate: null });
+      }
+    } catch {
       setEnabled(true);
       saveState({ enabled: true, lastShownDate: null });
     }
@@ -94,5 +127,5 @@ export function useDailyReminder(quote: string) {
     saveState({ enabled: value, lastShownDate: loadState().lastShownDate });
   };
 
-  return { permission, enabled, requestPermission, toggle };
+  return { mode, permission, enabled, requestPermission, toggle };
 }
