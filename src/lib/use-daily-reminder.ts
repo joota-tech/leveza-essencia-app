@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "daily-reminder-v1";
-const REMINDER_HOUR = 7; // 07:00
+const REMINDER_HOUR = 8; // 08:30
+const REMINDER_MINUTE = 30;
 
 type State = {
   enabled: boolean;
