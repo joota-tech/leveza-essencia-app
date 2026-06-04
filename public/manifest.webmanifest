@@ -1,0 +1,16 @@
+{
+  "name": "Desafio 21 Dias — Emagreça Comendo Bem",
+  "short_name": "Desafio 21",
+  "description": "Protocolo feminino de emagrecimento com alimentação proteica, sem fome e sem culpa.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5e6df",
+  "theme_color": "#f5e6df",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
