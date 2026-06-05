@@ -71,7 +71,7 @@ function RecipesPage() {
               className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft animate-float-up"
             >
               <div className="relative h-44 w-full">
-                <img src={r.image} alt={r.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105" width={768} height={768} />
+                <img src={r.image} alt={r.name} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105" width={768} height={768} />
                 <button
                   onClick={(e) => { e.preventDefault(); toggleFavorite(r.id); }}
                   className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 backdrop-blur"

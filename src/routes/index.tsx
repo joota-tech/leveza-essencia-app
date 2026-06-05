@@ -189,10 +189,12 @@ function HomePage() {
                     src={`/modules/${m.id}.jpg`}
                     alt={m.title}
                     loading="lazy"
+                    decoding="async"
                     width={640}
                     height={800}
                     className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px]"
                   />
+
                   <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/30 to-black/80" />
                   <div className="relative flex h-full flex-col justify-between p-4 text-white">
                     <div className="flex items-start justify-between">
