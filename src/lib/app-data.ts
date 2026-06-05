@@ -444,7 +444,8 @@ export const bonuses: Array<{
 
 
 import { motivationalQuotes } from "./quotes";
-export { motivationalQuotes, quoteOfTheDay } from "./quotes";
+export { quoteOfTheDay, motivationalQuotes } from "./quotes";
+
 
 
 
