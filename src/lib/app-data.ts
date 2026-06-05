@@ -443,8 +443,9 @@ export const bonuses: Array<{
 ];
 
 
-export { motivationalQuotes, quoteOfTheDay } from "./quotes";
 import { motivationalQuotes } from "./quotes";
+export { motivationalQuotes, quoteOfTheDay } from "./quotes";
+
 
 
 export type PlanMeal = { recipeId: string; name: string };
