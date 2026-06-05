@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
-import { quoteOfTheDay } from "@/lib/app-data";
+import { quoteOfTheDay } from "@/lib/quotes";
 import { useDailyReminder } from "@/lib/use-daily-reminder";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
 import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Quote, TrendingUp } from "lucide-react";
@@ -13,6 +13,9 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Início — Desafio 21 Dias" },
       { name: "description", content: "Sua jornada feminina de transformação começa aqui." },
+    ],
+    links: [
+      { rel: "preload", as: "image", href: heroImg, fetchpriority: "high" },
     ],
   }),
   component: HomePage,
@@ -91,7 +94,7 @@ function HomePage() {
       {/* Hero progress card */}
       <section className="mx-6 mt-6 overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft animate-float-up">
         <div className="relative h-40 w-full">
-          <img src={heroImg} alt="Sua jornada" className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} />
+          <img src={heroImg} alt="Sua jornada" className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} fetchPriority="high" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
           <div className="absolute bottom-3 left-4 right-4">
             <p className="text-[11px] uppercase tracking-widest text-muted-foreground">Sua jornada</p>
