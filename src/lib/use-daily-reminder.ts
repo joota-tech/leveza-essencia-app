@@ -7,22 +7,23 @@ type State = {
   enabled: boolean;
   lastShownDate: string | null; // YYYY-MM-DD
   time?: string; // HH:MM
+  message?: string; // custom reminder message
 };
 
 type Mode = "native" | "in-app";
 
 function loadState(): State {
-  if (typeof window === "undefined") return { enabled: false, lastShownDate: null, time: DEFAULT_TIME };
+  if (typeof window === "undefined") return { enabled: false, lastShownDate: null, time: DEFAULT_TIME, message: "" };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as State;
-      return { time: DEFAULT_TIME, ...parsed };
+      return { time: DEFAULT_TIME, message: "", ...parsed };
     }
   } catch {
     /* ignore */
   }
-  return { enabled: false, lastShownDate: null, time: DEFAULT_TIME };
+  return { enabled: false, lastShownDate: null, time: DEFAULT_TIME, message: "" };
 }
 
 function saveState(s: State) {
@@ -61,6 +62,7 @@ export function useDailyReminder(quote: string) {
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("unsupported");
   const [enabled, setEnabled] = useState<boolean>(false);
   const [time, setTimeState] = useState<string>(DEFAULT_TIME);
+  const [message, setMessageState] = useState<string>("");
 
   useEffect(() => {
     if (notificationsAvailable()) {
@@ -73,11 +75,15 @@ export function useDailyReminder(quote: string) {
     const s = loadState();
     setEnabled(s.enabled);
     setTimeState(s.time || DEFAULT_TIME);
+    setMessageState(s.message || "");
   }, []);
 
   // Dispara notificação nativa (apenas modo native, granted)
   useEffect(() => {
-    if (mode !== "native" || permission !== "granted" || !enabled || !quote) return;
+    if (mode !== "native" || permission !== "granted" || !enabled) return;
+
+    const body = (message || quote).trim();
+    if (!body) return;
 
     const { h, m } = parseTime(time);
 
@@ -86,7 +92,7 @@ export function useDailyReminder(quote: string) {
       if (s.lastShownDate !== todayKey()) {
         try {
           new Notification("Desafio 21 Dias 💛", {
-            body: quote,
+            body,
             icon: "/favicon.ico",
             tag: "daily-quote",
           });
@@ -109,29 +115,30 @@ export function useDailyReminder(quote: string) {
     const delay = next.getTime() - now.getTime();
     const timer = window.setTimeout(showNow, delay);
     return () => window.clearTimeout(timer);
-  }, [mode, permission, enabled, quote, time]);
+  }, [mode, permission, enabled, quote, time, message]);
 
   const requestPermission = async () => {
+    const cur = loadState();
     if (mode === "in-app") {
       setEnabled(true);
-      saveState({ enabled: true, lastShownDate: null, time });
+      saveState({ ...cur, enabled: true, lastShownDate: null });
       return;
     }
     try {
       const result = await Notification.requestPermission();
       setPermission(result);
       setEnabled(true);
-      saveState({ enabled: true, lastShownDate: null, time });
+      saveState({ ...cur, enabled: true, lastShownDate: null });
     } catch {
       setEnabled(true);
-      saveState({ enabled: true, lastShownDate: null, time });
+      saveState({ ...cur, enabled: true, lastShownDate: null });
     }
   };
 
   const toggle = (value: boolean) => {
     setEnabled(value);
     const cur = loadState();
-    saveState({ enabled: value, lastShownDate: cur.lastShownDate, time });
+    saveState({ ...cur, enabled: value });
   };
 
   const setTime = (value: string) => {
@@ -139,8 +146,15 @@ export function useDailyReminder(quote: string) {
     const normalized = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
     setTimeState(normalized);
     const cur = loadState();
-    saveState({ enabled: cur.enabled, lastShownDate: null, time: normalized });
+    saveState({ ...cur, time: normalized, lastShownDate: null });
   };
 
-  return { mode, permission, enabled, time, requestPermission, toggle, setTime };
+  const setMessage = (value: string) => {
+    const trimmed = value.trim();
+    setMessageState(trimmed);
+    const cur = loadState();
+    saveState({ ...cur, message: trimmed });
+  };
+
+  return { mode, permission, enabled, time, message, requestPermission, toggle, setTime, setMessage };
 }
