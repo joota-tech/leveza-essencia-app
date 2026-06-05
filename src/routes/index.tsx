@@ -5,7 +5,7 @@ import { useProgress } from "@/lib/use-progress";
 import { quoteOfTheDay } from "@/lib/quotes";
 import { useDailyReminder } from "@/lib/use-daily-reminder";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
-import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Quote, TrendingUp } from "lucide-react";
+import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Pencil, Quote, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
