@@ -72,10 +72,26 @@ function HomePage() {
               “{dailyQuote}”
             </p>
             {reminder.enabled ? (
-              <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+              <div className="relative z-10 mt-3 inline-flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur">
                 <BellRing className="h-3 w-3 text-primary" />
-                Lembrete diário ativo às 08:30
-              </p>
+                <label htmlFor="reminder-time" className="text-muted-foreground">Lembrete diário às</label>
+                <input
+                  id="reminder-time"
+                  type="time"
+                  value={reminder.time}
+                  onChange={(e) => reminder.setTime(e.target.value)}
+                  className="rounded-md bg-secondary/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground outline-none focus:ring-2 focus:ring-primary/40"
+                  aria-label="Horário do lembrete diário"
+                />
+                <button
+                  type="button"
+                  onClick={() => reminder.toggle(false)}
+                  className="ml-1 text-[10px] uppercase tracking-wider text-muted-foreground hover:text-primary"
+                  aria-label="Desativar lembrete"
+                >
+                  desativar
+                </button>
+              </div>
             ) : (
               <button
                 type="button"
