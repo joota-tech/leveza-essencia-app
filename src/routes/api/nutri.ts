@@ -33,7 +33,7 @@ export const Route = createFileRoute("/api/nutri")({
 
           const apiKey = process.env.LOVABLE_API_KEY;
           if (!apiKey) {
-            return Response.json({ error: "API key não configurada" }, { status: 500 });
+            return Response.json({ error: "API key no configurada" }, { status: 500 });
           }
 
           const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
