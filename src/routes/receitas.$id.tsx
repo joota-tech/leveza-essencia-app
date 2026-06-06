@@ -10,8 +10,8 @@ export const Route = createFileRoute("/receitas/$id")({
   notFoundComponent: () => (
     <MobileShell>
       <div className="p-10 text-center">
-        <p className="text-sm text-muted-foreground">Receita não encontrada.</p>
-        <Link to="/receitas" className="mt-4 inline-block text-primary">Voltar</Link>
+        <p className="text-sm text-muted-foreground">Receta no encontrada.</p>
+        <Link to="/receitas" className="mt-4 inline-block text-primary">Volver</Link>
       </div>
     </MobileShell>
   ),
@@ -32,7 +32,7 @@ function RecipeDetail() {
 
   const share = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: r.name, text: `${r.name} — Desafio 21 Dias` }); } catch {}
+      try { await navigator.share({ title: r.name, text: `${r.name} — Reto 21 Días` }); } catch {}
     }
   };
 
@@ -59,17 +59,17 @@ function RecipeDetail() {
         <h1 className="mt-2 font-serif text-3xl leading-tight">{r.name}</h1>
 
         <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-          <Stat icon={<Clock className="h-3 w-3" />} label="Tempo" value={r.time} />
+          <Stat icon={<Clock className="h-3 w-3" />} label="Tiempo" value={r.time} />
           <Stat icon={<Flame className="h-3 w-3" />} label="Proteína" value={r.protein} />
-          <Stat icon={<Sparkles className="h-3 w-3" />} label="Saciedade" value={"★".repeat(r.satiety)} />
+          <Stat icon={<Sparkles className="h-3 w-3" />} label="Saciedad" value={"★".repeat(r.satiety)} />
         </div>
 
         <div className="mt-5 rounded-2xl bg-blush p-4">
-          <p className="text-xs uppercase tracking-widest text-primary">Para você</p>
+          <p className="text-xs uppercase tracking-widest text-primary">Para ti</p>
           <p className="mt-1 text-sm leading-relaxed text-foreground">{r.feminineBenefits}</p>
         </div>
 
-        <Section title="Benefícios">
+        <Section title="Beneficios">
           <ul className="space-y-1.5">
             {r.benefits.map((b) => (
               <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -79,7 +79,7 @@ function RecipeDetail() {
           </ul>
         </Section>
 
-        <Section title="Melhor horário">
+        <Section title="Mejor horario">
           <p className="text-sm text-muted-foreground">{r.bestTime}</p>
         </Section>
 
@@ -93,7 +93,7 @@ function RecipeDetail() {
           </ul>
         </Section>
 
-        <Section title="Modo de preparo">
+        <Section title="Modo de preparación">
           <ol className="space-y-3">
             {r.steps.map((s, i) => (
               <li key={i} className="flex gap-3">
@@ -105,7 +105,7 @@ function RecipeDetail() {
         </Section>
 
         {r.videoId && (
-          <Section title="Vídeo da receita">
+          <Section title="Video de la receta">
             <div className="aspect-video overflow-hidden rounded-2xl border border-border">
               <iframe
                 src={`https://www.youtube.com/embed/${r.videoId}`}
