@@ -3,18 +3,18 @@ import { Heart, Wind, Sparkles, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 const motivacionais = [
-  "Respira. Esse momento vai passar — você já passou por outros.",
-  "Não é fome. É emoção. Acolhe, não come.",
-  "Você não precisa ser perfeita. Só precisa voltar.",
-  "Uma escolha de cada vez. Essa pode ser de amor próprio.",
-  "Seu corpo merece carinho, não punição.",
+  "Respira. Este momento pasará — ya has superado otros.",
+  "No es hambre. Es emoción. Acógela, no comas.",
+  "No necesitas ser perfecta. Solo necesitas volver.",
+  "Una elección a la vez. Esta puede ser de amor propio.",
+  "Tu cuerpo merece cariño, no castigo.",
 ];
 
 const tecnicas = [
-  "Beba 1 copo de água gelada lentamente",
-  "Escove os dentes agora mesmo",
-  "Saia do ambiente por 5 minutos",
-  "Coma 1 fruta com canela",
+  "Bebe 1 vaso de agua fría lentamente",
+  "Cepíllate los dientes ahora mismo",
+  "Sal del ambiente por 5 minutos",
+  "Come 1 fruta con canela",
 ];
 
 export function SOSButton() {
@@ -48,7 +48,7 @@ export function SOSButton() {
           if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(20);
           setOpen(true);
         }}
-        aria-label="SOS — preciso de ajuda"
+        aria-label="SOS — necesito ayuda"
         className="fixed bottom-24 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-rose text-rose-foreground shadow-glow ring-2 ring-card animate-glow"
       >
         <span className="text-[11px] font-bold tracking-widest">SOS</span>
@@ -63,8 +63,8 @@ export function SOSButton() {
             <button onClick={() => setOpen(false)} className="absolute right-4 top-4 rounded-full bg-secondary p-2 text-muted-foreground">
               <X className="h-4 w-4" />
             </button>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Um momento</p>
-            <h2 className="mt-1 font-serif text-2xl">Você não está sozinha</h2>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Un momento</p>
+            <h2 className="mt-1 font-serif text-2xl">No estás sola</h2>
 
             <div className="mt-5 rounded-2xl bg-blush p-4 text-center">
               <Heart className="mx-auto h-5 w-5 text-primary" />
@@ -73,7 +73,7 @@ export function SOSButton() {
 
             <div className="mt-5 rounded-2xl border border-border/60 bg-secondary/60 p-4">
               <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                <Wind className="h-3.5 w-3.5" /> Respiração 4-7-8
+                <Wind className="h-3.5 w-3.5" /> Respiración 4-7-8
               </div>
               <div className="mt-4 flex flex-col items-center">
                 <div
@@ -82,15 +82,15 @@ export function SOSButton() {
                   }`}
                 >
                   <span className="font-serif text-lg">
-                    {breath === "in" ? "Inspire" : breath === "hold" ? "Segure" : "Solte"}
+                    {breath === "in" ? "Inspira" : breath === "hold" ? "Sostén" : "Suelta"}
                   </span>
                 </div>
-                <p className="mt-3 text-xs text-muted-foreground">Repita 4 vezes</p>
+                <p className="mt-3 text-xs text-muted-foreground">Repite 4 veces</p>
               </div>
             </div>
 
             <div className="mt-5">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Atravesse o pico</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground">Atraviesa el pico</p>
               <ul className="mt-2 space-y-2">
                 {tecnicas.map((t, i) => (
                   <li key={i} className="flex items-start gap-2 rounded-2xl border border-border/60 bg-card p-3 text-sm">
@@ -102,10 +102,10 @@ export function SOSButton() {
 
             <div className="mt-5 grid grid-cols-2 gap-3">
               <Link to="/nutri" onClick={() => setOpen(false)} className="rounded-2xl bg-primary py-3 text-center text-xs font-medium text-primary-foreground shadow-glow">
-                Falar com a Nutri
+                Hablar con la Nutri
               </Link>
               <Link to="/anti-compulsao" onClick={() => setOpen(false)} className="rounded-2xl bg-secondary py-3 text-center text-xs font-medium text-secondary-foreground">
-                Guia anti-compulsão
+                Guía anti-atracón
               </Link>
             </div>
           </div>

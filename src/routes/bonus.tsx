@@ -5,7 +5,7 @@ import { Download, FileText, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/bonus")({
-  head: () => ({ meta: [{ title: "Bônus — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Bonos — Reto 21 Días" }] }),
   component: BonusPage,
 });
 
@@ -30,9 +30,9 @@ function BonusPage() {
   return (
     <MobileShell>
       <header className="px-6 pt-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Conteúdo exclusivo</p>
-        <h1 className="mt-1 font-serif text-3xl">Bônus</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Material extra para acelerar sua transformação.</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Contenido exclusivo</p>
+        <h1 className="mt-1 font-serif text-3xl">Bonos</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Material extra para acelerar tu transformación.</p>
       </header>
 
       <section className="mt-6 space-y-4 px-6">
@@ -46,7 +46,7 @@ function BonusPage() {
               <div className="bg-gradient-rose p-5 text-rose-foreground">
                 <div className="flex items-start justify-between">
                   <span className="rounded-full bg-card/30 px-3 py-1 text-[10px] font-medium backdrop-blur">
-                    Bônus {i + 1}
+                    Bono {i + 1}
                   </span>
                   <Sparkles className="h-4 w-4" />
                 </div>
@@ -67,13 +67,13 @@ function BonusPage() {
                     disabled={!available}
                     className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-medium text-primary-foreground shadow-glow transition disabled:opacity-50"
                   >
-                    <FileText className="h-3.5 w-3.5" /> {available ? "Abrir" : "Em breve"}
+                    <FileText className="h-3.5 w-3.5" /> {available ? "Abrir" : "Próximamente"}
                   </button>
                   <button
                     onClick={() => handleDownload(b)}
                     disabled={!available}
                     className="flex items-center justify-center rounded-2xl border border-border bg-card px-4 py-3 text-xs font-medium transition disabled:opacity-50"
-                    aria-label="Baixar PDF"
+                    aria-label="Descargar PDF"
                   >
                     <Download className="h-3.5 w-3.5" />
                   </button>
@@ -91,7 +91,7 @@ function BonusPage() {
             <button
               onClick={() => setOpenPdf(null)}
               className="rounded-full p-2 text-muted-foreground hover:bg-muted"
-              aria-label="Fechar"
+              aria-label="Cerrar"
             >
               <X className="h-4 w-4" />
             </button>

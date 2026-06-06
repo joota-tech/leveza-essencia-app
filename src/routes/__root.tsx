@@ -18,9 +18,9 @@ function NotFoundComponent() {
     <MobileShell>
       <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <h1 className="font-serif text-6xl text-foreground">404</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Essa página se perdeu na jornada.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Esta página se perdió en el camino.</p>
         <Link to="/" className="mt-6 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
-          Voltar ao início
+          Volver al inicio
         </Link>
       </div>
     </MobileShell>
@@ -31,7 +31,7 @@ function ErrorComponent({ error }: { error: Error }) {
   return (
     <MobileShell>
       <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-        <h1 className="font-serif text-2xl">Algo deu errado</h1>
+        <h1 className="font-serif text-2xl">Algo salió mal</h1>
         <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
       </div>
     </MobileShell>
@@ -46,9 +46,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#f5e6df" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-      { name: "apple-mobile-web-app-title", content: "Desafio 21" },
-      { title: "Desafio 21 Dias — Emagreça Comendo Bem" },
-      { name: "description", content: "Protocolo feminino de emagrecimento com alimentação proteica, sem fome e sem culpa." },
+      { name: "apple-mobile-web-app-title", content: "Reto 21" },
+      { title: "Reto 21 Días — Adelgaza Comiendo Bien" },
+      { name: "description", content: "Protocolo femenino de adelgazamiento con alimentación proteica, sin hambre y sin culpa." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -66,7 +66,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="es">
       <head>
         <HeadContent />
       </head>
