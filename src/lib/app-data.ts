@@ -438,7 +438,7 @@ export const bonuses: Array<{
 }> = [
   { id: "cardapio", title: "Menú Proteico de 21 Días", subtitle: "Listo para imprimir", items: ["Desayuno, almuerzo, cena y merienda", "Lista de compras semanal", "Sustituciones inteligentes"], pdf: "/bonus/menu-proteico-21-dias.pdf", filename: "Menu-Proteico-de-21-Dias.pdf" },
   { id: "guia", title: "Guía Anti-Compulsión Femenina", subtitle: "Por qué comes emocionalmente", items: ["Mapa de disparadores", "Guión 5-5-5", "Diario de emociones"], pdf: "/bonus/guia-anti-compulsao-feminina.pdf", filename: "Guia-Anti-Compulsao-Feminina.pdf" },
-  { id: "10min", title: "Recetas de 10 Minutos", subtitle: "Para los días imposibles", items: ["20 recetas probadas", "Ingredientes del día a día", "Sin dificultad"], pdf: "/bonus/receitas-10-minutos.pdf", filename: "Receitas-de-10-Minutos.pdf" },
+  { id: "10min", title: "Recetas de 10 Minutos", subtitle: "Para los días imposibles", items: ["20 recetas probadas", "Ingredientes del día a día", "Sin dificultad"], pdf: "/bonus/receitas-10-minutos.pdf", filename: "Recetas-de-10-Minutos.pdf" },
   { id: "fora", title: "Cómo Comer Fuera Sin Engordar", subtitle: "Restaurante, fiesta, viaje", items: ["Qué pedir en cada lugar", "Bebidas inteligentes", "Volviendo al plan sin culpa"], pdf: "/bonus/como-comer-fora-sem-engordar.pdf", filename: "Como-Comer-Fora-Sem-Engordar.pdf" },
 ];
 
