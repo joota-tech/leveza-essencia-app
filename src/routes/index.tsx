@@ -5,7 +5,7 @@ import { useProgress } from "@/lib/use-progress";
 import { quoteOfTheDay } from "@/lib/quotes";
 import { useDailyReminder } from "@/lib/use-daily-reminder";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
-import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Pencil, Quote, TrendingUp } from "lucide-react";
+import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Quote, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -92,26 +92,6 @@ function HomePage() {
                   >
                     desativar
                   </button>
-                </div>
-                <div className="rounded-xl bg-card/90 px-3 py-2 shadow-soft backdrop-blur">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
-                    <Pencil className="h-3 w-3" />
-                    <span>Sua mensagem</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={reminder.message}
-                    onChange={(e) => reminder.setMessage(e.target.value)}
-                    placeholder={dailyQuote}
-                    maxLength={120}
-                    className="mt-1 w-full rounded-md bg-secondary/80 px-2 py-1 text-[12px] font-medium text-foreground outline-none focus:ring-2 focus:ring-primary/40"
-                    aria-label="Mensagem do lembrete diário"
-                  />
-                  {reminder.message && (
-                    <p className="mt-1 text-[10px] text-muted-foreground">
-                      Preview: “{reminder.message}”
-                    </p>
-                  )}
                 </div>
               </div>
             ) : (
