@@ -112,7 +112,7 @@ export function useDailyReminder(quote: string) {
     const delay = next.getTime() - now.getTime();
     const timer = window.setTimeout(showNow, delay);
     return () => window.clearTimeout(timer);
-  }, [mode, permission, enabled, quote, time, message]);
+  }, [mode, permission, enabled, quote, time]);
 
   const requestPermission = async () => {
     const cur = loadState();
@@ -146,12 +146,5 @@ export function useDailyReminder(quote: string) {
     saveState({ ...cur, time: normalized, lastShownDate: null });
   };
 
-  const setMessage = (value: string) => {
-    const trimmed = value.trim();
-    setMessageState(trimmed);
-    const cur = loadState();
-    saveState({ ...cur, message: trimmed });
-  };
-
-  return { mode, permission, enabled, time, message, requestPermission, toggle, setTime, setMessage };
+  return { mode, permission, enabled, time, requestPermission, toggle, setTime };
 }
