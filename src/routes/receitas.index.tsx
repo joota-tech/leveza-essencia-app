@@ -7,7 +7,7 @@ import { Clock, Flame, Heart, Search } from "lucide-react";
 
 export const Route = createFileRoute("/receitas/")({
   head: () => ({
-    meta: [{ title: "Receitas — Desafio 21 Dias" }],
+    meta: [{ title: "Recetas — Reto 21 Días" }],
   }),
   component: RecipesPage,
 });
@@ -30,8 +30,8 @@ function RecipesPage() {
   return (
     <MobileShell>
       <header className="px-6 pt-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Cozinhe com leveza</p>
-        <h1 className="mt-1 font-serif text-3xl">Receitas</h1>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Cocina con ligereza</p>
+        <h1 className="mt-1 font-serif text-3xl">Recetas</h1>
       </header>
 
       <div className="mx-6 mt-5 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft">
@@ -39,7 +39,7 @@ function RecipesPage() {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Buscar receita..."
+          placeholder="Buscar receta..."
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
       </div>
@@ -87,7 +87,7 @@ function RecipesPage() {
                 <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{r.time}</span>
                   <span className="inline-flex items-center gap-1"><Flame className="h-3 w-3" />{r.protein}</span>
-                  <span>Saciedade {"★".repeat(r.satiety)}</span>
+                  <span>Saciedad {"★".repeat(r.satiety)}</span>
                 </div>
               </div>
             </Link>

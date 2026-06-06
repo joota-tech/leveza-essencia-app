@@ -8,21 +8,21 @@ type ChatMessage = { role: "user" | "assistant"; content: string };
 const STORAGE_KEY = "desafio21-nutri-chat";
 
 const QUICK = [
-  "Estou com vontade de doce",
-  "O que posso comer agora?",
-  "Estou desanimada",
-  "Não consegui seguir hoje",
-  "Me ajuda com compulsão",
-  "Quero secar barriga",
+  "Tengo ganas de dulce",
+  "¿Qué puedo comer ahora?",
+  "Estoy desanimada",
+  "No pude seguir el plan hoy",
+  "Ayúdame con el atracón",
+  "Quiero reducir la barriga",
 ];
 
 const WELCOME: ChatMessage = {
   role: "assistant",
-  content: "Oi, linda 🌸 Sou sua Nutri pessoal. Tô aqui pra te acolher, tirar dúvidas e te ajudar a continuar firme. Me conta: como você tá hoje?",
+  content: "¡Hola, linda! 🌸 Soy tu Nutri personal. Estoy aquí para acompañarte, resolver tus dudas y ayudarte a seguir firme. Cuéntame: ¿cómo estás hoy?",
 };
 
 export const Route = createFileRoute("/nutri")({
-  head: () => ({ meta: [{ title: "Converse com a Nutri — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Habla con la Nutri — Reto 21 Días" }] }),
   component: NutriPage,
 });
 
@@ -72,12 +72,12 @@ function NutriPage() {
       });
       const data = (await res.json()) as { reply?: string; error?: string };
       if (!res.ok || data.error) {
-        setError(data.error || "Algo deu errado. Tenta de novo?");
+        setError(data.error || "Algo salió mal. ¿Lo intentas de nuevo?");
       } else if (data.reply) {
         setMessages((m) => [...m, { role: "assistant", content: data.reply! }]);
       }
     } catch {
-      setError("Sem conexão. Tenta novamente.");
+      setError("Sin conexión. Inténtalo de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -99,9 +99,9 @@ function NutriPage() {
         </div>
         <div className="flex-1">
           <h1 className="font-serif text-lg leading-none">Nutri</h1>
-          <p className="text-[11px] text-muted-foreground">Online · responde em segundos</p>
+          <p className="text-[11px] text-muted-foreground">En línea · responde en segundos</p>
         </div>
-        <button onClick={clearChat} className="text-[11px] text-muted-foreground underline">limpar</button>
+        <button onClick={clearChat} className="text-[11px] text-muted-foreground underline">limpiar</button>
       </header>
 
       <section className="px-4 pb-44 pt-5">
@@ -140,7 +140,7 @@ function NutriPage() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); }
             }}
-            placeholder="Conta pra Nutri…"
+            placeholder="Cuéntale a la Nutri…"
             rows={1}
             className="max-h-32 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none"
           />

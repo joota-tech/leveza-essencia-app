@@ -11,12 +11,12 @@ export function MobileShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh bg-gradient-warm">
-      {/* Skip link para leitores de tela e teclado */}
+      {/* Enlace de omisión para lectores de pantalla y teclado */}
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-glow"
       >
-        Ir para o conteúdo
+        Ir al contenido
       </a>
 
       <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-x-hidden bg-background pb-28">
@@ -27,7 +27,7 @@ export function MobileShell({ children }: { children: ReactNode }) {
             className="sticky top-0 z-50 flex items-center justify-center gap-2 bg-foreground/90 px-4 py-2 text-[12px] font-medium text-background backdrop-blur"
           >
             <WifiOff className="h-3.5 w-3.5" aria-hidden="true" />
-            Modo offline — usando dados salvos no seu celular
+            Modo sin conexión — usando datos guardados en tu móvil
           </div>
         )}
         <main id="conteudo" tabIndex={-1} className="focus:outline-none">

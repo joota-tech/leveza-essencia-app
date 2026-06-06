@@ -6,7 +6,7 @@ import { useProgress } from "@/lib/use-progress";
 import { Check, Coffee, Moon, Sandwich, Sparkles, Sun } from "lucide-react";
 
 export const Route = createFileRoute("/plano")({
-  head: () => ({ meta: [{ title: "Plano 21 Dias — Desafio" }] }),
+  head: () => ({ meta: [{ title: "Plan 21 Días — Reto" }] }),
   component: PlanPage,
 });
 
@@ -34,11 +34,11 @@ function PlanPage() {
     <MobileShell>
       <header className="px-6 pt-10">
         <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Semana {week}</p>
-        <h1 className="mt-1 font-serif text-3xl">Plano de 21 Dias</h1>
+        <h1 className="mt-1 font-serif text-3xl">Plan de 21 Días</h1>
         <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-secondary">
           <div className="h-full rounded-full bg-gradient-rose transition-all" style={{ width: `${percent}%` }} />
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">{progress.completedDays.length} de 21 dias concluídos</p>
+        <p className="mt-2 text-xs text-muted-foreground">{progress.completedDays.length} de 21 días completados</p>
       </header>
 
       <div className="scrollbar-hide mt-5 flex gap-2 overflow-x-auto px-6">
@@ -57,7 +57,7 @@ function PlanPage() {
                   : "border-border bg-card text-muted-foreground"
               }`}
             >
-              <span className="text-[9px] opacity-70">Dia</span>
+              <span className="text-[9px] opacity-70">Día</span>
               <span className="font-serif text-lg leading-none">{d.day}</span>
               {dDone && !active && <Check className="mt-0.5 h-3 w-3" />}
             </button>
@@ -69,17 +69,17 @@ function PlanPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-widest text-primary">{day.title}</p>
-            <h2 className="font-serif text-2xl">Dia {day.day}</h2>
+            <h2 className="font-serif text-2xl">Día {day.day}</h2>
           </div>
           <Sparkles className="h-5 w-5 text-primary" />
         </div>
         <p className="mt-3 rounded-2xl bg-blush p-3 text-sm italic text-foreground">"{day.quote}"</p>
 
         <div className="mt-5 space-y-3">
-          <Meal icon={<Coffee className="h-4 w-4" />} label="Café da manhã" meal={day.breakfast} />
-          <Meal icon={<Sun className="h-4 w-4" />} label="Almoço" meal={day.lunch} />
-          <Meal icon={<Sandwich className="h-4 w-4" />} label="Lanche" meal={day.snack} />
-          <Meal icon={<Moon className="h-4 w-4" />} label="Jantar" meal={day.dinner} />
+          <Meal icon={<Coffee className="h-4 w-4" />} label="Desayuno" meal={day.breakfast} />
+          <Meal icon={<Sun className="h-4 w-4" />} label="Almuerzo" meal={day.lunch} />
+          <Meal icon={<Sandwich className="h-4 w-4" />} label="Merienda" meal={day.snack} />
+          <Meal icon={<Moon className="h-4 w-4" />} label="Cena" meal={day.dinner} />
         </div>
 
         <button
@@ -91,7 +91,7 @@ function PlanPage() {
               : "bg-primary text-primary-foreground shadow-glow active:scale-[0.98]"
           }`}
         >
-          {done ? "Dia concluído ✓" : "Concluir dia"}
+          {done ? "Día completado ✓" : "Completar día"}
         </button>
       </section>
 
@@ -101,8 +101,8 @@ function PlanPage() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-rose text-rose-foreground">
               <Sparkles className="h-7 w-7" />
             </div>
-            <h3 className="mt-4 font-serif text-2xl">Você arrasou!</h3>
-            <p className="mt-1 text-sm text-muted-foreground">Mais um dia da sua transformação ✨</p>
+            <h3 className="mt-4 font-serif text-2xl">¡Lo lograste!</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Un día más de tu transformación ✨</p>
           </div>
         </div>
       )}
@@ -122,7 +122,7 @@ function Meal({ icon, label, meal }: { icon: React.ReactNode; label: string; mea
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</p>
         <p className="mt-0.5 text-sm text-foreground">{meal.name}</p>
       </div>
-      <span className="self-center text-xs text-primary">Ver receita →</span>
+      <span className="self-center text-xs text-primary">Ver receta →</span>
     </Link>
   );
 }

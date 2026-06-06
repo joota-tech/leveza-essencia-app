@@ -5,7 +5,7 @@ import { ArrowLeft, Moon, Sun, Type, Volume2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/configuracoes")({
-  head: () => ({ meta: [{ title: "Configurações" }] }),
+  head: () => ({ meta: [{ title: "Ajustes" }] }),
   component: ConfiguracoesPage,
 });
 
@@ -43,15 +43,15 @@ function ConfiguracoesPage() {
         <Link to="/perfil" className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <h1 className="font-serif text-2xl">Configurações</h1>
+        <h1 className="font-serif text-2xl">Ajustes</h1>
       </header>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Seus dados</h3>
+        <h3 className="font-serif text-lg">Tus datos</h3>
         <div className="mt-4 space-y-3">
-          <TextField label="Nome" value={progress.name} onChange={(v) => update({ name: v })} />
+          <TextField label="Nombre" value={progress.name} onChange={(v) => update({ name: v })} />
           <div className="grid grid-cols-2 gap-3">
-            <NumField label="Idade" value={progress.age ?? ""} onChange={(v) => update({ age: v || undefined })} />
+            <NumField label="Edad" value={progress.age ?? ""} onChange={(v) => update({ age: v || undefined })} />
             <NumField label="Altura (cm)" value={progress.height ?? ""} onChange={(v) => update({ height: Number(v) || undefined })} />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -62,17 +62,17 @@ function ConfiguracoesPage() {
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Aparência</h3>
+        <h3 className="font-serif text-lg">Apariencia</h3>
         <div className="mt-4 space-y-3">
           <div>
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Tema</p>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Choice active={settings.theme === "light"} onClick={() => save({ theme: "light" })} icon={<Sun className="h-4 w-4" />} label="Claro" />
-              <Choice active={settings.theme === "dark"} onClick={() => save({ theme: "dark" })} icon={<Moon className="h-4 w-4" />} label="Escuro" />
+              <Choice active={settings.theme === "dark"} onClick={() => save({ theme: "dark" })} icon={<Moon className="h-4 w-4" />} label="Oscuro" />
             </div>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Tamanho do texto</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">Tamaño del texto</p>
             <div className="mt-2 grid grid-cols-3 gap-2">
               {(["sm", "md", "lg"] as const).map((s) => (
                 <Choice key={s} active={settings.fontSize === s} onClick={() => save({ fontSize: s })} icon={<Type className="h-4 w-4" />} label={s === "sm" ? "P" : s === "md" ? "M" : "G"} />
@@ -83,17 +83,17 @@ function ConfiguracoesPage() {
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Sons</h3>
+        <h3 className="font-serif text-lg">Sonidos</h3>
         <button onClick={() => save({ sound: !settings.sound })} className="mt-3 flex w-full items-center gap-3 rounded-2xl bg-secondary p-3 text-left">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blush text-primary"><Volume2 className="h-4 w-4" /></div>
-          <span className="flex-1 text-sm">Efeitos sonoros</span>
+          <span className="flex-1 text-sm">Efectos de sonido</span>
           <span className={`relative h-6 w-11 rounded-full transition-colors ${settings.sound ? "bg-primary" : "bg-muted"}`}>
             <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform ${settings.sound ? "translate-x-5" : "translate-x-0.5"}`} />
           </span>
         </button>
       </section>
 
-      <p className="mx-6 mt-6 text-center text-xs text-muted-foreground">Alterações salvas automaticamente.</p>
+      <p className="mx-6 mt-6 text-center text-xs text-muted-foreground">Los cambios se guardan automáticamente.</p>
     </MobileShell>
   );
 }

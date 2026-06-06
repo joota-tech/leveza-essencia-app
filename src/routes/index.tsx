@@ -11,8 +11,8 @@ import heroImg from "@/assets/hero.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Início — Desafio 21 Dias" },
-      { name: "description", content: "Sua jornada feminina de transformação começa aqui." },
+      { title: "Inicio — Reto 21 Días" },
+      { name: "description", content: "Tu jornada femenina de transformación comienza aquí." },
     ],
     links: [
       { rel: "preload", as: "image", href: heroImg, fetchpriority: "high" },
@@ -42,7 +42,7 @@ function HomePage() {
   }, [loaded, progress.onboarded, navigate]);
 
   useEffect(() => {
-    setWeekday(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
+    setWeekday(new Date().toLocaleDateString("es-ES", { weekday: "long" }));
   }, []);
 
   const percent = Math.round((progress.completedDays.length / 21) * 100);
@@ -54,11 +54,11 @@ function HomePage() {
           {weekday}
         </p>
         <h1 className="mt-1 font-serif text-3xl leading-tight">
-          Bom dia, <span className="italic text-primary">{progress.name}</span>
+          Buenos días, <span className="italic text-primary">{progress.name}</span>
         </h1>
       </header>
 
-      {/* Frase do dia — card matinal */}
+      {/* Frase del día — tarjeta matinal */}
       <section className="relative mx-6 mt-5 overflow-hidden rounded-3xl border border-primary/20 bg-gradient-warm p-5 shadow-soft animate-float-up">
         <div className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-primary/15 blur-2xl" />
         <div className="pointer-events-none absolute -bottom-8 -left-4 h-24 w-24 rounded-full bg-accent/30 blur-2xl" />
@@ -67,30 +67,30 @@ function HomePage() {
             <Quote className="h-4 w-4" />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-primary">Frase do dia · Dia {progress.currentDay}</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-primary">Frase del día · Día {progress.currentDay}</p>
             <p className="mt-1 font-serif text-[19px] italic leading-snug text-foreground">
-              “{dailyQuote}”
+              "{dailyQuote}"
             </p>
           {reminder.enabled ? (
               <div className="relative z-10 mt-3 space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur">
                   <BellRing className="h-3 w-3 text-primary" />
-                  <label htmlFor="reminder-time" className="text-muted-foreground">Lembrete diário às</label>
+                  <label htmlFor="reminder-time" className="text-muted-foreground">Recordatorio diario a las</label>
                   <input
                     id="reminder-time"
                     type="time"
                     value={reminder.time}
                     onChange={(e) => reminder.setTime(e.target.value)}
                     className="rounded-md bg-secondary/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground outline-none focus:ring-2 focus:ring-primary/40"
-                    aria-label="Horário do lembrete diário"
+                    aria-label="Hora del recordatorio diario"
                   />
                   <button
                     type="button"
                     onClick={() => reminder.toggle(false)}
                     className="ml-1 text-[10px] uppercase tracking-wider text-muted-foreground hover:text-primary"
-                    aria-label="Desativar lembrete"
+                    aria-label="Desactivar recordatorio"
                   >
-                    desativar
+                    desactivar
                   </button>
                 </div>
               </div>
@@ -101,7 +101,7 @@ function HomePage() {
                 className="relative z-10 mt-3 inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur transition hover:shadow-glow active:scale-95"
               >
                 <BellRing className="h-3 w-3 text-primary" />
-                Receber lembrete matinal
+                Recibir recordatorio matinal
               </button>
             )}
           </div>
@@ -109,14 +109,14 @@ function HomePage() {
       </section>
 
 
-      {/* Hero progress card */}
+      {/* Tarjeta de progreso hero */}
       <section className="mx-6 mt-6 overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft animate-float-up">
         <div className="relative h-40 w-full">
-          <img src={heroImg} alt="Sua jornada" className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} fetchPriority="high" decoding="async" />
+          <img src={heroImg} alt="Tu jornada" className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} fetchPriority="high" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
           <div className="absolute bottom-3 left-4 right-4">
-            <p className="text-[11px] uppercase tracking-widest text-muted-foreground">Sua jornada</p>
-            <p className="font-serif text-xl">Dia {progress.currentDay} de 21</p>
+            <p className="text-[11px] uppercase tracking-widest text-muted-foreground">Tu jornada</p>
+            <p className="font-serif text-xl">Día {progress.currentDay} de 21</p>
           </div>
         </div>
         <div className="space-y-3 p-5">
@@ -127,7 +127,7 @@ function HomePage() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">{percent}% concluído</span>
+            <span className="text-xs text-muted-foreground">{percent}% completado</span>
             <Link
               to="/plano"
               className="inline-flex items-center gap-1 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-glow"
@@ -138,25 +138,25 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Quick stats */}
+      {/* Estadísticas rápidas */}
       <section className="mx-6 mt-5 grid grid-cols-3 gap-3">
-        <StatCard icon={<Flame className="h-4 w-4" />} label="Sequência" value={`${progress.completedDays.length}d`} />
+        <StatCard icon={<Flame className="h-4 w-4" />} label="Racha" value={`${progress.completedDays.length}d`} />
         <StatCard icon={<Heart className="h-4 w-4" />} label="Favoritas" value={`${progress.favorites.length}`} />
-        <StatCard icon={<Sparkles className="h-4 w-4" />} label="Humor" value="Leve" />
+        <StatCard icon={<Sparkles className="h-4 w-4" />} label="Estado" value="Ligera" />
       </section>
 
-      {/* Water tracker */}
+      {/* Control de agua */}
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Hidratação</p>
-            <h3 className="font-serif text-lg">{progress.water} / 8 copos</h3>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">Hidratación</p>
+            <h3 className="font-serif text-lg">{progress.water} / 8 vasos</h3>
           </div>
           <button
             onClick={() => update((p) => ({ water: Math.min(8, p.water + 1) }))}
             className="rounded-full bg-accent px-4 py-2 text-xs font-medium text-accent-foreground"
           >
-            + 1 copo
+            + 1 vaso
           </button>
         </div>
         <div className="mt-3 flex gap-1.5">
@@ -173,26 +173,26 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Premium quick actions */}
+      {/* Acciones rápidas premium */}
       <section className="mx-6 mt-5 grid grid-cols-2 gap-3">
         <Link to="/nutri" className="group relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-rose p-4 text-rose-foreground shadow-glow premium-glow">
           <MessageCircleHeart className="h-5 w-5" />
-          <p className="mt-3 font-serif text-base leading-tight">Converse com a Nutri</p>
-          <p className="mt-0.5 text-[11px] opacity-90">Suporte feminino 24h</p>
+          <p className="mt-3 font-serif text-base leading-tight">Habla con la Nutri</p>
+          <p className="mt-0.5 text-[11px] opacity-90">Apoyo femenino 24h</p>
         </Link>
         <Link to="/evolucao" className="rounded-3xl border border-border/60 bg-card p-4 shadow-soft">
           <TrendingUp className="h-5 w-5 text-primary" />
-          <p className="mt-3 font-serif text-base leading-tight">Sua evolução</p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">Conquistas e medalhas</p>
+          <p className="mt-3 font-serif text-base leading-tight">Tu evolución</p>
+          <p className="mt-0.5 text-[11px] text-muted-foreground">Logros y medallas</p>
         </Link>
       </section>
 
-      {/* Modules carousel */}
+      {/* Carrusel de módulos */}
       <section className="mt-7">
         <div className="flex items-end justify-between px-6">
           <div>
-            <h2 className="font-serif text-xl">Módulos da jornada</h2>
-            <p className="text-[11px] text-muted-foreground">Desbloqueio a cada 2 dias</p>
+            <h2 className="font-serif text-xl">Módulos de la jornada</h2>
+            <p className="text-[11px] text-muted-foreground">Se desbloquean cada 2 días</p>
           </div>
           <Link to="/modulos" className="text-xs text-primary">Ver todos</Link>
         </div>
@@ -222,7 +222,7 @@ function HomePage() {
                       <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
                     <div className="relative">
-                      {/* decorative backdrop */}
+                      {/* fondo decorativo */}
                       <div className="pointer-events-none absolute inset-x-0 -inset-y-3 rounded-2xl bg-gradient-to-t from-black/55 via-black/30 to-transparent blur-md" />
                       <div className="pointer-events-none absolute left-1/2 top-1 h-px w-10 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent" />
                       <h3 className={`relative text-center font-serif italic tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] ${titleSize(m.title)}`}>
@@ -242,7 +242,7 @@ function HomePage() {
                       <Lock className="h-5 w-5" />
                     </div>
                     <span className="rounded-full bg-card/95 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-foreground">
-                      Faltam {Math.max(0, req - progress.completedDays.length)}d
+                      Faltan {Math.max(0, req - progress.completedDays.length)}d
                     </span>
                   </div>
                 )}
@@ -259,11 +259,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Mini calendar */}
+      {/* Mini calendario */}
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
-          <h3 className="font-serif text-lg">Seus 21 dias</h3>
-          <Link to="/plano" className="text-xs text-primary">Ver tudo</Link>
+          <h3 className="font-serif text-lg">Tus 21 días</h3>
+          <Link to="/plano" className="text-xs text-primary">Ver todo</Link>
         </div>
         <div className="mt-3 grid grid-cols-7 gap-1.5">
           {Array.from({ length: 21 }).map((_, i) => {

@@ -1,29 +1,29 @@
-// Frases motivacionais — arquivo isolado para não arrastar imagens das receitas
-// no bundle inicial da home.
+// Frases motivacionales — archivo aislado para no arrastrar las imágenes de recetas
+// en el bundle inicial de la home.
 
 export const motivationalQuotes = [
-  "Você não precisa sofrer para emagrecer.",
-  "Comer bem é um ato de autocuidado.",
-  "Cada refeição é uma escolha de amor próprio.",
-  "Seu corpo te escuta. Fale com carinho.",
-  "Hoje é mais um dia da sua transformação.",
-  "Você está mais perto do que ontem.",
-  "A constância te leva mais longe que a perfeição.",
-  "Pequenas escolhas, grandes mudanças.",
-  "Respira fundo. Você consegue mais um dia.",
-  "O espelho não define seu valor — sua coragem sim.",
-  "Disciplina é o amor próprio em ação.",
-  "Não desista de quem você está se tornando.",
-  "Seu progresso é silencioso, mas é real.",
-  "Beba água. Coma com calma. Seja gentil com você.",
-  "Cada dia cumprido é uma vitória pra vida toda.",
-  "Você não está sozinha — eu estou com você.",
-  "A jornada é sua, o ritmo também.",
-  "Mais leveza, menos cobrança.",
-  "O corpo muda quando a mente se acalma.",
-  "Você é mais forte do que qualquer vontade passageira.",
-  "Faltam poucos dias — confia no processo.",
-  "Hoje é o último passo de uma nova mulher.",
+  "No necesitas sufrir para adelgazar.",
+  "Comer bien es un acto de autocuidado.",
+  "Cada comida es una elección de amor propio.",
+  "Tu cuerpo te escucha. Háblale con cariño.",
+  "Hoy es un día más de tu transformación.",
+  "Estás más cerca que ayer.",
+  "La constancia te lleva más lejos que la perfección.",
+  "Pequeñas elecciones, grandes cambios.",
+  "Respira profundo. Puedes con un día más.",
+  "El espejo no define tu valor — tu valentía sí.",
+  "La disciplina es el amor propio en acción.",
+  "No te rindas de quien te estás convirtiendo.",
+  "Tu progreso es silencioso, pero es real.",
+  "Bebe agua. Come con calma. Sé gentil contigo.",
+  "Cada día cumplido es una victoria para toda la vida.",
+  "No estás sola — estoy contigo.",
+  "La jornada es tuya, el ritmo también.",
+  "Más ligereza, menos autoexigencia.",
+  "El cuerpo cambia cuando la mente se calma.",
+  "Eres más fuerte que cualquier antojo pasajero.",
+  "Faltan pocos días — confía en el proceso.",
+  "Hoy es el último paso de una mujer nueva.",
 ];
 
 export function quoteOfTheDay(currentDay: number) {

@@ -5,7 +5,7 @@ import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/mo
 import { ArrowLeft, Lock, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/modulos/")({
-  head: () => ({ meta: [{ title: "Módulos — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Módulos — Reto 21 Días" }] }),
   component: ModulesIndex,
 });
 
@@ -28,16 +28,16 @@ function ModulesIndex() {
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <div className="flex-1">
-          <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">Sua jornada</p>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">Tu recorrido</p>
           <h1 className="font-serif text-xl leading-none">Módulos premium</h1>
         </div>
       </header>
 
       <section className="px-6 pt-5">
         <div className="rounded-3xl border border-border/60 bg-gradient-warm p-5 shadow-soft">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">Desbloqueio progressivo</p>
-          <h2 className="mt-1 font-serif text-lg">A cada 2 dias concluídos, um novo módulo abre 🤍</h2>
-          <p className="mt-2 text-xs text-muted-foreground">{done} dias concluídos · {Math.min(8, Math.floor(done / 2) + 1)} de 8 módulos desbloqueados</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">Desbloqueo progresivo</p>
+          <h2 className="mt-1 font-serif text-lg">Cada 2 días completados, un nuevo módulo se abre 🤍</h2>
+          <p className="mt-2 text-xs text-muted-foreground">{done} días completados · {Math.min(8, Math.floor(done / 2) + 1)} de 8 módulos desbloqueados</p>
         </div>
       </section>
 
@@ -112,7 +112,7 @@ function ModuleCard({
             <Lock className="h-5 w-5" />
           </div>
           <span className="rounded-full bg-card/95 px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-foreground">
-            Faltam {Math.max(0, req - doneDays)} {req - doneDays === 1 ? "dia" : "dias"}
+            Faltan {Math.max(0, req - doneDays)} {req - doneDays === 1 ? "día" : "días"}
           </span>
         </div>
       )}
