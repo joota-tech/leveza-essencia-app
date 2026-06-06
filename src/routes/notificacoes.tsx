@@ -4,7 +4,7 @@ import { ArrowLeft, Bell, Clock, Droplet, Heart, Moon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/notificacoes")({
-  head: () => ({ meta: [{ title: "Notificações & lembretes" }] }),
+  head: () => ({ meta: [{ title: "Notificaciones & recordatorios" }] }),
   component: NotificacoesPage,
 });
 
@@ -51,28 +51,28 @@ function NotificacoesPage() {
         <Link to="/perfil" className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <h1 className="font-serif text-2xl">Notificações</h1>
+        <h1 className="font-serif text-2xl">Notificaciones</h1>
       </header>
 
       <p className="mx-6 mt-3 text-sm text-muted-foreground">
-        Configure lembretes carinhosos para te acompanhar ao longo do dia.
+        Configura recordatorios cariñosos para acompañarte a lo largo del día.
       </p>
 
       <section className="mx-6 mt-5 space-y-2">
-        <Toggle icon={<Droplet className="h-4 w-4" />} label="Lembrete de água" value={prefs.agua} onChange={(v) => update({ agua: v })} />
-        <Toggle icon={<Bell className="h-4 w-4" />} label="Lembrete de refeições" value={prefs.refeicoes} onChange={(v) => update({ refeicoes: v })} />
-        <Toggle icon={<Heart className="h-4 w-4" />} label="Mensagem motivacional diária" value={prefs.motivacao} onChange={(v) => update({ motivacao: v })} />
-        <Toggle icon={<Moon className="h-4 w-4" />} label="Lembrete de sono" value={prefs.sono} onChange={(v) => update({ sono: v })} />
+        <Toggle icon={<Droplet className="h-4 w-4" />} label="Recordatorio de agua" value={prefs.agua} onChange={(v) => update({ agua: v })} />
+        <Toggle icon={<Bell className="h-4 w-4" />} label="Recordatorio de comidas" value={prefs.refeicoes} onChange={(v) => update({ refeicoes: v })} />
+        <Toggle icon={<Heart className="h-4 w-4" />} label="Mensaje motivacional diario" value={prefs.motivacao} onChange={(v) => update({ motivacao: v })} />
+        <Toggle icon={<Moon className="h-4 w-4" />} label="Recordatorio de sueño" value={prefs.sono} onChange={(v) => update({ sono: v })} />
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft space-y-4">
-        <h3 className="font-serif text-lg">Horários</h3>
-        <TimeRow icon={<Droplet className="h-4 w-4" />} label="Primeiro copo de água" value={prefs.horarioAgua} onChange={(v) => update({ horarioAgua: v })} />
-        <TimeRow icon={<Clock className="h-4 w-4" />} label="Almoço" value={prefs.horarioRefeicao} onChange={(v) => update({ horarioRefeicao: v })} />
+        <h3 className="font-serif text-lg">Horarios</h3>
+        <TimeRow icon={<Droplet className="h-4 w-4" />} label="Primer vaso de agua" value={prefs.horarioAgua} onChange={(v) => update({ horarioAgua: v })} />
+        <TimeRow icon={<Clock className="h-4 w-4" />} label="Almuerzo" value={prefs.horarioRefeicao} onChange={(v) => update({ horarioRefeicao: v })} />
       </section>
 
       <p className="mx-6 mt-6 text-center text-xs text-muted-foreground">
-        Suas preferências são salvas neste dispositivo.
+        Tus preferencias se guardan en este dispositivo.
       </p>
     </MobileShell>
   );

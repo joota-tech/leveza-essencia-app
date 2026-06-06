@@ -18,7 +18,7 @@ import {
 const MOOD_KEY = "desafio21-mood";
 
 export const Route = createFileRoute("/perfil")({
-  head: () => ({ meta: [{ title: "Perfil — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Perfil — Reto 21 Días" }] }),
   component: ProfilePage,
 });
 
@@ -66,20 +66,20 @@ function ProfilePage() {
             {progress.name?.[0]?.toUpperCase() || "♥"}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Bem-vinda</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">Bienvenida</p>
             <h1 className="font-serif text-2xl capitalize">{progress.name}</h1>
           </div>
         </div>
       </header>
 
       <section className="mx-6 mt-6 grid grid-cols-3 gap-3">
-        <Mini label="Dias" value={`${progress.completedDays.length}/21`} icon={<Trophy className="h-4 w-4" />} />
+        <Mini label="Días" value={`${progress.completedDays.length}/21`} icon={<Trophy className="h-4 w-4" />} />
         <Mini label="Meta" value={lost ? `-${lost}kg` : "—"} icon={<Smile className="h-4 w-4" />} />
         <Mini label="Favoritas" value={`${favs.length}`} icon={<Bell className="h-4 w-4" />} />
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Sua evolução</h3>
+        <h3 className="font-serif text-lg">Tu evolución</h3>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <Field
             label="Peso inicial (kg)"
@@ -94,7 +94,7 @@ function ProfilePage() {
         </div>
 
         <div className="mt-5">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">Progresso</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">Progreso</p>
           <div className="mt-2 flex h-24 items-end gap-1.5">
             {Array.from({ length: 21 }).map((_, i) => {
               const done = progress.completedDays.includes(i + 1);
@@ -111,7 +111,7 @@ function ProfilePage() {
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Como você está hoje?</h3>
+        <h3 className="font-serif text-lg">¿Cómo estás hoy?</h3>
         <div className="mt-3 flex justify-between">
           {["😔", "😐", "🙂", "😊", "✨"].map((e) => (
             <button
@@ -123,28 +123,28 @@ function ProfilePage() {
             </button>
           ))}
         </div>
-        {mood && <p className="mt-3 text-center text-xs text-muted-foreground">Registrado por hoje ♥</p>}
+        {mood && <p className="mt-3 text-center text-xs text-muted-foreground">Registrado por hoy ♥</p>}
       </section>
 
       <section className="mx-6 mt-5 space-y-2">
-        <Row icon={<TrendingUp className="h-4 w-4" />} label="Minha evolução & conquistas" to="/evolucao" />
-        <Row icon={<Bell className="h-4 w-4" />} label="Notificações & lembretes" to="/notificacoes" />
-        <Row icon={<Settings className="h-4 w-4" />} label="Configurações" to="/configuracoes" />
+        <Row icon={<TrendingUp className="h-4 w-4" />} label="Mi evolución & logros" to="/evolucao" />
+        <Row icon={<Bell className="h-4 w-4" />} label="Notificaciones & recordatorios" to="/notificacoes" />
+        <Row icon={<Settings className="h-4 w-4" />} label="Ajustes" to="/configuracoes" />
         <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => setResetOpen(true)} />
       </section>
 
       <AlertDialog open={resetOpen} onOpenChange={setResetOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Reiniciar sua jornada?</AlertDialogTitle>
+            <AlertDialogTitle>¿Reiniciar tu jornada?</AlertDialogTitle>
             <AlertDialogDescription>
-              Todos os seus dados, progresso, favoritos e respostas serão apagados. Esta ação não pode ser desfeita.
+              Todos tus datos, progreso, favoritos y respuestas serán eliminados. Esta acción no se puede deshacer.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction onClick={handleReset} className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Sim, reiniciar
+              Sí, reiniciar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

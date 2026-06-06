@@ -5,7 +5,7 @@ import { useProgress } from "@/lib/use-progress";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/onboarding")({
-  head: () => ({ meta: [{ title: "Bem-vinda — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Bienvenida — Reto 21 Días" }] }),
   component: OnboardingPage,
 });
 
@@ -29,18 +29,18 @@ type ChoiceStep = {
 type Step = InputStep | ChoiceStep;
 
 const steps: Step[] = [
-  { type: "input", key: "name", question: "Como prefere ser chamada?", placeholder: "Seu nome", inputMode: "text" },
-  { type: "input", key: "age", question: "Qual a sua idade?", placeholder: "anos", inputMode: "numeric" },
-  { type: "input", key: "height", question: "Qual a sua altura?", hint: "em centímetros", placeholder: "ex: 165", inputMode: "numeric" },
-  { type: "input", key: "weight", question: "Qual o seu peso atual?", hint: "em quilos", placeholder: "ex: 70", inputMode: "decimal" },
-  { type: "input", key: "goalWeight", question: "Qual a sua meta de peso?", hint: "em quilos (opcional)", placeholder: "ex: 62", inputMode: "decimal", optional: true },
-  { type: "choice", key: "objective", question: "Seu objetivo principal?", options: ["Emagrecer", "Reduzir compulsão", "Mais energia", "Autoestima"] },
-  { type: "choice", key: "difficulty", question: "Sua maior dificuldade?", options: ["Vontade de doce", "Comer à noite", "Falta de tempo", "Ansiedade"] },
-  { type: "choice", key: "routine", question: "Como é a sua rotina?", options: ["Muito corrida", "Equilibrada", "Tranquila"] },
+  { type: "input", key: "name", question: "¿Cómo prefieres que te llamen?", placeholder: "Tu nombre", inputMode: "text" },
+  { type: "input", key: "age", question: "¿Cuántos años tienes?", placeholder: "años", inputMode: "numeric" },
+  { type: "input", key: "height", question: "¿Cuál es tu altura?", hint: "en centímetros", placeholder: "ej: 165", inputMode: "numeric" },
+  { type: "input", key: "weight", question: "¿Cuál es tu peso actual?", hint: "en kilos", placeholder: "ej: 70", inputMode: "decimal" },
+  { type: "input", key: "goalWeight", question: "¿Cuál es tu peso meta?", hint: "en kilos (opcional)", placeholder: "ej: 62", inputMode: "decimal", optional: true },
+  { type: "choice", key: "objective", question: "¿Cuál es tu objetivo principal?", options: ["Adelgazar", "Reducir el atracón", "Más energía", "Autoestima"] },
+  { type: "choice", key: "difficulty", question: "¿Cuál es tu mayor dificultad?", options: ["Antojo de dulce", "Comer de noche", "Falta de tiempo", "Ansiedad"] },
+  { type: "choice", key: "routine", question: "¿Cómo es tu rutina?", options: ["Muy agitada", "Equilibrada", "Tranquila"] },
 ];
 
 function OnboardingPage() {
-  const [i, setI] = useState(-1); // -1 = welcome, steps.length = finish screen
+  const [i, setI] = useState(-1); // -1 = bienvenida, steps.length = pantalla final
   const [values, setValues] = useState<Record<string, string>>({});
   const { update } = useProgress();
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ function OnboardingPage() {
     navigate({ to: "/" });
   };
 
-  // Welcome screen
+  // Pantalla de bienvenida
   if (i === -1) {
     return (
       <MobileShell>
@@ -68,26 +68,26 @@ function OnboardingPage() {
             <Sparkles className="h-7 w-7 text-rose-foreground" />
           </div>
           <h1 className="mt-8 text-center font-serif text-4xl leading-tight">
-            Bem-vinda à sua <span className="italic text-primary">transformação</span>
+            Bienvenida a tu <span className="italic text-primary">transformación</span>
           </h1>
           <p className="mt-3 text-center text-sm leading-relaxed text-muted-foreground">
-            Um protocolo feminino, leve e possível. Sem fome, sem culpa, sem guerra com a comida.
+            Un protocolo femenino, ligero y posible. Sin hambre, sin culpa, sin guerra con la comida.
           </p>
           <p className="mt-8 text-center text-xs uppercase tracking-widest text-muted-foreground">
-            Vamos personalizar o seu plano em {total} perguntas rápidas
+            Vamos a personalizar tu plan en {total} preguntas rápidas
           </p>
           <button
             onClick={() => setI(0)}
             className="mt-auto mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow"
           >
-            Começar <ChevronRight className="h-4 w-4" />
+            Comenzar <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       </MobileShell>
     );
   }
 
-  // Finish screen
+  // Pantalla final
   if (i >= total) {
     return (
       <MobileShell>
@@ -95,15 +95,15 @@ function OnboardingPage() {
           <div className="flex h-20 w-20 animate-pop items-center justify-center rounded-full bg-gradient-rose shadow-glow">
             <Sparkles className="h-8 w-8 text-rose-foreground" />
           </div>
-          <h2 className="mt-6 font-serif text-3xl leading-tight">Seu plano personalizado está pronto.</h2>
+          <h2 className="mt-6 font-serif text-3xl leading-tight">Tu plan personalizado está listo.</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Preparamos os próximos 21 dias com receitas, apoio emocional e tudo o que você precisa.
+            Preparamos los próximos 21 días con recetas, apoyo emocional y todo lo que necesitas.
           </p>
           <button
             onClick={finish}
             className="mt-10 w-full max-w-xs rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow"
           >
-            Acessar meu plano
+            Acceder a mi plan
           </button>
         </div>
       </MobileShell>
@@ -144,7 +144,7 @@ function OnboardingPage() {
             onClick={() => setI(i - 1)}
             className="flex items-center gap-1 text-xs uppercase tracking-widest text-muted-foreground"
           >
-            <ChevronLeft className="h-4 w-4" /> Voltar
+            <ChevronLeft className="h-4 w-4" /> Volver
           </button>
           <p className="text-xs uppercase tracking-widest text-muted-foreground">
             {i + 1} de {total}
@@ -174,7 +174,7 @@ function OnboardingPage() {
               disabled={!canAdvance}
               className="mt-auto mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow disabled:opacity-40"
             >
-              {step.optional && !current ? "Pular" : "Continuar"} <ChevronRight className="h-4 w-4" />
+              {step.optional && !current ? "Omitir" : "Continuar"} <ChevronRight className="h-4 w-4" />
             </button>
           </>
         ) : (

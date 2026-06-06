@@ -8,7 +8,7 @@ import { ArrowLeft, Check, Lock, Sparkles, Droplet, Sun, Moon, Heart, Calendar, 
 const CHECK_KEY = "desafio21-module-checks";
 
 export const Route = createFileRoute("/modulos/$id")({
-  head: () => ({ meta: [{ title: "Módulo — Desafio 21 Dias" }] }),
+  head: () => ({ meta: [{ title: "Módulo — Reto 21 Días" }] }),
   component: ModuleDetail,
 });
 
@@ -30,8 +30,8 @@ function ModuleDetail() {
     return (
       <MobileShell>
         <div className="p-8 text-center">
-          <p>Módulo não encontrado.</p>
-          <Link to="/modulos" className="text-primary underline">Voltar</Link>
+          <p>Módulo no encontrado.</p>
+          <Link to="/modulos" className="text-primary underline">Volver</Link>
         </div>
       </MobileShell>
     );
@@ -44,7 +44,7 @@ function ModuleDetail() {
       <MobileShell>
         <header className="px-6 pt-8">
           <button onClick={() => navigate({ to: "/modulos" })} className="flex items-center gap-2 text-sm text-muted-foreground">
-            <ArrowLeft className="h-4 w-4" /> Voltar
+            <ArrowLeft className="h-4 w-4" /> Volver
           </button>
         </header>
         <div className="mx-6 mt-10 flex flex-col items-center rounded-3xl border border-border/60 bg-card p-8 text-center shadow-soft">
@@ -52,7 +52,7 @@ function ModuleDetail() {
             <Lock className="h-7 w-7" />
           </div>
           <h2 className="mt-4 font-serif text-2xl">Módulo bloqueado</h2>
-          <p className="mt-2 text-sm text-muted-foreground">Conclua mais {Math.max(0, req - progress.completedDays.length)} dias do desafio para desbloquear.</p>
+          <p className="mt-2 text-sm text-muted-foreground">Completa {Math.max(0, req - progress.completedDays.length)} días más del reto para desbloquearlo.</p>
         </div>
       </MobileShell>
     );
@@ -104,8 +104,8 @@ function ModuleDetail() {
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
-          <h3 className="font-serif text-base">Checklist do módulo</h3>
-          <span className="text-[11px] text-muted-foreground">Marque o que fez hoje</span>
+          <h3 className="font-serif text-base">Checklist del módulo</h3>
+          <span className="text-[11px] text-muted-foreground">Marca lo que hiciste hoy</span>
         </div>
         <ul className="mt-3 space-y-2">
           {mod.checklist.map((item) => {
@@ -131,7 +131,7 @@ function ModuleDetail() {
 
       <div className="px-6 pt-6">
         <Link to="/nutri" className="block rounded-3xl bg-primary p-4 text-center text-sm font-medium text-primary-foreground shadow-glow">
-          Tirar dúvidas com a Nutri
+          Consultar dudas con la Nutri
         </Link>
       </div>
     </MobileShell>
@@ -143,14 +143,14 @@ function ExtraBlock({ kind }: { kind?: string }) {
 
   if (kind === "protocol24h") {
     const steps = [
-      { time: "Manhã", action: "Água com limão + proteína no café" },
-      { time: "Meio-dia", action: "Almoço com folhas verdes e proteína magra" },
-      { time: "Tarde", action: "Chá de hortelã ou gengibre + caminhada de 15 min" },
-      { time: "Noite", action: "Jantar leve, zero açúcar, dormir antes das 23h" },
+      { time: "Mañana", action: "Agua con limón + proteína en el desayuno" },
+      { time: "Mediodía", action: "Almuerzo con hojas verdes y proteína magra" },
+      { time: "Tarde", action: "Té de menta o jengibre + caminata de 15 min" },
+      { time: "Noche", action: "Cena ligera, cero azúcar, dormir antes de las 23h" },
     ];
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-base">Protocolo 24h anti-inchaço</h3>
+        <h3 className="font-serif text-base">Protocolo 24h anti-hinchazón</h3>
         <ol className="mt-3 space-y-3">
           {steps.map((s, i) => (
             <li key={i} className="flex gap-3">
@@ -169,12 +169,12 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "morningRoutine") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Sun className="h-4 w-4 text-primary" /> Rotina matinal feminina</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Sun className="h-4 w-4 text-primary" /> Rutina matinal femenina</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>💧 1 copo de água ao acordar</li>
-          <li>☀️ 5 minutos de sol na pele</li>
-          <li>🥚 Café com proteína (20g+)</li>
-          <li>🧘 1 minuto de respiração profunda</li>
+          <li>💧 1 vaso de agua al despertar</li>
+          <li>☀️ 5 minutos de sol en la piel</li>
+          <li>🥚 Desayuno con proteína (20g+)</li>
+          <li>🧘 1 minuto de respiración profunda</li>
         </ul>
       </section>
     );
@@ -183,12 +183,12 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "nightRitual") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Moon className="h-4 w-4 text-primary" /> Ritual noturno</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Moon className="h-4 w-4 text-primary" /> Ritual nocturno</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>🌙 Luz baixa após às 21h</li>
-          <li>🍵 Chá de camomila ou melissa</li>
-          <li>📵 Telas longe da cama</li>
-          <li>📝 Escreva 1 gratidão antes de dormir</li>
+          <li>🌙 Luz tenue después de las 21h</li>
+          <li>🍵 Té de manzanilla o melissa</li>
+          <li>📵 Pantallas lejos de la cama</li>
+          <li>📝 Escribe 1 gratitud antes de dormir</li>
         </ul>
       </section>
     );
@@ -197,12 +197,12 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "hydration") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Droplet className="h-4 w-4 text-primary" /> Águas saborizadas</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Droplet className="h-4 w-4 text-primary" /> Aguas saborizadas</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>🍋 Limão + hortelã — desincha</li>
-          <li>🫚 Gengibre + canela — acelera metabolismo</li>
-          <li>🥒 Pepino + limão — refrescante e drena</li>
-          <li>🌺 Hibisco gelado — antioxidante</li>
+          <li>🍋 Limón + menta — desinfla</li>
+          <li>🫚 Jengibre + canela — acelera el metabolismo</li>
+          <li>🥒 Pepino + limón — refrescante y drenante</li>
+          <li>🌺 Hibisco frío — antioxidante</li>
         </ul>
       </section>
     );
@@ -210,14 +210,14 @@ function ExtraBlock({ kind }: { kind?: string }) {
 
   if (kind === "cycle") {
     const phases = [
-      { name: "Menstrual", tip: "Descanso, ferro, comida quente" },
-      { name: "Folicular", tip: "Energia alta — aproveite pra treinar" },
-      { name: "Ovulatória", tip: "Pico de confiança e disposição" },
-      { name: "Lútea", tip: "Mais proteína, mais sono, menos cobrança" },
+      { name: "Menstrual", tip: "Descanso, hierro, comida caliente" },
+      { name: "Folicular", tip: "Energía alta — ¡aprovecha para entrenar!" },
+      { name: "Ovulatoria", tip: "Pico de confianza y vitalidad" },
+      { name: "Lútea", tip: "Más proteína, más sueño, menos exigencia" },
     ];
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Calendar className="h-4 w-4 text-primary" /> Seu ciclo, seu plano</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Calendar className="h-4 w-4 text-primary" /> Tu ciclo, tu plan</h3>
         <ul className="mt-3 grid grid-cols-2 gap-2 text-sm">
           {phases.map((p) => (
             <li key={p.name} className="rounded-2xl bg-blush/60 p-3">
@@ -237,7 +237,7 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "future") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Heart className="h-4 w-4 text-primary" /> Suas metas dos próximos 30 dias</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Heart className="h-4 w-4 text-primary" /> Tus metas para los próximos 30 días</h3>
         <FutureGoals />
       </section>
     );
@@ -257,11 +257,11 @@ function DiaryBlock() {
   };
   return (
     <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-      <h3 className="flex items-center gap-2 font-serif text-base"><Pencil className="h-4 w-4 text-primary" /> Diário pessoal</h3>
+      <h3 className="flex items-center gap-2 font-serif text-base"><Pencil className="h-4 w-4 text-primary" /> Diario personal</h3>
       <textarea
         value={entry}
         onChange={(e) => save(e.target.value)}
-        placeholder="Escreva 1 vitória sua hoje, por menor que seja…"
+        placeholder="Escribe 1 victoria tuya hoy, por pequeña que sea…"
         rows={5}
         className="mt-3 w-full rounded-2xl border border-border/60 bg-secondary/50 p-3 text-sm outline-none"
       />
@@ -282,7 +282,7 @@ function FutureGoals() {
     <textarea
       value={goals}
       onChange={(e) => save(e.target.value)}
-      placeholder="Ex: dormir 8h, treinar 3x/semana, manter o peso…"
+      placeholder="Ej: dormir 8h, entrenar 3x/semana, mantener el peso…"
       rows={4}
       className="mt-3 w-full rounded-2xl border border-border/60 bg-secondary/50 p-3 text-sm outline-none"
     />
