@@ -7,23 +7,22 @@ type State = {
   enabled: boolean;
   lastShownDate: string | null; // YYYY-MM-DD
   time?: string; // HH:MM
-  message?: string; // custom reminder message
 };
 
 type Mode = "native" | "in-app";
 
 function loadState(): State {
-  if (typeof window === "undefined") return { enabled: false, lastShownDate: null, time: DEFAULT_TIME, message: "" };
+  if (typeof window === "undefined") return { enabled: false, lastShownDate: null, time: DEFAULT_TIME };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as State;
-      return { time: DEFAULT_TIME, message: "", ...parsed };
+      return { time: DEFAULT_TIME, ...parsed };
     }
   } catch {
     /* ignore */
   }
-  return { enabled: false, lastShownDate: null, time: DEFAULT_TIME, message: "" };
+  return { enabled: false, lastShownDate: null, time: DEFAULT_TIME };
 }
 
 function saveState(s: State) {
@@ -62,7 +61,6 @@ export function useDailyReminder(quote: string) {
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("unsupported");
   const [enabled, setEnabled] = useState<boolean>(false);
   const [time, setTimeState] = useState<string>(DEFAULT_TIME);
-  const [message, setMessageState] = useState<string>("");
 
   useEffect(() => {
     if (notificationsAvailable()) {
@@ -75,14 +73,13 @@ export function useDailyReminder(quote: string) {
     const s = loadState();
     setEnabled(s.enabled);
     setTimeState(s.time || DEFAULT_TIME);
-    setMessageState(s.message || "");
   }, []);
 
   // Dispara notificação nativa (apenas modo native, granted)
   useEffect(() => {
     if (mode !== "native" || permission !== "granted" || !enabled) return;
 
-    const body = (message || quote).trim();
+    const body = quote.trim();
     if (!body) return;
 
     const { h, m } = parseTime(time);
