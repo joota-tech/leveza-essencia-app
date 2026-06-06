@@ -63,7 +63,7 @@ export const Route = createFileRoute("/api/nutri")({
           }
 
           const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
-          const reply = data.choices?.[0]?.message?.content?.trim() || "Estou aqui com você. Me conta um pouco mais? 🌸";
+          const reply = data.choices?.[0]?.message?.content?.trim() || "Estoy aquí contigo. ¿Me cuentas un poco más? 🌸";
 
           return Response.json({ reply });
         } catch (err) {
