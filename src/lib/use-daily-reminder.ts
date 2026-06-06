@@ -75,7 +75,7 @@ export function useDailyReminder(quote: string) {
     setTimeState(s.time || DEFAULT_TIME);
   }, []);
 
-  // Dispara notificação nativa (apenas modo native, granted)
+  // Dispara notificación nativa (solo modo native, granted)
   useEffect(() => {
     if (mode !== "native" || permission !== "granted" || !enabled) return;
 
@@ -88,7 +88,7 @@ export function useDailyReminder(quote: string) {
       const s = loadState();
       if (s.lastShownDate !== todayKey()) {
         try {
-          new Notification("Desafio 21 Dias 💛", {
+          new Notification("Reto 21 Días 💛", {
             body,
             icon: "/favicon.ico",
             tag: "daily-quote",
@@ -100,7 +100,7 @@ export function useDailyReminder(quote: string) {
       }
     };
 
-    // Se já passou o horário hoje e ainda não mostrou, dispara
+    // Si ya pasó la hora hoy y aún no se mostró, dispara
     const now = new Date();
     const todayTarget = new Date();
     todayTarget.setHours(h, m, 0, 0);
