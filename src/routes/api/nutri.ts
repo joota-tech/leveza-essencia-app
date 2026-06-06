@@ -54,12 +54,12 @@ export const Route = createFileRoute("/api/nutri")({
           if (!res.ok) {
             const text = await res.text();
             if (res.status === 429) {
-              return Response.json({ error: "Muitas mensagens em pouco tempo. Tente novamente em alguns segundos 💗" }, { status: 429 });
+              return Response.json({ error: "Demasiados mensajes en poco tiempo. Inténtalo de nuevo en unos segundos 💗" }, { status: 429 });
             }
             if (res.status === 402) {
-              return Response.json({ error: "Limite de uso atingido. Adicione créditos no workspace." }, { status: 402 });
+              return Response.json({ error: "Límite de uso alcanzado. Añade créditos en el workspace." }, { status: 402 });
             }
-            return Response.json({ error: text || "Erro ao chamar IA" }, { status: 500 });
+            return Response.json({ error: text || "Error al llamar a la IA" }, { status: 500 });
           }
 
           const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
