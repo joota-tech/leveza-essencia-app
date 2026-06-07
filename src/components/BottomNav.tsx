@@ -1,26 +1,29 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Home, BookOpen, CalendarHeart, HeartHandshake, Gift, User } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 const items = [
-  { to: "/", label: "Inicio", icon: Home },
-  { to: "/receitas", label: "Recetas", icon: BookOpen },
-  { to: "/plano", label: "21 Días", icon: CalendarHeart },
-  { to: "/anti-compulsao", label: "Acoger", icon: HeartHandshake },
-  { to: "/bonus", label: "Bonos", icon: Gift },
-  { to: "/perfil", label: "Perfil", icon: User },
+  { to: "/", key: "home", icon: Home },
+  { to: "/receitas", key: "recipes", icon: BookOpen },
+  { to: "/plano", key: "plan", icon: CalendarHeart },
+  { to: "/anti-compulsao", key: "acolher", icon: HeartHandshake },
+  { to: "/bonus", key: "bonus", icon: Gift },
+  { to: "/perfil", key: "profile", icon: User },
 ] as const;
 
 export function BottomNav() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const t = useT();
   if (pathname.startsWith("/onboarding") || pathname.startsWith("/nutri")) return null;
   return (
     <nav
-      aria-label="Navegación principal"
+      aria-label={t("nav.ariaLabel")}
       className="fixed bottom-0 left-1/2 z-40 w-full max-w-md -translate-x-1/2 px-3 pb-3 pt-2"
     >
       <ul className="flex items-center justify-between rounded-3xl border border-border/60 bg-card/90 px-2 py-2 shadow-soft backdrop-blur-xl">
-        {items.map(({ to, label, icon: Icon }) => {
+        {items.map(({ to, key, icon: Icon }) => {
           const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
+          const label = t(`nav.${key}`);
           return (
             <li key={to} className="flex-1">
               <Link

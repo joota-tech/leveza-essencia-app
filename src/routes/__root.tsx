@@ -12,15 +12,17 @@ import appCss from "../styles.css?url";
 import { BottomNav } from "@/components/BottomNav";
 import { MobileShell } from "@/components/MobileShell";
 import { registerServiceWorker } from "@/lib/register-sw";
+import { LocaleProvider, useT } from "@/lib/i18n";
 
 function NotFoundComponent() {
+  const t = useT();
   return (
     <MobileShell>
       <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <h1 className="font-serif text-6xl text-foreground">404</h1>
         <p className="mt-2 text-sm text-muted-foreground">Esta página se perdió en el camino.</p>
         <Link to="/" className="mt-6 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
-          Volver al inicio
+          {t("common.back")}
         </Link>
       </div>
     </MobileShell>
@@ -84,9 +86,11 @@ function RootComponent() {
     registerServiceWorker();
   }, []);
   return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <BottomNav />
-    </QueryClientProvider>
+    <LocaleProvider>
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+        <BottomNav />
+      </QueryClientProvider>
+    </LocaleProvider>
   );
 }

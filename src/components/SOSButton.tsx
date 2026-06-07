@@ -1,23 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Heart, Wind, Sparkles, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-
-const motivacionais = [
-  "Respira. Este momento pasará — ya has superado otros.",
-  "No es hambre. Es emoción. Acógela, no comas.",
-  "No necesitas ser perfecta. Solo necesitas volver.",
-  "Una elección a la vez. Esta puede ser de amor propio.",
-  "Tu cuerpo merece cariño, no castigo.",
-];
-
-const tecnicas = [
-  "Bebe 1 vaso de agua fría lentamente",
-  "Cepíllate los dientes ahora mismo",
-  "Sal del ambiente por 5 minutos",
-  "Come 1 fruta con canela",
-];
+import { useLocale } from "@/lib/i18n";
+import { dict } from "@/lib/i18n-dict";
 
 export function SOSButton() {
+  const { locale, t } = useLocale();
+  const motivacionais = useMemo(() => dict[locale].sos.motivacionais, [locale]);
+  const tecnicas = useMemo(() => dict[locale].sos.tecnicas, [locale]);
+
   const [open, setOpen] = useState(false);
   const [frase, setFrase] = useState(motivacionais[0]);
   const [breath, setBreath] = useState<"in" | "hold" | "out">("in");
@@ -25,7 +16,7 @@ export function SOSButton() {
   useEffect(() => {
     if (!open) return;
     setFrase(motivacionais[Math.floor(Math.random() * motivacionais.length)]);
-  }, [open]);
+  }, [open, motivacionais]);
 
   useEffect(() => {
     if (!open) return;
@@ -48,10 +39,10 @@ export function SOSButton() {
           if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(20);
           setOpen(true);
         }}
-        aria-label="SOS — necesito ayuda"
+        aria-label={t("sos.ariaLabel")}
         className="fixed bottom-24 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-rose text-rose-foreground shadow-glow ring-2 ring-card animate-glow"
       >
-        <span className="text-[11px] font-bold tracking-widest">SOS</span>
+        <span className="text-[11px] font-bold tracking-widest">{t("sos.label")}</span>
       </button>
 
       {open && (
@@ -60,11 +51,11 @@ export function SOSButton() {
             onClick={(e) => e.stopPropagation()}
             className="relative mx-auto w-full max-w-md max-h-[88vh] overflow-y-auto rounded-t-3xl bg-card p-6 shadow-glow animate-float-up"
           >
-            <button onClick={() => setOpen(false)} className="absolute right-4 top-4 rounded-full bg-secondary p-2 text-muted-foreground">
+            <button onClick={() => setOpen(false)} className="absolute right-4 top-4 rounded-full bg-secondary p-2 text-muted-foreground" aria-label={t("common.close")}>
               <X className="h-4 w-4" />
             </button>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Un momento</p>
-            <h2 className="mt-1 font-serif text-2xl">No estás sola</h2>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">{t("sos.eyebrow")}</p>
+            <h2 className="mt-1 font-serif text-2xl">{t("sos.title")}</h2>
 
             <div className="mt-5 rounded-2xl bg-blush p-4 text-center">
               <Heart className="mx-auto h-5 w-5 text-primary" />
@@ -73,7 +64,7 @@ export function SOSButton() {
 
             <div className="mt-5 rounded-2xl border border-border/60 bg-secondary/60 p-4">
               <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                <Wind className="h-3.5 w-3.5" /> Respiración 4-7-8
+                <Wind className="h-3.5 w-3.5" /> {t("sos.breathTitle")}
               </div>
               <div className="mt-4 flex flex-col items-center">
                 <div
@@ -82,19 +73,19 @@ export function SOSButton() {
                   }`}
                 >
                   <span className="font-serif text-lg">
-                    {breath === "in" ? "Inspira" : breath === "hold" ? "Sostén" : "Suelta"}
+                    {breath === "in" ? t("sos.in") : breath === "hold" ? t("sos.hold") : t("sos.out")}
                   </span>
                 </div>
-                <p className="mt-3 text-xs text-muted-foreground">Repite 4 veces</p>
+                <p className="mt-3 text-xs text-muted-foreground">{t("sos.repeat")}</p>
               </div>
             </div>
 
             <div className="mt-5">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Atraviesa el pico</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground">{t("sos.overcomePeak")}</p>
               <ul className="mt-2 space-y-2">
-                {tecnicas.map((t, i) => (
+                {tecnicas.map((tec, i) => (
                   <li key={i} className="flex items-start gap-2 rounded-2xl border border-border/60 bg-card p-3 text-sm">
-                    <Sparkles className="mt-0.5 h-4 w-4 text-primary" /> {t}
+                    <Sparkles className="mt-0.5 h-4 w-4 text-primary" /> {tec}
                   </li>
                 ))}
               </ul>
@@ -102,10 +93,10 @@ export function SOSButton() {
 
             <div className="mt-5 grid grid-cols-2 gap-3">
               <Link to="/nutri" onClick={() => setOpen(false)} className="rounded-2xl bg-primary py-3 text-center text-xs font-medium text-primary-foreground shadow-glow">
-                Hablar con la Nutri
+                {t("sos.talkToNutri")}
               </Link>
               <Link to="/anti-compulsao" onClick={() => setOpen(false)} className="rounded-2xl bg-secondary py-3 text-center text-xs font-medium text-secondary-foreground">
-                Guía anti-atracón
+                {t("sos.antiBingeGuide")}
               </Link>
             </div>
           </div>
