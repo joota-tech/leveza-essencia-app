@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { bonuses } from "@/lib/app-data";
-import { Download, FileText, Sparkles, X } from "lucide-react";
-import { useState } from "react";
+import { Download, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/bonus")({
   head: () => ({ meta: [{ title: "Bonos — Reto 21 Días" }] }),
@@ -10,13 +9,6 @@ export const Route = createFileRoute("/bonus")({
 });
 
 function BonusPage() {
-  const [openPdf, setOpenPdf] = useState<{ url: string; title: string } | null>(null);
-
-  const handleOpen = (b: (typeof bonuses)[number]) => {
-    if (!b.pdf) return;
-    setOpenPdf({ url: b.pdf, title: b.title });
-  };
-
   const handleDownload = (b: (typeof bonuses)[number]) => {
     if (!b.pdf) return;
     const a = document.createElement("a");
@@ -61,21 +53,13 @@ function BonusPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 flex gap-2">
-                  <button
-                    onClick={() => handleOpen(b)}
-                    disabled={!available}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-medium text-primary-foreground shadow-glow transition disabled:opacity-50"
-                  >
-                    <FileText className="h-3.5 w-3.5" /> {available ? "Abrir" : "Próximamente"}
-                  </button>
+                <div className="mt-4">
                   <button
                     onClick={() => handleDownload(b)}
                     disabled={!available}
-                    className="flex items-center justify-center rounded-2xl border border-border bg-card px-4 py-3 text-xs font-medium transition disabled:opacity-50"
-                    aria-label="Descargar PDF"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-medium text-primary-foreground shadow-glow transition disabled:opacity-50"
                   >
-                    <Download className="h-3.5 w-3.5" />
+                    <Download className="h-3.5 w-3.5" /> {available ? "Descargar PDF" : "Próximamente"}
                   </button>
                 </div>
               </div>
@@ -83,22 +67,6 @@ function BonusPage() {
           );
         })}
       </section>
-
-      {openPdf && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-background animate-float-up">
-          <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-card px-4 py-3">
-            <p className="truncate font-serif text-base">{openPdf.title}</p>
-            <button
-              onClick={() => setOpenPdf(null)}
-              className="rounded-full p-2 text-muted-foreground hover:bg-muted"
-              aria-label="Cerrar"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-          <iframe src={openPdf.url} title={openPdf.title} className="flex-1 w-full" />
-        </div>
-      )}
     </MobileShell>
   );
 }
