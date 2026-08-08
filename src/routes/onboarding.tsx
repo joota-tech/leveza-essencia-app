@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
+import { useLocale } from "@/lib/i18n";
+import { dict } from "@/lib/i18n-dict";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/onboarding")({
@@ -28,22 +30,24 @@ type ChoiceStep = {
 
 type Step = InputStep | ChoiceStep;
 
-const steps: Step[] = [
-  { type: "input", key: "name", question: "¿Cómo prefieres que te llamen?", placeholder: "Tu nombre", inputMode: "text" },
-  { type: "input", key: "age", question: "¿Cuántos años tienes?", placeholder: "años", inputMode: "numeric" },
-  { type: "input", key: "height", question: "¿Cuál es tu altura?", hint: "en centímetros", placeholder: "ej: 165", inputMode: "numeric" },
-  { type: "input", key: "weight", question: "¿Cuál es tu peso actual?", hint: "en kilos", placeholder: "ej: 70", inputMode: "decimal" },
-  { type: "input", key: "goalWeight", question: "¿Cuál es tu peso meta?", hint: "en kilos (opcional)", placeholder: "ej: 62", inputMode: "decimal", optional: true },
-  { type: "choice", key: "objective", question: "¿Cuál es tu objetivo principal?", options: ["Adelgazar", "Reducir el atracón", "Más energía", "Autoestima"] },
-  { type: "choice", key: "difficulty", question: "¿Cuál es tu mayor dificultad?", options: ["Antojo de dulce", "Comer de noche", "Falta de tiempo", "Ansiedad"] },
-  { type: "choice", key: "routine", question: "¿Cómo es tu rutina?", options: ["Muy agitada", "Equilibrada", "Tranquila"] },
-];
-
 function OnboardingPage() {
   const [i, setI] = useState(-1); // -1 = bienvenida, steps.length = pantalla final
   const [values, setValues] = useState<Record<string, string>>({});
   const { update } = useProgress();
   const navigate = useNavigate();
+  const { locale, t } = useLocale();
+  const ob = dict[locale].onboarding;
+
+  const steps: Step[] = [
+    { type: "input", key: "name", question: ob.name.question, placeholder: ob.name.placeholder, inputMode: "text" },
+    { type: "input", key: "age", question: ob.age.question, placeholder: ob.age.placeholder, inputMode: "numeric" },
+    { type: "input", key: "height", question: ob.height.question, hint: ob.height.hint, placeholder: ob.height.placeholder, inputMode: "numeric" },
+    { type: "input", key: "weight", question: ob.weight.question, hint: ob.weight.hint, placeholder: ob.weight.placeholder, inputMode: "decimal" },
+    { type: "input", key: "goalWeight", question: ob.goalWeight.question, hint: ob.goalWeight.hint, placeholder: ob.goalWeight.placeholder, inputMode: "decimal", optional: true },
+    { type: "choice", key: "objective", question: ob.objective.question, options: ob.objective.options },
+    { type: "choice", key: "difficulty", question: ob.difficulty.question, options: ob.difficulty.options },
+    { type: "choice", key: "routine", question: ob.routine.question, options: ob.routine.options },
+  ];
 
   const total = steps.length;
 
@@ -68,19 +72,19 @@ function OnboardingPage() {
             <Sparkles className="h-7 w-7 text-rose-foreground" />
           </div>
           <h1 className="mt-8 text-center font-serif text-4xl leading-tight">
-            Bienvenida a tu <span className="italic text-primary">transformación</span>
+            {t("onboarding.welcomeTitle")}
           </h1>
           <p className="mt-3 text-center text-sm leading-relaxed text-muted-foreground">
-            Un protocolo femenino, ligero y posible. Sin hambre, sin culpa, sin guerra con la comida.
+            {t("onboarding.welcomeBody")}
           </p>
           <p className="mt-8 text-center text-xs uppercase tracking-widest text-muted-foreground">
-            Vamos a personalizar tu plan en {total} preguntas rápidas
+            {t("onboarding.welcomeSteps", { n: total })}
           </p>
           <button
             onClick={() => setI(0)}
             className="mt-auto mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow"
           >
-            Comenzar <ChevronRight className="h-4 w-4" />
+            {t("onboarding.startBtn")} <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       </MobileShell>
@@ -95,15 +99,15 @@ function OnboardingPage() {
           <div className="flex h-20 w-20 animate-pop items-center justify-center rounded-full bg-gradient-rose shadow-glow">
             <Sparkles className="h-8 w-8 text-rose-foreground" />
           </div>
-          <h2 className="mt-6 font-serif text-3xl leading-tight">Tu plan personalizado está listo.</h2>
+          <h2 className="mt-6 font-serif text-3xl leading-tight">{t("onboarding.finalTitle")}</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Preparamos los próximos 21 días con recetas, apoyo emocional y todo lo que necesitas.
+            {t("onboarding.finalBody")}
           </p>
           <button
             onClick={finish}
             className="mt-10 w-full max-w-xs rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow"
           >
-            Acceder a mi plan
+            {t("onboarding.accessBtn")}
           </button>
         </div>
       </MobileShell>
@@ -144,10 +148,10 @@ function OnboardingPage() {
             onClick={() => setI(i - 1)}
             className="flex items-center gap-1 text-xs uppercase tracking-widest text-muted-foreground"
           >
-            <ChevronLeft className="h-4 w-4" /> Volver
+            <ChevronLeft className="h-4 w-4" /> {t("onboarding.backBtn")}
           </button>
           <p className="text-xs uppercase tracking-widest text-muted-foreground">
-            {i + 1} de {total}
+            {t("onboarding.stepOf", { n: i + 1, total })}
           </p>
         </div>
 
@@ -174,7 +178,7 @@ function OnboardingPage() {
               disabled={!canAdvance}
               className="mt-auto mb-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-sm font-medium text-primary-foreground shadow-glow disabled:opacity-40"
             >
-              {step.optional && !current ? "Omitir" : "Continuar"} <ChevronRight className="h-4 w-4" />
+              {step.optional && !current ? t("onboarding.skipBtn") : t("onboarding.continueBtn")} <ChevronRight className="h-4 w-4" />
             </button>
           </>
         ) : (

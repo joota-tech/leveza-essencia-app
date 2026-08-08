@@ -1,25 +1,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
+import { useLocale } from "@/lib/i18n";
+import { dict } from "@/lib/i18n-dict";
 import { ArrowLeft, Send, Sparkles } from "lucide-react";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const STORAGE_KEY = "desafio21-nutri-chat";
-
-const QUICK = [
-  "Tengo ganas de dulce",
-  "¿Qué puedo comer ahora?",
-  "Estoy desanimada",
-  "No pude seguir el plan hoy",
-  "Ayúdame con el atracón",
-  "Quiero reducir la barriga",
-];
-
-const WELCOME: ChatMessage = {
-  role: "assistant",
-  content: "¡Hola, linda! 🌸 Soy tu Nutri personal. Estoy aquí para acompañarte, resolver tus dudas y ayudarte a seguir firme. Cuéntame: ¿cómo estás hoy?",
-};
 
 export const Route = createFileRoute("/nutri")({
   head: () => ({ meta: [{ title: "Habla con la Nutri — Reto 21 Días" }] }),
@@ -28,6 +16,11 @@ export const Route = createFileRoute("/nutri")({
 
 function NutriPage() {
   const navigate = useNavigate();
+  const { locale, t } = useLocale();
+  const nutriDict = dict[locale].nutri;
+  const WELCOME: ChatMessage = { role: "assistant", content: nutriDict.welcome };
+  const QUICK = nutriDict.quick;
+
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -68,16 +61,16 @@ function NutriPage() {
       const res = await fetch("/api/nutri", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, locale }),
       });
       const data = (await res.json()) as { reply?: string; error?: string };
       if (!res.ok || data.error) {
-        setError(data.error || "Algo salió mal. ¿Lo intentas de nuevo?");
+        setError(data.error || t("nutri.errorGeneral"));
       } else if (data.reply) {
         setMessages((m) => [...m, { role: "assistant", content: data.reply! }]);
       }
     } catch {
-      setError("Sin conexión. Inténtalo de nuevo.");
+      setError(t("nutri.errorOffline"));
     } finally {
       setLoading(false);
     }
@@ -98,10 +91,10 @@ function NutriPage() {
           <Sparkles className="h-5 w-5" />
         </div>
         <div className="flex-1">
-          <h1 className="font-serif text-lg leading-none">Nutri</h1>
-          <p className="text-[11px] text-muted-foreground">En línea · responde en segundos</p>
+          <h1 className="font-serif text-lg leading-none">{t("nutri.h1")}</h1>
+          <p className="text-[11px] text-muted-foreground">{t("nutri.status")}</p>
         </div>
-        <button onClick={clearChat} className="text-[11px] text-muted-foreground underline">limpiar</button>
+        <button onClick={clearChat} className="text-[11px] text-muted-foreground underline">{t("nutri.clearBtn")}</button>
       </header>
 
       <section className="px-4 pb-44 pt-5">
@@ -140,7 +133,7 @@ function NutriPage() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); }
             }}
-            placeholder="Cuéntale a la Nutri…"
+            placeholder={t("nutri.placeholder")}
             rows={1}
             className="max-h-32 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none"
           />

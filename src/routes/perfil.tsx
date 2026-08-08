@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
+import { useLocale } from "@/lib/i18n";
 import { recipes } from "@/lib/app-data";
 import { Bell, ChevronRight, LogOut, Settings, Smile, Trophy, TrendingUp } from "lucide-react";
 import {
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/perfil")({
 
 function ProfilePage() {
   const { progress, update } = useProgress();
+  const { t } = useLocale();
   const favs = recipes.filter((r) => progress.favorites.includes(r.id));
   const lost =
     progress.startWeight && progress.goalWeight
@@ -66,35 +68,35 @@ function ProfilePage() {
             {progress.name?.[0]?.toUpperCase() || "♥"}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Bienvenida</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">{t("profile.greeting")}</p>
             <h1 className="font-serif text-2xl capitalize">{progress.name}</h1>
           </div>
         </div>
       </header>
 
       <section className="mx-6 mt-6 grid grid-cols-3 gap-3">
-        <Mini label="Días" value={`${progress.completedDays.length}/21`} icon={<Trophy className="h-4 w-4" />} />
-        <Mini label="Meta" value={lost ? `-${lost}kg` : "—"} icon={<Smile className="h-4 w-4" />} />
-        <Mini label="Favoritas" value={`${favs.length}`} icon={<Bell className="h-4 w-4" />} />
+        <Mini label={t("profile.daysLabel")} value={`${progress.completedDays.length}/21`} icon={<Trophy className="h-4 w-4" />} />
+        <Mini label={t("profile.goalLabel")} value={lost ? `-${lost}kg` : "—"} icon={<Smile className="h-4 w-4" />} />
+        <Mini label={t("profile.favoritesLabel")} value={`${favs.length}`} icon={<Bell className="h-4 w-4" />} />
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Tu evolución</h3>
+        <h3 className="font-serif text-lg">{t("profile.evolutionTitle")}</h3>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <Field
-            label="Peso inicial (kg)"
+            label={t("profile.startWeight")}
             value={progress.startWeight ?? ""}
             onChange={(v) => update({ startWeight: Number(v) || undefined })}
           />
           <Field
-            label="Meta (kg)"
+            label={t("profile.goalWeight")}
             value={progress.goalWeight ?? ""}
             onChange={(v) => update({ goalWeight: Number(v) || undefined })}
           />
         </div>
 
         <div className="mt-5">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">Progreso</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">{t("profile.progressLabel")}</p>
           <div className="mt-2 flex h-24 items-end gap-1.5">
             {Array.from({ length: 21 }).map((_, i) => {
               const done = progress.completedDays.includes(i + 1);
@@ -111,7 +113,7 @@ function ProfilePage() {
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">¿Cómo estás hoy?</h3>
+        <h3 className="font-serif text-lg">{t("profile.moodTitle")}</h3>
         <div className="mt-3 flex justify-between">
           {["😔", "😐", "🙂", "😊", "✨"].map((e) => (
             <button
@@ -123,28 +125,28 @@ function ProfilePage() {
             </button>
           ))}
         </div>
-        {mood && <p className="mt-3 text-center text-xs text-muted-foreground">Registrado por hoy ♥</p>}
+        {mood && <p className="mt-3 text-center text-xs text-muted-foreground">{t("profile.moodSaved")}</p>}
       </section>
 
       <section className="mx-6 mt-5 space-y-2">
-        <Row icon={<TrendingUp className="h-4 w-4" />} label="Mi evolución & logros" to="/evolucao" />
-        <Row icon={<Bell className="h-4 w-4" />} label="Notificaciones & recordatorios" to="/notificacoes" />
-        <Row icon={<Settings className="h-4 w-4" />} label="Ajustes" to="/configuracoes" />
-        <Row icon={<LogOut className="h-4 w-4" />} label="Reiniciar jornada" onClick={() => setResetOpen(true)} />
+        <Row icon={<TrendingUp className="h-4 w-4" />} label={t("profile.evolutionRow")} to="/evolucao" />
+        <Row icon={<Bell className="h-4 w-4" />} label={t("profile.notificationsRow")} to="/notificacoes" />
+        <Row icon={<Settings className="h-4 w-4" />} label={t("profile.settingsRow")} to="/configuracoes" />
+        <Row icon={<LogOut className="h-4 w-4" />} label={t("profile.resetRow")} onClick={() => setResetOpen(true)} />
       </section>
 
       <AlertDialog open={resetOpen} onOpenChange={setResetOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Reiniciar tu jornada?</AlertDialogTitle>
+            <AlertDialogTitle>{t("profile.resetTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Todos tus datos, progreso, favoritos y respuestas serán eliminados. Esta acción no se puede deshacer.
+              {t("profile.resetDesc")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel>{t("profile.resetCancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={handleReset} className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Sí, reiniciar
+              {t("profile.resetConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
