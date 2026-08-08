@@ -47,7 +47,7 @@ function NotFoundPage() {
 }
 
 function DetailPage() {
-  const id = Route.useLoaderData();
+  const id = Route.useLoaderData() as SectionId;
   const { locale, t } = useLocale();
   const s = dict[locale].antiBinge[id];
   const Icon = sectionIcons[id];
