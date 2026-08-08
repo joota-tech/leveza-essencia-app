@@ -5,6 +5,8 @@ import { useProgress } from "@/lib/use-progress";
 import { quoteOfTheDay } from "@/lib/quotes";
 import { useDailyReminder } from "@/lib/use-daily-reminder";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
+import { L } from "@/lib/app-data";
+import { useLocale } from "@/lib/i18n";
 import { BellRing, ChevronRight, Droplet, Sparkles, Flame, Heart, Lock, MessageCircleHeart, Quote, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 
@@ -32,9 +34,10 @@ function titleSize(title: string) {
 function HomePage() {
   const { progress, update, loaded } = useProgress();
   const navigate = useNavigate();
+  const { locale, t } = useLocale();
   const [weekday, setWeekday] = useState<string>("");
 
-  const dailyQuote = quoteOfTheDay(progress.currentDay);
+  const dailyQuote = L(quoteOfTheDay(progress.currentDay), locale);
   const reminder = useDailyReminder(dailyQuote);
 
   useEffect(() => {
@@ -42,8 +45,9 @@ function HomePage() {
   }, [loaded, progress.onboarded, navigate]);
 
   useEffect(() => {
-    setWeekday(new Date().toLocaleDateString("es-ES", { weekday: "long" }));
-  }, []);
+    const localeMap = { es: "es-ES", pt: "pt-BR", en: "en-US" } as const;
+    setWeekday(new Date().toLocaleDateString(localeMap[locale as keyof typeof localeMap], { weekday: "long" }));
+  }, [locale]);
 
   const percent = Math.round((progress.completedDays.length / 21) * 100);
 
@@ -67,7 +71,7 @@ function HomePage() {
             <Quote className="h-4 w-4" />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-primary">Frase del día · Día {progress.currentDay}</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-primary">{t("home.quoteEyebrow").replace("{n}", String(progress.currentDay))}</p>
             <p className="mt-1 font-serif text-[19px] italic leading-snug text-foreground">
               "{dailyQuote}"
             </p>
@@ -75,22 +79,22 @@ function HomePage() {
               <div className="relative z-10 mt-3 space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur">
                   <BellRing className="h-3 w-3 text-primary" />
-                  <label htmlFor="reminder-time" className="text-muted-foreground">Recordatorio diario a las</label>
+                  <label htmlFor="reminder-time" className="text-muted-foreground">{t("home.reminderLabel")}</label>
                   <input
                     id="reminder-time"
                     type="time"
                     value={reminder.time}
                     onChange={(e) => reminder.setTime(e.target.value)}
                     className="rounded-md bg-secondary/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground outline-none focus:ring-2 focus:ring-primary/40"
-                    aria-label="Hora del recordatorio diario"
+                    aria-label={t("home.reminderAriaLabel")}
                   />
                   <button
                     type="button"
                     onClick={() => reminder.toggle(false)}
                     className="ml-1 text-[10px] uppercase tracking-wider text-muted-foreground hover:text-primary"
-                    aria-label="Desactivar recordatorio"
+                    aria-label={t("home.reminderDisableAria")}
                   >
-                    desactivar
+                    {t("home.reminderDisable")}
                   </button>
                 </div>
               </div>
@@ -101,7 +105,7 @@ function HomePage() {
                 className="relative z-10 mt-3 inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-[11px] font-medium text-foreground shadow-soft backdrop-blur transition hover:shadow-glow active:scale-95"
               >
                 <BellRing className="h-3 w-3 text-primary" />
-                Recibir recordatorio matinal
+                {t("home.reminderBtn")}
               </button>
             )}
           </div>
@@ -112,11 +116,11 @@ function HomePage() {
       {/* Tarjeta de progreso hero */}
       <section className="mx-6 mt-6 overflow-hidden rounded-3xl border border-border/60 bg-card shadow-soft animate-float-up">
         <div className="relative h-40 w-full">
-          <img src={heroImg} alt="Tu jornada" className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} fetchPriority="high" decoding="async" />
+          <img src={heroImg} alt={t("home.journeyAlt")} className="absolute inset-0 h-full w-full object-cover" width={1024} height={1024} fetchPriority="high" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
           <div className="absolute bottom-3 left-4 right-4">
-            <p className="text-[11px] uppercase tracking-widest text-muted-foreground">Tu jornada</p>
-            <p className="font-serif text-xl">Día {progress.currentDay} de 21</p>
+            <p className="text-[11px] uppercase tracking-widest text-muted-foreground">{t("home.journeyLabel")}</p>
+            <p className="font-serif text-xl">{t("home.dayOf").replace("{n}", String(progress.currentDay))}</p>
           </div>
         </div>
         <div className="space-y-3 p-5">
@@ -127,12 +131,12 @@ function HomePage() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">{percent}% completado</span>
+            <span className="text-xs text-muted-foreground">{t("home.percentDone").replace("{n}", String(percent))}</span>
             <Link
               to="/plano"
               className="inline-flex items-center gap-1 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-glow"
             >
-              Continuar jornada <ChevronRight className="h-3 w-3" />
+              {t("home.continueBtn")} <ChevronRight className="h-3 w-3" />
             </Link>
           </div>
         </div>
@@ -140,23 +144,23 @@ function HomePage() {
 
       {/* Estadísticas rápidas */}
       <section className="mx-6 mt-5 grid grid-cols-3 gap-3">
-        <StatCard icon={<Flame className="h-4 w-4" />} label="Racha" value={`${progress.completedDays.length}d`} />
-        <StatCard icon={<Heart className="h-4 w-4" />} label="Favoritas" value={`${progress.favorites.length}`} />
-        <StatCard icon={<Sparkles className="h-4 w-4" />} label="Estado" value="Ligera" />
+        <StatCard icon={<Flame className="h-4 w-4" />} label={t("home.streakLabel")} value={`${progress.completedDays.length}d`} />
+        <StatCard icon={<Heart className="h-4 w-4" />} label={t("home.favoritesLabel")} value={`${progress.favorites.length}`} />
+        <StatCard icon={<Sparkles className="h-4 w-4" />} label={t("home.stateLabel")} value={t("home.stateValue")} />
       </section>
 
       {/* Control de agua */}
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Hidratación</p>
-            <h3 className="font-serif text-lg">{progress.water} / 8 vasos</h3>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">{t("home.hydrationLabel")}</p>
+            <h3 className="font-serif text-lg">{t("home.waterGlasses").replace("{n}", String(progress.water))}</h3>
           </div>
           <button
             onClick={() => update((p) => ({ water: Math.min(8, p.water + 1) }))}
             className="rounded-full bg-accent px-4 py-2 text-xs font-medium text-accent-foreground"
           >
-            + 1 vaso
+            {t("home.addWater")}
           </button>
         </div>
         <div className="mt-3 flex gap-1.5">
@@ -177,13 +181,13 @@ function HomePage() {
       <section className="mx-6 mt-5 grid grid-cols-2 gap-3">
         <Link to="/nutri" className="group relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-rose p-4 text-rose-foreground shadow-glow premium-glow">
           <MessageCircleHeart className="h-5 w-5" />
-          <p className="mt-3 font-serif text-base leading-tight">Habla con la Nutri</p>
-          <p className="mt-0.5 text-[11px] opacity-90">Apoyo femenino 24h</p>
+          <p className="mt-3 font-serif text-base leading-tight">{t("home.nutriTitle")}</p>
+          <p className="mt-0.5 text-[11px] opacity-90">{t("home.nutriSub")}</p>
         </Link>
         <Link to="/evolucao" className="rounded-3xl border border-border/60 bg-card p-4 shadow-soft">
           <TrendingUp className="h-5 w-5 text-primary" />
-          <p className="mt-3 font-serif text-base leading-tight">Tu evolución</p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">Logros y medallas</p>
+          <p className="mt-3 font-serif text-base leading-tight">{t("home.evolutionTitle")}</p>
+          <p className="mt-0.5 text-[11px] text-muted-foreground">{t("home.evolutionSub")}</p>
         </Link>
       </section>
 
@@ -191,10 +195,10 @@ function HomePage() {
       <section className="mt-7">
         <div className="flex items-end justify-between px-6">
           <div>
-            <h2 className="font-serif text-xl">Módulos de la jornada</h2>
-            <p className="text-[11px] text-muted-foreground">Se desbloquean cada 2 días</p>
+            <h2 className="font-serif text-xl">{t("home.modulesTitle")}</h2>
+            <p className="text-[11px] text-muted-foreground">{t("home.modulesSub")}</p>
           </div>
-          <Link to="/modulos" className="text-xs text-primary">Ver todos</Link>
+          <Link to="/modulos" className="text-xs text-primary">{t("home.modulesViewAll")}</Link>
         </div>
         <div className="scrollbar-hide mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-2">
           {modulesData.map((m) => {
@@ -205,7 +209,7 @@ function HomePage() {
                 <div className="relative aspect-[4/5] w-full overflow-hidden">
                   <img
                     src={`/modules/${m.id}.jpg`}
-                    alt={m.title}
+                    alt={L(m.title, locale)}
                     loading="lazy"
                     decoding="async"
                     width={640}
@@ -217,7 +221,7 @@ function HomePage() {
                   <div className="relative flex h-full flex-col justify-between p-4 text-white">
                     <div className="flex items-start justify-between">
                       <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-medium backdrop-blur-md">
-                        Módulo {m.index}
+                        {t("home.moduleBadge").replace("{n}", String(m.index))}
                       </span>
                       <span className="text-xl drop-shadow-md" aria-hidden>{m.emoji}</span>
                     </div>
@@ -225,8 +229,8 @@ function HomePage() {
                       {/* fondo decorativo */}
                       <div className="pointer-events-none absolute inset-x-0 -inset-y-3 rounded-2xl bg-gradient-to-t from-black/55 via-black/30 to-transparent blur-md" />
                       <div className="pointer-events-none absolute left-1/2 top-1 h-px w-10 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent" />
-                      <h3 className={`relative text-center font-serif italic tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] ${titleSize(m.title)}`}>
-                        {m.title}
+                      <h3 className={`relative text-center font-serif italic tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] ${titleSize(L(m.title, locale))}`}>
+                        {L(m.title, locale)}
                       </h3>
                       <div className="pointer-events-none mx-auto mt-1.5 flex items-center justify-center gap-1.5">
                         <span className="h-px w-6 bg-white/60" />
@@ -242,7 +246,7 @@ function HomePage() {
                       <Lock className="h-5 w-5" />
                     </div>
                     <span className="rounded-full bg-card/95 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-foreground">
-                      Faltan {Math.max(0, req - progress.completedDays.length)}d
+                      {t("home.moduleLocked").replace("{n}", String(Math.max(0, req - progress.completedDays.length)))}
                     </span>
                   </div>
                 )}
@@ -262,8 +266,8 @@ function HomePage() {
       {/* Mini calendario */}
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
-          <h3 className="font-serif text-lg">Tus 21 días</h3>
-          <Link to="/plano" className="text-xs text-primary">Ver todo</Link>
+          <h3 className="font-serif text-lg">{t("home.calendarTitle")}</h3>
+          <Link to="/plano" className="text-xs text-primary">{t("home.calendarViewAll")}</Link>
         </div>
         <div className="mt-3 grid grid-cols-7 gap-1.5">
           {Array.from({ length: 21 }).map((_, i) => {
