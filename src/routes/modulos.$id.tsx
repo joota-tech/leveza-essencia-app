@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
 import { modulesData, isModuleUnlocked, moduleUnlockRequirement } from "@/lib/modules-data";
+import { L } from "@/lib/app-data";
+import { useLocale } from "@/lib/i18n";
+import { dict } from "@/lib/i18n-dict";
 import { ArrowLeft, Check, Lock, Sparkles, Droplet, Sun, Moon, Heart, Calendar, Pencil } from "lucide-react";
 
 const CHECK_KEY = "desafio21-module-checks";
@@ -16,6 +19,7 @@ function ModuleDetail() {
   const { id } = Route.useParams();
   const { progress } = useProgress();
   const navigate = useNavigate();
+  const { locale, t } = useLocale();
   const mod = modulesData.find((m) => m.id === id);
 
   const [checks, setChecks] = useState<Record<string, boolean>>({});
@@ -30,8 +34,8 @@ function ModuleDetail() {
     return (
       <MobileShell>
         <div className="p-8 text-center">
-          <p>Módulo no encontrado.</p>
-          <Link to="/modulos" className="text-primary underline">Volver</Link>
+          <p>{t("modules.notFound")}</p>
+          <Link to="/modulos" className="text-primary underline">{t("common.back")}</Link>
         </div>
       </MobileShell>
     );
@@ -40,19 +44,20 @@ function ModuleDetail() {
   const unlocked = isModuleUnlocked(mod.index, progress.completedDays.length);
   if (!unlocked) {
     const req = moduleUnlockRequirement(mod.index);
+    const remaining = Math.max(0, req - progress.completedDays.length);
     return (
       <MobileShell>
         <header className="px-6 pt-8">
           <button onClick={() => navigate({ to: "/modulos" })} className="flex items-center gap-2 text-sm text-muted-foreground">
-            <ArrowLeft className="h-4 w-4" /> Volver
+            <ArrowLeft className="h-4 w-4" /> {t("common.back")}
           </button>
         </header>
         <div className="mx-6 mt-10 flex flex-col items-center rounded-3xl border border-border/60 bg-card p-8 text-center shadow-soft">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blush text-primary shadow-glow">
             <Lock className="h-7 w-7" />
           </div>
-          <h2 className="mt-4 font-serif text-2xl">Módulo bloqueado</h2>
-          <p className="mt-2 text-sm text-muted-foreground">Completa {Math.max(0, req - progress.completedDays.length)} días más del reto para desbloquearlo.</p>
+          <h2 className="mt-4 font-serif text-2xl">{t("modules.lockedTitle")}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">{t("modules.lockedDesc", { n: remaining })}</p>
         </div>
       </MobileShell>
     );
@@ -68,6 +73,10 @@ function ModuleDetail() {
     });
   };
 
+  const title = L(mod.title, locale);
+  const intro = L(mod.intro, locale);
+  const highlight = mod.highlight ? L(mod.highlight, locale) : undefined;
+
   return (
     <MobileShell>
       <header className={`bg-gradient-to-br ${mod.accent} px-6 pb-8 pt-6`}>
@@ -77,25 +86,25 @@ function ModuleDetail() {
         <div className="mt-4 flex items-center gap-3">
           <span className="text-4xl" aria-hidden>{mod.emoji}</span>
           <div>
-            <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">Módulo {mod.index}</p>
-            <h1 className="font-serif text-2xl leading-tight">{mod.title}</h1>
+            <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">{t("modules.moduleBadge", { n: mod.index })}</p>
+            <h1 className="font-serif text-2xl leading-tight">{title}</h1>
           </div>
         </div>
-        <p className="mt-3 text-sm text-foreground/80">{mod.intro}</p>
+        <p className="mt-3 text-sm text-foreground/80">{intro}</p>
       </header>
 
-      {mod.highlight && (
+      {highlight && (
         <div className="mx-6 mt-5 rounded-3xl bg-gradient-rose p-5 text-center text-rose-foreground shadow-glow">
           <Sparkles className="mx-auto h-5 w-5" />
-          <p className="mt-2 font-serif text-lg italic">{mod.highlight}</p>
+          <p className="mt-2 font-serif text-lg italic">{highlight}</p>
         </div>
       )}
 
       <section className="space-y-3 px-6 pt-5">
         {mod.sections.map((s, i) => (
           <article key={i} className="rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-            <h3 className="font-serif text-base">{s.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+            <h3 className="font-serif text-base">{L(s.title, locale)}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{L(s.body, locale)}</p>
           </article>
         ))}
       </section>
@@ -104,16 +113,17 @@ function ModuleDetail() {
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
         <div className="flex items-center justify-between">
-          <h3 className="font-serif text-base">Checklist del módulo</h3>
-          <span className="text-[11px] text-muted-foreground">Marca lo que hiciste hoy</span>
+          <h3 className="font-serif text-base">{t("modules.checklistTitle")}</h3>
+          <span className="text-[11px] text-muted-foreground">{t("modules.checklistHint")}</span>
         </div>
         <ul className="mt-3 space-y-2">
           {mod.checklist.map((item) => {
-            const checked = !!checks[`${mod.id}::${item}`];
+            const label = L(item, locale);
+            const checked = !!checks[`${mod.id}::${label}`];
             return (
-              <li key={item}>
+              <li key={label}>
                 <button
-                  onClick={() => toggle(item)}
+                  onClick={() => toggle(label)}
                   className={`flex w-full items-center gap-3 rounded-2xl border p-3 text-left text-sm transition-all ${
                     checked ? "border-primary bg-blush" : "border-border/60 bg-secondary/60"
                   }`}
@@ -121,7 +131,7 @@ function ModuleDetail() {
                   <span className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${checked ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/30 bg-card"}`}>
                     {checked && <Check className="h-3.5 w-3.5" />}
                   </span>
-                  <span className={checked ? "text-foreground" : "text-muted-foreground"}>{item}</span>
+                  <span className={checked ? "text-foreground" : "text-muted-foreground"}>{label}</span>
                 </button>
               </li>
             );
@@ -131,7 +141,7 @@ function ModuleDetail() {
 
       <div className="px-6 pt-6">
         <Link to="/nutri" className="block rounded-3xl bg-primary p-4 text-center text-sm font-medium text-primary-foreground shadow-glow">
-          Consultar dudas con la Nutri
+          {t("modules.nutriBtn")}
         </Link>
       </div>
     </MobileShell>
@@ -139,18 +149,16 @@ function ModuleDetail() {
 }
 
 function ExtraBlock({ kind }: { kind?: string }) {
+  const { locale } = useLocale();
+  const d = dict[locale].modules;
+
   if (!kind) return null;
 
   if (kind === "protocol24h") {
-    const steps = [
-      { time: "Mañana", action: "Agua con limón + proteína en el desayuno" },
-      { time: "Mediodía", action: "Almuerzo con hojas verdes y proteína magra" },
-      { time: "Tarde", action: "Té de menta o jengibre + caminata de 15 min" },
-      { time: "Noche", action: "Cena ligera, cero azúcar, dormir antes de las 23h" },
-    ];
+    const steps = d.protocol24h.steps;
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-base">Protocolo 24h anti-hinchazón</h3>
+        <h3 className="font-serif text-base">{d.protocol24h.title}</h3>
         <ol className="mt-3 space-y-3">
           {steps.map((s, i) => (
             <li key={i} className="flex gap-3">
@@ -169,12 +177,11 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "morningRoutine") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Sun className="h-4 w-4 text-primary" /> Rutina matinal femenina</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Sun className="h-4 w-4 text-primary" /> {d.morningRoutine.title}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>💧 1 vaso de agua al despertar</li>
-          <li>☀️ 5 minutos de sol en la piel</li>
-          <li>🥚 Desayuno con proteína (20g+)</li>
-          <li>🧘 1 minuto de respiración profunda</li>
+          {d.morningRoutine.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
     );
@@ -183,12 +190,11 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "nightRitual") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Moon className="h-4 w-4 text-primary" /> Ritual nocturno</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Moon className="h-4 w-4 text-primary" /> {d.nightRitual.title}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>🌙 Luz tenue después de las 21h</li>
-          <li>🍵 Té de manzanilla o melissa</li>
-          <li>📵 Pantallas lejos de la cama</li>
-          <li>📝 Escribe 1 gratitud antes de dormir</li>
+          {d.nightRitual.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
     );
@@ -197,29 +203,22 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "hydration") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Droplet className="h-4 w-4 text-primary" /> Aguas saborizadas</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Droplet className="h-4 w-4 text-primary" /> {d.hydration.title}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>🍋 Limón + menta — desinfla</li>
-          <li>🫚 Jengibre + canela — acelera el metabolismo</li>
-          <li>🥒 Pepino + limón — refrescante y drenante</li>
-          <li>🌺 Hibisco frío — antioxidante</li>
+          {d.hydration.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
     );
   }
 
   if (kind === "cycle") {
-    const phases = [
-      { name: "Menstrual", tip: "Descanso, hierro, comida caliente" },
-      { name: "Folicular", tip: "Energía alta — ¡aprovecha para entrenar!" },
-      { name: "Ovulatoria", tip: "Pico de confianza y vitalidad" },
-      { name: "Lútea", tip: "Más proteína, más sueño, menos exigencia" },
-    ];
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Calendar className="h-4 w-4 text-primary" /> Tu ciclo, tu plan</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Calendar className="h-4 w-4 text-primary" /> {d.cycle.title}</h3>
         <ul className="mt-3 grid grid-cols-2 gap-2 text-sm">
-          {phases.map((p) => (
+          {d.cycle.phases.map((p) => (
             <li key={p.name} className="rounded-2xl bg-blush/60 p-3">
               <p className="font-serif text-sm">{p.name}</p>
               <p className="mt-1 text-[11px] text-muted-foreground">{p.tip}</p>
@@ -237,7 +236,7 @@ function ExtraBlock({ kind }: { kind?: string }) {
   if (kind === "future") {
     return (
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="flex items-center gap-2 font-serif text-base"><Heart className="h-4 w-4 text-primary" /> Tus metas para los próximos 30 días</h3>
+        <h3 className="flex items-center gap-2 font-serif text-base"><Heart className="h-4 w-4 text-primary" /> {d.future.title}</h3>
         <FutureGoals />
       </section>
     );
@@ -247,6 +246,8 @@ function ExtraBlock({ kind }: { kind?: string }) {
 }
 
 function DiaryBlock() {
+  const { locale } = useLocale();
+  const d = dict[locale].modules.diary;
   const [entry, setEntry] = useState("");
   useEffect(() => {
     try { setEntry(localStorage.getItem("desafio21-diary") || ""); } catch {}
@@ -257,11 +258,11 @@ function DiaryBlock() {
   };
   return (
     <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-      <h3 className="flex items-center gap-2 font-serif text-base"><Pencil className="h-4 w-4 text-primary" /> Diario personal</h3>
+      <h3 className="flex items-center gap-2 font-serif text-base"><Pencil className="h-4 w-4 text-primary" /> {d.title}</h3>
       <textarea
         value={entry}
         onChange={(e) => save(e.target.value)}
-        placeholder="Escribe 1 victoria tuya hoy, por pequeña que sea…"
+        placeholder={d.placeholder}
         rows={5}
         className="mt-3 w-full rounded-2xl border border-border/60 bg-secondary/50 p-3 text-sm outline-none"
       />
@@ -270,6 +271,8 @@ function DiaryBlock() {
 }
 
 function FutureGoals() {
+  const { locale } = useLocale();
+  const d = dict[locale].modules.future;
   const [goals, setGoals] = useState("");
   useEffect(() => {
     try { setGoals(localStorage.getItem("desafio21-future") || ""); } catch {}
@@ -282,7 +285,7 @@ function FutureGoals() {
     <textarea
       value={goals}
       onChange={(e) => save(e.target.value)}
-      placeholder="Ej: dormir 8h, entrenar 3x/semana, mantener el peso…"
+      placeholder={d.placeholder}
       rows={4}
       className="mt-3 w-full rounded-2xl border border-border/60 bg-secondary/50 p-3 text-sm outline-none"
     />

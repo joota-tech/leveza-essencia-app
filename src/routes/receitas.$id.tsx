@@ -1,20 +1,24 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import type { Recipe } from "@/lib/app-data";
-import { recipes } from "@/lib/app-data";
+import { recipes, categories, L } from "@/lib/app-data";
 import { useProgress } from "@/lib/use-progress";
+import { useLocale } from "@/lib/i18n";
 import { ArrowLeft, Clock, Flame, Heart, Share2, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/receitas/$id")({
   component: RecipeDetail,
-  notFoundComponent: () => (
-    <MobileShell>
-      <div className="p-10 text-center">
-        <p className="text-sm text-muted-foreground">Receta no encontrada.</p>
-        <Link to="/receitas" className="mt-4 inline-block text-primary">Volver</Link>
-      </div>
-    </MobileShell>
-  ),
+  notFoundComponent: () => {
+    const { t } = useLocale();
+    return (
+      <MobileShell>
+        <div className="p-10 text-center">
+          <p className="text-sm text-muted-foreground">{t("recipes.notFound")}</p>
+          <Link to="/receitas" className="mt-4 inline-block text-primary">{t("common.back")}</Link>
+        </div>
+      </MobileShell>
+    );
+  },
   errorComponent: ({ error }) => (
     <MobileShell><div className="p-10 text-center text-sm">{error.message}</div></MobileShell>
   ),
@@ -28,18 +32,21 @@ export const Route = createFileRoute("/receitas/$id")({
 function RecipeDetail() {
   const { recipe: r } = Route.useLoaderData() as { recipe: Recipe };
   const { progress, toggleFavorite } = useProgress();
+  const { locale, t } = useLocale();
   const fav = progress.favorites.includes(r.id);
+  const name = L(r.name, locale);
+  const categoryLabel = L(categories.find((c) => c.id === r.category)?.label ?? categories[0].label, locale);
 
   const share = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: r.name, text: `${r.name} — Reto 21 Días` }); } catch {}
+      try { await navigator.share({ title: name, text: `${name} — Reto 21 Días` }); } catch {}
     }
   };
 
   return (
     <MobileShell>
       <div className="relative h-72 w-full">
-        <img src={r.image} alt={r.name} className="absolute inset-0 h-full w-full object-cover" width={768} height={768} />
+        <img src={r.image} alt={name} className="absolute inset-0 h-full w-full object-cover" width={768} height={768} />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
         <Link to="/receitas" className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-card/90 backdrop-blur">
           <ArrowLeft className="h-4 w-4" />
@@ -55,23 +62,23 @@ function RecipeDetail() {
       </div>
 
       <div className="relative -mt-8 rounded-t-[2rem] bg-background px-6 pb-6 pt-8">
-        <span className="block text-xs uppercase tracking-widest text-primary">{r.category}</span>
-        <h1 className="mt-2 font-serif text-3xl leading-tight">{r.name}</h1>
+        <span className="block text-xs uppercase tracking-widest text-primary">{categoryLabel}</span>
+        <h1 className="mt-2 font-serif text-3xl leading-tight">{name}</h1>
 
         <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-          <Stat icon={<Clock className="h-3 w-3" />} label="Tiempo" value={r.time} />
-          <Stat icon={<Flame className="h-3 w-3" />} label="Proteína" value={r.protein} />
-          <Stat icon={<Sparkles className="h-3 w-3" />} label="Saciedad" value={"★".repeat(r.satiety)} />
+          <Stat icon={<Clock className="h-3 w-3" />} label={t("recipes.timeLabel")} value={r.time} />
+          <Stat icon={<Flame className="h-3 w-3" />} label={t("recipes.proteinLabel")} value={r.protein} />
+          <Stat icon={<Sparkles className="h-3 w-3" />} label={t("recipes.satietyLabel")} value={"★".repeat(r.satiety)} />
         </div>
 
         <div className="mt-5 rounded-2xl bg-blush p-4">
-          <p className="text-xs uppercase tracking-widest text-primary">Para ti</p>
-          <p className="mt-1 text-sm leading-relaxed text-foreground">{r.feminineBenefits}</p>
+          <p className="text-xs uppercase tracking-widest text-primary">{t("recipes.forYou")}</p>
+          <p className="mt-1 text-sm leading-relaxed text-foreground">{L(r.feminineBenefits, locale)}</p>
         </div>
 
-        <Section title="Beneficios">
+        <Section title={t("recipes.benefitsTitle")}>
           <ul className="space-y-1.5">
-            {r.benefits.map((b) => (
+            {L(r.benefits, locale).map((b) => (
               <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{b}
               </li>
@@ -79,13 +86,13 @@ function RecipeDetail() {
           </ul>
         </Section>
 
-        <Section title="Mejor horario">
-          <p className="text-sm text-muted-foreground">{r.bestTime}</p>
+        <Section title={t("recipes.bestTimeTitle")}>
+          <p className="text-sm text-muted-foreground">{L(r.bestTime, locale)}</p>
         </Section>
 
-        <Section title="Ingredientes">
+        <Section title={t("recipes.ingredientsTitle")}>
           <ul className="space-y-2">
-            {r.ingredients.map((i) => (
+            {L(r.ingredients, locale).map((i) => (
               <li key={i} className="flex items-center gap-3 rounded-xl bg-secondary px-3 py-2 text-sm">
                 <span className="h-2 w-2 rounded-full bg-primary" />{i}
               </li>
@@ -93,9 +100,9 @@ function RecipeDetail() {
           </ul>
         </Section>
 
-        <Section title="Modo de preparación">
+        <Section title={t("recipes.prepTitle")}>
           <ol className="space-y-3">
-            {r.steps.map((s, i) => (
+            {L(r.steps, locale).map((s, i) => (
               <li key={i} className="flex gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-rose font-serif text-sm text-rose-foreground">{i + 1}</span>
                 <p className="pt-1 text-sm leading-relaxed text-foreground">{s}</p>
@@ -105,11 +112,11 @@ function RecipeDetail() {
         </Section>
 
         {r.videoId && (
-          <Section title="Video de la receta">
+          <Section title={t("recipes.videoTitle")}>
             <div className="aspect-video overflow-hidden rounded-2xl border border-border">
               <iframe
                 src={`https://www.youtube.com/embed/${r.videoId}`}
-                title={r.name}
+                title={name}
                 className="h-full w-full"
                 allowFullScreen
               />
