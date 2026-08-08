@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { useProgress } from "@/lib/use-progress";
+import { useLocale } from "@/lib/i18n";
 import { ArrowLeft, Trophy, Droplet, Flame, Crown } from "lucide-react";
 
 export const Route = createFileRoute("/evolucao")({
@@ -21,6 +22,7 @@ function streakFrom(days: number[]) {
 
 function EvolucaoPage() {
   const { progress } = useProgress();
+  const { t } = useLocale();
   const done = progress.completedDays.length;
   const streak = streakFrom(progress.completedDays);
   const perfectWeek = streak >= 7;
@@ -30,10 +32,10 @@ function EvolucaoPage() {
       : null;
 
   const medals = [
-    { id: "7", icon: <Trophy className="h-5 w-5" />, label: "7 días seguidos", got: streak >= 7 },
-    { id: "hydra", icon: <Droplet className="h-5 w-5" />, label: "Reina de la hidratación", got: progress.water >= 8 },
-    { id: "14", icon: <Flame className="h-5 w-5" />, label: "Control total", got: done >= 14 },
-    { id: "perfect", icon: <Crown className="h-5 w-5" />, label: "Semana perfecta", got: perfectWeek },
+    { id: "7", icon: <Trophy className="h-5 w-5" />, label: t("evolution.medal7days"), got: streak >= 7 },
+    { id: "hydra", icon: <Droplet className="h-5 w-5" />, label: t("evolution.medalHydra"), got: progress.water >= 8 },
+    { id: "14", icon: <Flame className="h-5 w-5" />, label: t("evolution.medalControl"), got: done >= 14 },
+    { id: "perfect", icon: <Crown className="h-5 w-5" />, label: t("evolution.medalPerfect"), got: perfectWeek },
   ];
 
   return (
@@ -43,20 +45,20 @@ function EvolucaoPage() {
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <div>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">Tu historia</p>
-          <h1 className="font-serif text-xl leading-none">Evolución</h1>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">{t("evolution.eyebrow")}</p>
+          <h1 className="font-serif text-xl leading-none">{t("evolution.h1")}</h1>
         </div>
       </header>
 
       <section className="mx-6 mt-5 grid grid-cols-2 gap-3">
-        <StatCard label="Días completados" value={`${done}/21`} />
-        <StatCard label="Racha" value={`${streak}d`} accent />
-        <StatCard label="Vasos de agua" value={`${progress.water}`} />
-        <StatCard label="Meta de peso" value={lost ? `-${lost}kg` : "—"} />
+        <StatCard label={t("evolution.daysCompleted")} value={`${done}/21`} />
+        <StatCard label={t("evolution.streak")} value={`${streak}d`} accent />
+        <StatCard label={t("evolution.waterGlasses")} value={`${progress.water}`} />
+        <StatCard label={t("evolution.weightGoal")} value={lost ? `-${lost}kg` : "—"} />
       </section>
 
       <section className="mx-6 mt-5 rounded-3xl border border-border/60 bg-card p-5 shadow-soft">
-        <h3 className="font-serif text-lg">Tu jornada de 21 días</h3>
+        <h3 className="font-serif text-lg">{t("evolution.journeyTitle")}</h3>
         <div className="mt-4 flex h-28 items-end gap-1">
           {Array.from({ length: 21 }).map((_, i) => {
             const d = i + 1;
@@ -64,18 +66,18 @@ function EvolucaoPage() {
             return (
               <div
                 key={d}
-                title={`Día ${d}`}
+                title={t("evolution.dayTitle", { n: d })}
                 className={`flex-1 rounded-t-lg transition-all ${isDone ? "bg-gradient-rose" : "bg-secondary"}`}
                 style={{ height: `${isDone ? 25 + (i * 70) / 21 : 10}%` }}
               />
             );
           })}
         </div>
-        <p className="mt-3 text-center text-xs text-muted-foreground">{Math.round((done / 21) * 100)}% completado</p>
+        <p className="mt-3 text-center text-xs text-muted-foreground">{t("evolution.percentDone", { n: Math.round((done / 21) * 100) })}</p>
       </section>
 
       <section className="mx-6 mt-5">
-        <h3 className="font-serif text-lg">Tus logros</h3>
+        <h3 className="font-serif text-lg">{t("evolution.achievementsTitle")}</h3>
         <div className="mt-3 grid grid-cols-2 gap-3">
           {medals.map((m) => (
             <div
@@ -89,7 +91,7 @@ function EvolucaoPage() {
               </div>
               <p className="mt-2 font-serif text-sm">{m.label}</p>
               <p className={`mt-1 text-[10px] uppercase tracking-widest ${m.got ? "text-rose-foreground/80" : "text-muted-foreground"}`}>
-                {m.got ? "Obtenida" : "Bloqueada"}
+                {m.got ? t("evolution.earned") : t("evolution.locked")}
               </p>
             </div>
           ))}
@@ -98,7 +100,7 @@ function EvolucaoPage() {
 
       <div className="px-6 py-6">
         <Link to="/modulos" className="block rounded-3xl bg-primary p-4 text-center text-sm font-medium text-primary-foreground shadow-glow">
-          Continuar con los módulos
+          {t("evolution.continueBtn")}
         </Link>
       </div>
     </MobileShell>
