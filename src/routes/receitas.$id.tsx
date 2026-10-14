@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, type ErrorComponentProps } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import type { Recipe } from "@/lib/app-data";
 import { recipes, categories, L } from "@/lib/app-data";
@@ -19,8 +19,12 @@ export const Route = createFileRoute("/receitas/$id")({
       </MobileShell>
     );
   },
-  errorComponent: ({ error }) => (
-    <MobileShell><div className="p-10 text-center text-sm">{error.message}</div></MobileShell>
+  errorComponent: ({ error }: ErrorComponentProps) => (
+    <MobileShell>
+      <div className="p-10 text-center text-sm">
+        {error instanceof Error ? error.message : String(error)}
+      </div>
+    </MobileShell>
   ),
   loader: ({ params }) => {
     const r = recipes.find((x) => x.id === params.id);
