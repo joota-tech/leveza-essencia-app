@@ -5,6 +5,7 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -29,12 +30,13 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error }: { error: Error }) {
+function ErrorComponent({ error }: ErrorComponentProps) {
+  const message = error instanceof Error ? error.message : String(error);
   return (
     <MobileShell>
       <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <h1 className="font-serif text-2xl">Algo salió mal</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
+        <p className="mt-2 text-sm text-muted-foreground">{message}</p>
       </div>
     </MobileShell>
   );
